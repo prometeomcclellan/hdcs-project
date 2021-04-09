@@ -1,0 +1,81 @@
+body{
+    background-color:#dee2e6;
+  
+}
+ table.dataTable thead {
+    background: #007bff;
+    color:white;
+}
+
+.caja{
+  /* border: 1px solid; */
+  padding: 5px;
+  box-shadow: 10px 10px 50px 1px #7c7c81;
+  border-radius: 10px;
+}
+
+
+.foot {
+	border-radius: 20px;
+	margin-top: 40px;
+
+}
+
+#editar {
+	margin-top: 0px;
+}
+
+
+.modal-dialog {
+  margin-top: 200px;
+}
+
+button#btnBuscar {
+    margin-top: 32px;
+}
+
+button#btnBuscarU {
+    margin-top: 32px;
+}
+
+#anchoModalBuscarSolMant {
+  width: 160%;
+  margin-left: -150px;
+}
+
+#modalCuadro {
+    margin-top: -90px;
+}
+
+hr {
+    margin-top: -5px;
+  }
+
+#h5 {
+  margin-top: 30px;
+}
+
+
+/*Mostrar cantidad de registris */
+
+div#tablaControlMant_length {
+    margin-top: 20px;
+}
+
+/* Botones*/
+.dt-buttons.btn-group {
+    position: absolute !important;
+    margin-left: 250px;
+    margin-top: -45px;
+}
+
+/* Filtro de busqueda*/
+div#tablaControlMant_filter {
+    margin-top: -37px;
+}
+
+/* Paginacion */
+div#tablaControlMant_paginate {
+    margin-top: -30px;
+    margin-bottom: 10px;
+}
