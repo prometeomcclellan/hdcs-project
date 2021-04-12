@@ -109,7 +109,11 @@ opcion = 4;
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },
-      
+    "initComplete": function(settings, json) {
+        
+      $(".page-link").eq(1).css("background-color", "#1a3c8a");
+      $(".page-link").eq(1).css("border-color", "#1a3c8a");
+  },
       "ajax":{            
           "url": "crud.php", 
           "method": 'POST', 

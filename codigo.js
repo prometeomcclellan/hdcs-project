@@ -1,4 +1,6 @@
+$("#page_loader").fadeIn();
 $(document).ready(function() {
+  $("#page_loader").fadeOut("slow");
 let isPhoto = false;
   var currentUrl = location.pathname;
   let mantenimientosArray = [];
@@ -61,6 +63,33 @@ let isPhoto = false;
     }
     
 }
+
+let ahora = new Date();
+    let ahoraAnio = ahora.getFullYear();
+    let ahoraMonth = ahora.getMonth();
+    let ahoraDay = ahora.getDate();
+    let ahoraHour = ahora.getHours();
+    let ahoraMinutes = ahora.getMinutes();
+    let ahoraSeconds = ahora.getSeconds();
+    let ahoraDia;
+    let ahoraMes;
+    if (ahoraMonth < 10) {
+      ahoraMes = "0"+ahoraMonth;
+    }else{
+      ahoraMes = ahoraMonth;
+    }
+
+    if (ahoraDay < 10) {
+      ahoraDia = "0"+ahoraDay;
+    }else{
+      ahoraDia = ahoraDay;
+    }
+
+    let hora = ahoraHour+"_"+ahoraMinutes+"_"+ahoraSeconds;
+
+    let fechaActual = ahoraAnio+"-"+ahoraMes+"-"+ahoraDia+"_"+hora;
+
+    let titulo = "";
 
 
 
@@ -329,7 +358,16 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
             let cargo = element.cargo;
             let estado = element.estado;
             let row_cnt = element.row_cnt;
+            let estadoDescripcion = "";
+            let oClassU = "";
 
+            if (estado.toString().trim() == "1") {
+              estadoDescripcion = "Activo";
+              oClassU = "success";
+            }else{
+              estadoDescripcion = "Inactivo";
+              oClassU = "danger";
+            }
 
             if (window.matchMedia("(max-width: 700px)").matches) {
               /* The viewport is less than, or equal to, 700 pixels wide */
@@ -376,9 +414,9 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
                     +"<td>"
                       +cargo
                     +"</td>"
-                    +"<td>"
-                      +estado
-                    +"</td>"
+                    +"<td><span class='badge badge-"+oClassU+"' style='width:120px;'>"
+                      +estadoDescripcion
+                    +"</span></td>"
                     +"<td>"
                       +row_cnt
                     +"</td>"
@@ -395,9 +433,9 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
                     +"<td>"
                       +cargo
                     +"</td>"
-                    +"<td>"
-                      +estado
-                    +"</td>"
+                    +"<td><span class='badge badge-"+oClassU+"' style='width:120px;'>"
+                      +estadoDescripcion
+                    +"</span></td>"
                     +"<td>"
                       +row_cnt
                     +"</td>"
@@ -479,38 +517,6 @@ fotoStatus = localStorage.getItem("fotoStatus");
 
   }
 
-  //  sendDateButton
-/*
-let fromDateValue;
-let toDateValue;
-
-let date_input = document.getElementById("fechaInicio");
-let date_end = document.getElementById("fechaFinal");
-date_input.onchange = function(){
-  fromDateValue = this.value;
-}
-date_end.onchange = function(){
-  toDateValue = this.value;
-}
-
-
-$("#sendDateButton").click(function(){
-
-$.ajax({
-  type: "post",
-  crossOrigin: true,
-  url: "../bd/get_mantenimientos_por_periodo.php",
-  data: {from:fromDateValue, to:toDateValue},
-  async: false,
-  success: function (data) {
-    //console.log("mantenimiento data extra");
-    //console.dir(JSON.parse(data));
-    //mantenimientosArrayX = JSON.parse(data);
-    //console.log(mantenimientosArrayX.length);
-  }
-})
-});
-*/
   if(currentUrl == "/HDCS/forms/departamento/index.php"){
     let elemU = document.getElementById("dWrapper"); // .offsetWidth; //$("#wrapper").attr("width");
     let wrapperWidthU = percentwidth(elemU);
@@ -1478,21 +1484,6 @@ fotoStatus = localStorage.getItem("fotoStatus");
       excv.preventDefault();
       excv.stopPropagation();
 
-      
-
-      /*
-      var element = document.getElementsByClassName('tabla-data');
-      let excelIndex = $(".boton-excel").index(this);
-      let myTableId = element[excelIndex].id;
-      $("#"+myTableId).table2excel({
-        exclude: ".excludeThisClass",
-        name: "Worksheet Name",
-        filename: "SomeFile.xls", // do include extension
-        preserveColors: true // set to true if you want background colors and font colors preserved
-      });
-
-      */
-
     });
     
     
@@ -1518,6 +1509,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
       }
 
       let elem = element[printIndex];
+      let fechaActual = new Date();
       var opt = {
         margin:       1,
         filename:     'myfile.pdf',
@@ -1525,7 +1517,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
         html2canvas:  { scale: 1},
         jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
       };
-      html2pdf().set(opt).from(elem).toPdf().save('prueba.pdf').then(function(pdf) {
+      html2pdf().set(opt).from(elem).toPdf().save('control-matenimientos-'+fechaActual+'.pdf').then(function(pdf) {
         for (let indexB = 0; indexB < botonesAccion.length; indexB++) {
           const element = botonesAccion[indexB];
           element.style.display = "inherit";
@@ -1536,45 +1528,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
       });
     });
 
-    $(".boton-pdf").click(function(evpdf){
-      evpdf.preventDefault();
-      evpdf.stopPropagation();
-      let pdftIndex = $(".boton-pdf").index(this);
-      if (window.matchMedia("(max-width: 700px)").matches) {
-        escala = 1;
-      }else{
-        escala = 2;
-      }
-      
-      var element = document.getElementsByClassName('print-container');
-      var botonesAccion = document.getElementsByClassName("boton-accion");
-
-      document.getElementById('repSegEst').style.height = "auto";
-
-      for (let indexA = 0; indexA < botonesAccion.length; indexA++) {
-        const element = botonesAccion[indexA];
-        element.style.display = "none";
-      }
-
-      let elem = element[pdftIndex];
-      var opt = {
-        margin:       1,
-        filename:     'myfile.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 1},
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-      };
-      html2pdf().set(opt).from(elem).toPdf().save('prueba.pdf').then(function(pdf) {
-        for (let indexB = 0; indexB < botonesAccion.length; indexB++) {
-          const element = botonesAccion[indexB];
-          element.style.display = "inherit";
-        }
-
-       
-      document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
-        
-      });
-    });
+    
 
   //}
   
@@ -1639,7 +1593,7 @@ let fechaSolicitud;
   
   $("#saveChangesButton").click(function(){
     
-    $("#page_loader_afl").fadeIn();
+    $("#page_loader").fadeIn();
 
 
     if(esCambioFoto == true){
@@ -1865,6 +1819,179 @@ $(".logout-button").click(function(){
   })
 
 
+  
+
+  var tablaContainer = document.getElementsByClassName('tabla-data');
+  
+  //let excelIndex = $(".boton-excel").index(this);
+//alert("voy")
+  for (let indexTabla = 0; indexTabla < tablaContainer.length; indexTabla++) {
+    const element = tablaContainer[indexTabla];
+    titulo = $(".file-title").eq(indexTabla).val();
+    let myTableId = element.id;
+  TableExport(document.getElementById(myTableId), {
+    headers: true,                      // (Boolean), display table headers (th or td elements) in the <thead>, (default: true)
+    footers: true,                      // (Boolean), display table footers (th or td elements) in the <tfoot>, (default: false)
+    formats: ["xlsx", "csv", "txt"],    // (String[]), filetype(s) for the export, (default: ['xlsx', 'csv', 'txt'])
+    filename: titulo+fechaActual,                     // (id, String), filename for the downloaded file, (default: 'id')
+    bootstrap: false,                   // (Boolean), style buttons using bootstrap, (default: true)
+    exportButtons: true,                // (Boolean), automatically generate the built-in export buttons for each of the specified formats (default: true)
+    position: "top",                 // (top, bottom), position of the caption element relative to table, (default: 'bottom')
+    ignoreRows: null,                   // (Number, Number[]), row indices to exclude from the exported file(s) (default: null)
+    ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file(s) (default: null)
+    trimWhitespace: true,               // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: false)
+    RTL: false,                         // (Boolean), set direction of the worksheet to right-to-left (default: false)
+    sheetname: "id"                     // (id, String), sheet name for the exported spreadsheet, (default: 'id')
+  });
+
+  if (indexTabla == (tablaContainer.length-1)) {
+    let botoneras = document.getElementsByClassName("tableexport-caption");
+    if (window.matchMedia("(max-width: 700px)").matches) {
+      for (let indexBoton = 0; indexBoton < botoneras.length; indexBoton++) {
+        $(".tableexport-caption").eq(indexBoton).prepend(
+          "<div class='row'><div class='col-md-6' style='margin-bottom:6px;'>"
+          +"<button type='button' tableexport-id='bbb618"
+          +indexBoton+"-todas' class='btn btn-info crear boton-accion boton-crear create-orders-button' style='width:110px;'>Nueva <i class='fas fa-plus'></i></span></button>"
+          +"<button type='button' tableexport-id='bba618"
+          +indexBoton+"-todas' class='btn btn-secondary todas boton-accion boton-todas all-orders-button' style='width:110px;'>Todas <i class='fas fa-eye'></i></span></button>"
+          +"<button type='button' tableexport-id='baa618"
+          +indexBoton+"-pdf' class='btn btn-danger pdf boton-accion boton-pdf' style='width:110px;'><span id='pdfIconContainer'>Pdf <i class='fas fa-file-pdf'></i></span></button>"
+          +"</div></div>"
+        );
+
+        if (indexBoton == (botoneras.length-1)) {
+          let botonesXlsx = document.getElementsByClassName("xlsx");
+          for (let indexXlsx = 0; indexXlsx < botonesXlsx.length; indexXlsx++) {
+            const elementXlsx = botonesXlsx[indexXlsx];
+            $(".xlsx").eq(indexXlsx).removeClass("button-default");
+            $(".xlsx").eq(indexXlsx).addClass("btn");
+            $(".xlsx").eq(indexXlsx).addClass("btn-success");
+            $(".csv").eq(indexXlsx).removeClass("button-default");
+            $(".csv").eq(indexXlsx).addClass("btn");
+            $(".csv").eq(indexXlsx).addClass("btn-primary");
+            $(".txt").eq(indexXlsx).removeClass("button-default");
+            $(".txt").eq(indexXlsx).addClass("btn");
+            $(".txt").eq(indexXlsx).addClass("btn-warning");
+            $(".xlsx").eq(indexXlsx).css("margin-right", "6px");
+            $(".csv").eq(indexXlsx).css("margin-right", "6px");
+            $(".txt").eq(indexXlsx).css("margin-right", "6px");
+            $(".xlsx").eq(indexXlsx).css("width", "110px");
+            $(".csv").eq(indexXlsx).css("width", "110px");
+            $(".txt").eq(indexXlsx).css("width", "110px");
+            $(".xlsx").eq(indexXlsx).text("");
+            $(".csv").eq(indexXlsx).text("");
+            $(".txt").eq(indexXlsx).text("");
+            $(".xlsx").eq(indexXlsx).append(" <span>Excel <i class='fas fa-file-excel'></i></span>");
+            $(".csv").eq(indexXlsx).append(" <span>Csv <i class='fas fa-file-csv'></i></span>");
+            $(".txt").eq(indexXlsx).append(" <span>Txt <i class='fa fa-file'></i></span>");
+          }
+      }
+    }
+    }else{
+      for (let indexBoton = 0; indexBoton < botoneras.length; indexBoton++) {
+        $(".tableexport-caption").eq(indexBoton).prepend(
+          "<button type='button' tableexport-id='bbb618"
+          +indexBoton+"-todas' class='btn btn-info crear boton-accion boton-crear create-orders-button' style='width:110px;'>Nueva <i class='fas fa-plus'></i></span></button>"
+          +"<button type='button' tableexport-id='bba618"
+          +indexBoton+"-todas' class='btn btn-secondary todas boton-accion boton-todas all-orders-button' style='width:110px;'>Todas <i class='fas fa-eye'></i></span></button>"
+          +"<button type='button' tableexport-id='baa618"
+          +indexBoton+"-pdf' class='btn btn-danger pdf boton-accion boton-pdf' style='width:110px;'><span id='pdfIconContainer'>Pdf <i class='fas fa-file-pdf'></i></span></button>"
+          );
+        // 
+        if (indexBoton == (botoneras.length-1)) {
+          let botonesXlsx = document.getElementsByClassName("xlsx");
+          for (let indexXlsx = 0; indexXlsx < botonesXlsx.length; indexXlsx++) {
+            const elementXlsx = botonesXlsx[indexXlsx];
+            $(".xlsx").eq(indexXlsx).removeClass("button-default");
+            $(".xlsx").eq(indexXlsx).addClass("btn");
+            $(".xlsx").eq(indexXlsx).addClass("btn-success");
+            $(".csv").eq(indexXlsx).removeClass("button-default");
+            $(".csv").eq(indexXlsx).addClass("btn");
+            $(".csv").eq(indexXlsx).addClass("btn-primary");
+            $(".txt").eq(indexXlsx).removeClass("button-default");
+            $(".txt").eq(indexXlsx).addClass("btn");
+            $(".txt").eq(indexXlsx).addClass("btn-warning");
+            $(".xlsx").eq(indexXlsx).css("margin-right", "6px");
+            $(".csv").eq(indexXlsx).css("margin-right", "6px");
+            $(".txt").eq(indexXlsx).css("margin-right", "6px");
+            $(".xlsx").eq(indexXlsx).css("width", "110px");
+            $(".csv").eq(indexXlsx).css("width", "110px");
+            $(".txt").eq(indexXlsx).css("width", "110px");
+            $(".xlsx").eq(indexXlsx).text("");
+            $(".csv").eq(indexXlsx).text("");
+            $(".txt").eq(indexXlsx).text("");
+            $(".xlsx").eq(indexXlsx).append(" <span>Excel <i class='fas fa-file-excel'></i></span>");
+            $(".csv").eq(indexXlsx).append(" <span>Csv <i class='fas fa-file-csv'></i></span>");
+            $(".txt").eq(indexXlsx).append(" <span>Txt <i class='fa fa-file'></i></span>");
+          }
+        }
+      }
+    }
+    
+
+  }
+
+  }
+  
+  $(".create-orders-button").click(function(evc){
+    //alert("voy");
+    evc.preventDefault();
+    evc.stopPropagation();
+    window.open("/HDCS/forms/solicitudMantenimiento/index.php", "_self");
+  });
+  
+  $(".boton-pdf").click(function(evpdf){
+    //alert("voy");
+    evpdf.preventDefault();
+    evpdf.stopPropagation();
+    let pdftIndex = $(".boton-pdf").index(this);
+    if (window.matchMedia("(max-width: 700px)").matches) {
+      escala = 1;
+    }else{
+      escala = 2;
+    }
+    
+    var element = document.getElementsByClassName('print-container');
+    var elementTitle = document.getElementsByClassName('file-title');
+    var botonesAccion = document.getElementsByClassName("boton-accion");
+    var captionS = document.getElementsByClassName("tableexport-caption");
+    var tblthis = document.getElementsByTagName("table")[pdftIndex];
+    var widthT = tblthis.offsetWidth;
+    captionS[pdftIndex].style.display = "none";
+
+    document.getElementById('repSegEst').style.height = "auto";
+
+    for (let indexA = 0; indexA < botonesAccion.length; indexA++) {
+      const element = botonesAccion[indexA];
+      //element.style.display = "none";
+    }
+
+    let elem = element[pdftIndex];
+    titulo = $(".file-title").eq(pdftIndex).val();
+
+    var opt = {
+      margin:       1,
+      filename:     'myfile.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 1},
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(elem).toPdf().save(titulo+fechaActual+'.pdf').then(function(pdf) {
+      captionS[pdftIndex].style.display = "inherit";
+      captionS[pdftIndex].style.width = widthT+"px";
+      
+      for (let indexB = 0; indexB < botonesAccion.length; indexB++) {
+        const element = botonesAccion[indexB];
+        //element.style.display = "inherit";
+
+      }
+
+     
+    document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
+      
+    });
+  });
+
   $(".all-orders-button").click(function(){
     let ordersIndex = $(".all-orders-button").index(this);
     //alert(ordersIndex)
@@ -1894,26 +2021,4 @@ $(".logout-button").click(function(){
     }
   });
 
-  var tablaContainer = document.getElementsByClassName('tabla-data');
-  //let excelIndex = $(".boton-excel").index(this);
-//alert("voy")
-  for (let indexTabla = 0; indexTabla < tablaContainer.length; indexTabla++) {
-    const element = tablaContainer[indexTabla];
-    let myTableId = element.id;
-  TableExport(document.getElementById(myTableId), {
-    headers: true,                      // (Boolean), display table headers (th or td elements) in the <thead>, (default: true)
-    footers: true,                      // (Boolean), display table footers (th or td elements) in the <tfoot>, (default: false)
-    formats: ["xlsx", "csv", "txt"],    // (String[]), filetype(s) for the export, (default: ['xlsx', 'csv', 'txt'])
-    filename: "id",                     // (id, String), filename for the downloaded file, (default: 'id')
-    bootstrap: false,                   // (Boolean), style buttons using bootstrap, (default: true)
-    exportButtons: true,                // (Boolean), automatically generate the built-in export buttons for each of the specified formats (default: true)
-    position: "bottom",                 // (top, bottom), position of the caption element relative to table, (default: 'bottom')
-    ignoreRows: null,                   // (Number, Number[]), row indices to exclude from the exported file(s) (default: null)
-    ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file(s) (default: null)
-    trimWhitespace: true,               // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: false)
-    RTL: false,                         // (Boolean), set direction of the worksheet to right-to-left (default: false)
-    sheetname: "id"                     // (id, String), sheet name for the exported spreadsheet, (default: 'id')
-  });
-  }
-  
-});
+}); // document ready

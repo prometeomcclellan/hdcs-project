@@ -45,7 +45,11 @@ opcion = 4;
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },
-      
+    "initComplete": function(settings, json) {
+        
+      $(".page-link").eq(1).css("background-color", "#1a3c8a");
+      $(".page-link").eq(1).css("border-color", "#1a3c8a");
+  },
       "ajax":{            
           "url": "crud.php", 
           "method": 'POST', //usamos el metodo POST
@@ -75,7 +79,7 @@ opcion = 4;
           {"data": "telefonoContacto"},
           {"data": "correoElectronico"},
           {"data": "userName"},
-          {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-primary btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
+          {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-warning btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
       ],
       
       //para usar los botones   

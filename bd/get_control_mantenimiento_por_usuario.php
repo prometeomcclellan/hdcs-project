@@ -15,6 +15,12 @@
     $result = $conn->query($sql);
     $row_cnt = $result->num_rows;
 
+    if ($result) {
+        while($row = $result->fetch_assoc()) {
+
+        }
+    }
+
     $sqlNombre = "SELECT userName, codEmpleado FROM usuario
     WHERE idUsuario = '".$idU."'";
     $resultNombre = $conn->query($sqlNombre);

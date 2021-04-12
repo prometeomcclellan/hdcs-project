@@ -13,7 +13,7 @@
     $from=date('Y-m-d',strtotime($_POST['from']));
     $to=date('Y-m-d',strtotime($_POST['to']));
 
-    echo $from.", ".$to;
+    //echo $from.", ".$to;
 
     $sql = "SELECT * FROM controlmantenimiento
     WHERE fechaControlMantenimiento  BETWEEN '".$from."' AND '".$to."'";

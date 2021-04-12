@@ -11,10 +11,6 @@ var diccionarioEquipo = [];
 var diccionarioUsuario = [];
 opcion = 4;
 
-$("#dashboard_button").click(function(){
-  window.open("http://localhost/HDCS/dashboard/index2.html", "_self");
-});
-
 
   //Consulta a la tabla tipo mantenimiento  
   $.ajax({
@@ -98,7 +94,11 @@ console.log(diccionarioControlMant);
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },
-      
+    "initComplete": function(settings, json) {
+        
+      $(".page-link").eq(1).css("background-color", "#1a3c8a");
+      $(".page-link").eq(1).css("border-color", "#1a3c8a");
+  },
       "ajax":{            
           "url": "crud.php", 
           "method": 'POST', //usamos el metodo POST
@@ -125,7 +125,7 @@ console.log(diccionarioControlMant);
                         }
               }},
           {"data": "empleado"},
-          {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-primary btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
+          {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-warning btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
       ],
       
       
@@ -262,7 +262,11 @@ console.log(diccionarioControlMant);
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },
-      
+    "initComplete": function(settings, json) {
+        
+      $(".page-link").eq(1).css("background-color", "#1a3c8a");
+      $(".page-link").eq(1).css("border-color", "#1a3c8a");
+  },
       "ajax":{            
           "url": "crud.php", 
           "method": 'POST', 
@@ -275,7 +279,7 @@ console.log(diccionarioControlMant);
           {"data": "descripcionEquipo"},
           {"data": "preDiagnostico"},
           {"data": "empleado"},
-          {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-success' id='btnSeleccionar'><i class='material-icons' >check_box</i></button></div></div>" }
+          {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-warning' id='btnSeleccionar'><i class='material-icons' >check_box</i></button></div></div>" }
       ]
   });  
 

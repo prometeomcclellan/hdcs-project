@@ -11,7 +11,7 @@
 		<meta name="author" content="Omar McClellan, Mapphash Group">
 
 		<!-- Favicon -->
-		<link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="../inicio/plugins/fontawesome-free/css/all.min.css">
@@ -210,7 +210,7 @@ if ( $detect->isMobile() ) {
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/HDCS/forms/tipoDisco/index.php" class="nav-link">
+                <a href="/HDCS/forms/tipoEquipo/index.php" class="nav-link">
                   <i class="nav-icon fas fa-laptop-house"></i>
                   <p>
                     Tipo de Equipo
@@ -598,7 +598,7 @@ if ( $detect->isMobile() ) {
 
 
 <!-- ./wrapper -->
-
+<div class="spinner-border" id="page_loader" style="position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 45vw;z-index: 1060;display:inherit;top: 30%;"></div>
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
@@ -633,7 +633,7 @@ if ( $detect->isMobile() ) {
 
 <script src="../codigo.js"></script>
 
-<div class="spinner-border" id="page_loader_afl" style="position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 45vw;z-index: 1060;display:none;top: 30%;"></div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">

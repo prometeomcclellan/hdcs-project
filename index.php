@@ -11,10 +11,12 @@
         <link rel="shortcut icon" href="#" />
         <!-- Required meta tags -->
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
         <title>Login</title>
 
         <title>HDCS | Admin</title>
+        <!-- Favicon -->
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -43,7 +45,6 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
         
     </head>
-    
 <?php
 require_once "Mobile_Detect.php";
   $detect = new Mobile_Detect;
@@ -92,10 +93,10 @@ if ( $detect->isMobile() ) {
               <div class="card-header" style="color:white;background-color:#1a3c8a;">
               <div class="row">
               <div class="col-md-8">
-              <h3 class="card-title">Inicio de Sesión</h3>
+              <h3 class="card-title">Inicio de sesión</h3>
               </div>
               <div class="col-md-4">
-              <img src="\HDCS\inicio\dist\img\HDCS-imagotipoWhite.png" style="width: 60px;float: right;">
+              <img src="\HDCS\inicio\dist\img\HDCS-imagotipo-white.png" style="width: 60px;float: right;">
               </div>
               </div>
                 
@@ -113,14 +114,14 @@ if ( $detect->isMobile() ) {
                   <div class="form-group row">
                     <!-- label for="inputPassword3" class="col-sm-3 col-form-label">Contraseña</label -->
                     <div class="col-sm-12">
-                    <input class="input100 form-control" type="password" id="password" name="password" placeholder="Password" AUTOCOMPLETE="OFF">
+                    <input class="input100 form-control" type="password" id="password" name="password" placeholder="Contraseña" AUTOCOMPLETE="OFF">
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-12">
                       <div class="form-check">
                         <input type="checkbox" id="abierta" name="abierta" class="form-check-input" id="exampleCheck2">
-                        <label class="form-check-label" for="exampleCheck2">Mantener Sesión Abierta</label>
+                        <label class="form-check-label" for="exampleCheck2">Mantener sesión abierta</label>
                       </div>
                     </div>
                   </div>
@@ -129,7 +130,7 @@ if ( $detect->isMobile() ) {
                 <div class="card-footer">
                   
                   <a href="#" class="btn btn-default no-cursor" style="color:transparent;cursor:arrow;">Cancel</a>
-                  <button id="submitButton" type="submit" name="submit" class="btn btn-info float-right" style="background-color:#1a3c8a;">Iniciar Sesión</button>
+                  <button id="submitButton" type="submit" name="submit" class="btn btn-info float-right" style="background-color:#1a3c8a;">Iniciar sesión</button>
                 </div>
                 <!-- /.card-footer -->
               </form>

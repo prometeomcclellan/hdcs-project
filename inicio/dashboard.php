@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
   <title>HDCS | Admin</title>
@@ -169,7 +169,7 @@
                 <a href="/HDCS/forms/asignacionEquipo/index.php" class="nav-link">
                   <i class="nav-icon fas fa-tasks"></i>
                   <p>
-                    Asignación de Equipo
+                    Asignación de equipo
                   </p>
                 </a>
               </li>
@@ -185,7 +185,7 @@
                 <a href="/HDCS/forms/controlGarantia/index.php" class="nav-link">
                   <i class="nav-icon fas fa-award"></i>
                   <p>
-                    Control de Garantía
+                    Control de garantía
                   </p>
                 </a>
               </li>
@@ -193,7 +193,7 @@
                 <a href="/HDCS/forms/detEquipoComputadora/index.php" class="nav-link">
                   <i class="nav-icon fas fa-tv"></i>
                   <p>
-                    Detalle de Computadora
+                    Detalle de computadora
                   </p>
                 </a>
               </li>
@@ -218,15 +218,15 @@
                 <a href="/HDCS/forms/tipoDisco/index.php" class="nav-link">
                   <i class="nav-icon fas fa-hdd"></i>
                   <p>
-                    Tipo de Disco
+                    Tipo de disco
                   </p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/HDCS/forms/tipoDisco/index.php" class="nav-link">
+                <a href="/HDCS/forms/tipoEquipo/index.php" class="nav-link">
                   <i class="nav-icon fas fa-laptop-house"></i>
                   <p>
-                    Tipo de Equipo
+                    Tipo de equipo
                   </p>
                 </a>
               </li>
@@ -323,7 +323,7 @@
                 <a href="/HDCS/forms/solicitudMantenimiento/index.php" class="nav-link">
                   <i class="nav-icon fas fa-comment-dots"></i>
                   <p>
-                    Solicitud Mantenimiento
+                    Solicitud mantenimiento
                   </p>
                 </a>
               </li>
@@ -331,7 +331,7 @@
                 <a href="/HDCS/forms/controlMantenimiento/index.php" class="nav-link">
                   <i class="nav-icon fas fa-cog"></i>
                   <p>
-                    Control Mantenimiento
+                    Control mantenimiento
                   </p>
                 </a>
               </li>
@@ -339,7 +339,7 @@
                 <a href="/HDCS/forms/estadoControlMantenimiento/index.php" class="nav-link">
                   <i class="nav-icon fas fa-hammer"></i>
                   <p>
-                    Estado Mantenimiento
+                    Estado mantenimiento
                   </p>
                 </a>
               </li>
@@ -347,7 +347,7 @@
                 <a href="/HDCS/forms/tipoMantenimiento/index.php" class="nav-link">
                   <i class="nav-icon fas fa-cogs"></i>
                   <p>
-                    Tipo Mantenimiento
+                    Tipo mantenimiento
                   </p>
                 </a>
               </li>
@@ -428,9 +428,10 @@
         
 
         <div class="print-container" style="width:100%">
+        <input type="hidden" class="file-title" value="mantenimientos-fecha-">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12">
-                <strong>Solicitudes de Mantenimiento</strong>
+                <strong>Solicitudes de mantenimiento</strong>
                 
             </div>
         
@@ -443,7 +444,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text top-report-text">Diagnosticado</span>
-                <span class="info-box-number" id="statusD">1</span>
+                <span class="info-box-number" id="statusD"></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -457,7 +458,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text top-report-text">En reparación</span>
-                <span class="info-box-number" id="statusP">1</span>
+                <span class="info-box-number" id="statusP"></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -472,7 +473,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text top-report-text">Finalizados</span>
-                <span class="info-box-number" id="statusF">0</span>
+                <span class="info-box-number" id="statusF"></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -495,7 +496,7 @@
 
                 <div class="card-tools" style="width:100%;">
                 <div class="row" style="width:100%;">
-              <div class="col-md-2"><h3 class="card-title">Mantenimientos del Mes</h3></div>
+              <div class="col-md-2"><h3 class="card-title">Mantenimientos del mes</h3></div>
               <div class="col-md-10" style="width:100%;">
                 <div class="row">
                 <?php
@@ -503,7 +504,7 @@
     $detect = new Mobile_Detect;
 
     if ( $detect->isMobile() ) {
-      echo "<nav class='navbar navbar-expand' style='text-align:right;'>
+      /*echo "<nav class='navbar navbar-expand' style='text-align:right;'>
       <ul class='navbar-nav ml-auto'>
 
       <li class='nav-item dropdown'>
@@ -539,8 +540,9 @@
       </li>
     </ul>
     </nav>";
+    */
     }else{
-        echo "<div class='col-md-2'></div>
+        /*echo "<div class='col-md-2'></div>
         <div class='col-md-2'>
         
         </div>
@@ -561,6 +563,7 @@
         <div class='col-md-2'>
         <a href='javascript:void(0)' class='btn btn-sm btn-secondary float-right all-orders-button boton-accion' id='verMantenimientoBoton'>Ver Todas</a>
         </div>";
+        */
     }
     ?>
                   
@@ -596,11 +599,11 @@
                   <table id="mantenimientosTabla" class="table table-striped table-hover m-0 tabla-data">
                     <thead>
                     <tr>
-                      <th>Número Orden</th>
+                      <th>Número orden</th>
                       <th>Equipo</th>
                       <th>Estado</th>
-                      <th>Fecha Solicitud</th>
-                      <th>Fecha Mantenimiento</th>
+                      <th>Fecha solicitud</th>
+                      <th>Fecha mantenimiento</th>
                     </tr>
                     </thead>
                     <tbody id="mantenimientosTable"></tbody>
@@ -610,7 +613,7 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-              <a id='crearMantenimientoBoton' href='/HDCS/forms/equipo/index.php' class='btn btn-sm btn-info float-left boton-accion' style='background-color: #1a3c8a;'>Crear Solicitud</a>
+              <!-- a id='crearMantenimientoBoton' href='/HDCS/forms/solicitudMantenimiento/index.php' class='btn btn-sm btn-info float-left boton-accion' style='background-color: #1a3c8a;'>Crear Solicitud</a -->
               </div>
               <!-- /.card-footer -->
             </div>
@@ -643,7 +646,7 @@
     $detect = new Mobile_Detect;
 
     if ( $detect->isMobile() ) {
-      echo "<nav class='navbar navbar-expand' style='text-align:right;'>
+      /*echo "<nav class='navbar navbar-expand' style='text-align:right;'>
       <ul class='navbar-nav ml-auto'>
 
       <li class='nav-item dropdown'>
@@ -679,8 +682,9 @@
       </li>
     </ul>
     </nav>";
+    */
     }else{
-        echo "<div class='col-md-2'></div>
+        /*echo "<div class='col-md-2'></div>
         <div class='col-md-2'>
         
         </div>
@@ -701,6 +705,7 @@
         <div class='col-md-2'>
         <a href='javascript:void(0)' class='btn btn-sm btn-secondary float-right all-orders-button boton-accion' id='verReportesBoton'>Ver Todas</a>
         </div>";
+        */
     }
     ?>
                   
@@ -715,6 +720,7 @@
           </div>
 
           <div class="print-container" style="width:100%">
+          <input type="hidden" class="file-title" value="mantenimientos-deptos-fecha-">
           <div class="row">
           <div class="col-md-3">
           <!-- Info Boxes Style 2 -->
@@ -864,18 +870,6 @@
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                   </button>
-                  <!-- div class="btn-group">
-                    <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                      <i class="fas fa-wrench"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" role="menu">
-                      <a href="#" class="dropdown-item">Action</a>
-                      <a href="#" class="dropdown-item">Another action</a>
-                      <a href="#" class="dropdown-item">Something else here</a>
-                      <a class="dropdown-divider"></a>
-                      <a href="#" class="dropdown-item">Separated link</a>
-                    </div>
-                  </div  -->
                   
                 </div>
               </div>
@@ -977,7 +971,7 @@
 <script src="dist/js/tableexport.js"></script>
 <script src="dist/js/xlsx.core.min.js"></script>
 
-<div class="spinner-border" id="page_loader_afl" style="position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 45vw;z-index: 1060;display:none;top: 30%;"></div>
+<div class="spinner-border" id="page_loader" style="position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 45vw;z-index: 1060;display:inherit;top: 30%;"></div>
 
 <!-- Modal -->
 <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
@@ -1098,11 +1092,11 @@
                   <table id="reportesTabla" class="table table-striped table-hover m-0 tabla-data">
                     <thead>
                     <tr>
-                      <th>Número Orden</th>
+                      <th>Número orden</th>
                       <th>Equipo</th>
                       <th>Estado</th>
-                      <th>Fecha Solicitud</th>
-                      <th>Fecha Mantenimiento</th>
+                      <th>Fecha solicitud</th>
+                      <th>Fecha mantenimiento</th>
                     </tr>
                     </thead>
                     <tbody id="quickReportsTable"></tbody>

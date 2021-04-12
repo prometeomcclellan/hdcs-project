@@ -146,8 +146,7 @@ if ( $detect->isMobile() ) {
       
 
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">  
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">  
           <li class="nav-item has-treeview">
             <a href="/HDCS/forms/equipo/index.php" class="nav-link">
               <i class="nav-icon fas fa-laptop"></i>
@@ -169,7 +168,7 @@ if ( $detect->isMobile() ) {
                 <a href="/HDCS/forms/asignacionEquipo/index.php" class="nav-link">
                   <i class="nav-icon fas fa-tasks"></i>
                   <p>
-                    Asignación de Equipo
+                    Asignación de equipo
                   </p>
                 </a>
               </li>
@@ -185,7 +184,7 @@ if ( $detect->isMobile() ) {
                 <a href="/HDCS/forms/controlGarantia/index.php" class="nav-link">
                   <i class="nav-icon fas fa-award"></i>
                   <p>
-                    Control de Garantía
+                    Control de garantía
                   </p>
                 </a>
               </li>
@@ -193,7 +192,7 @@ if ( $detect->isMobile() ) {
                 <a href="/HDCS/forms/detEquipoComputadora/index.php" class="nav-link">
                   <i class="nav-icon fas fa-tv"></i>
                   <p>
-                    Detalle de Computadora
+                    Detalle de computadora
                   </p>
                 </a>
               </li>
@@ -218,15 +217,15 @@ if ( $detect->isMobile() ) {
                 <a href="/HDCS/forms/tipoDisco/index.php" class="nav-link">
                   <i class="nav-icon fas fa-hdd"></i>
                   <p>
-                    Tipo de Disco
+                    Tipo de disco
                   </p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/HDCS/forms/tipoDisco/index.php" class="nav-link">
+                <a href="/HDCS/forms/tipoEquipo/index.php" class="nav-link">
                   <i class="nav-icon fas fa-laptop-house"></i>
                   <p>
-                    Tipo de Equipo
+                    Tipo de equipo
                   </p>
                 </a>
               </li>
@@ -323,7 +322,7 @@ if ( $detect->isMobile() ) {
                 <a href="/HDCS/forms/solicitudMantenimiento/index.php" class="nav-link">
                   <i class="nav-icon fas fa-comment-dots"></i>
                   <p>
-                    Solicitud Mantenimiento
+                    Solicitud mantenimiento
                   </p>
                 </a>
               </li>
@@ -331,7 +330,7 @@ if ( $detect->isMobile() ) {
                 <a href="/HDCS/forms/controlMantenimiento/index.php" class="nav-link">
                   <i class="nav-icon fas fa-cog"></i>
                   <p>
-                    Control Mantenimiento
+                    Control mantenimiento
                   </p>
                 </a>
               </li>
@@ -339,7 +338,7 @@ if ( $detect->isMobile() ) {
                 <a href="/HDCS/forms/estadoControlMantenimiento/index.php" class="nav-link">
                   <i class="nav-icon fas fa-hammer"></i>
                   <p>
-                    Estado Mantenimiento
+                    Estado mantenimiento
                   </p>
                 </a>
               </li>
@@ -347,7 +346,7 @@ if ( $detect->isMobile() ) {
                 <a href="/HDCS/forms/tipoMantenimiento/index.php" class="nav-link">
                   <i class="nav-icon fas fa-cogs"></i>
                   <p>
-                    Tipo Mantenimiento
+                    Tipo mantenimiento
                   </p>
                 </a>
               </li>

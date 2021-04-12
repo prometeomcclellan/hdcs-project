@@ -25,7 +25,11 @@ opcion = 4;
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },
-      
+    "initComplete": function(settings, json) {
+        
+      $(".page-link").eq(1).css("background-color", "#1a3c8a");
+      $(".page-link").eq(1).css("border-color", "#1a3c8a");
+  },
       "ajax":{            
           "url": "crud.php", 
           "method": 'POST', //usamos el metodo POST
@@ -36,7 +40,7 @@ opcion = 4;
           {"data": "idModelo"},
           {"data": "modelo"},
           {"data": "marca"},
-          {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btnEditar'><i class='material-icons' >edit</i> |  Editar</button><button class='btn btn-danger btnBorrar'><i class='material-icons'>delete</i> |  Eliminar</button></div></div>" }
+          {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-warning btnEditar'><i class='material-icons' >edit</i></button><button class='btn btn-danger btnBorrar'><i class='material-icons'>delete</i></button></div></div>" }
       ]
   });  
 
