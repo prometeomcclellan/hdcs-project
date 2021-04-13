@@ -231,6 +231,92 @@ if (urlString == -1) {
 
 //alert(currentUrl)
 if(currentUrl == "/HDCS/inicio/reporteria.php"){
+  
+
+  $("input[type=date]").val("");
+
+  $('input[type=date]').change(function (val) {
+    let indexDate = $('input[type=date]').index(this);
+    if (indexDate == 0) {
+      dFrom = this.value;
+    }
+    if (indexDate == 1) {
+      dTo = this.value;
+    }
+  });
+
+  $(".boton-filtrar").click(function(){
+    //alert(dFrom+", "+dTo);
+    $("#mantenimientosFiltradosFecha").empty();
+    $("#page_loader").fadeIn();
+
+  
+    $.ajax({
+      type: "post",
+      crossOrigin: true,
+      url: "../bd/get_mantenimientos_por_periodo.php",
+      data: {from:dFrom, to:dTo},
+      async: false,
+      success: function (data) {
+        arrayFiltered = JSON.parse(data);
+        console.log("data filtrada");
+        console.dir(arrayFiltered);
+        let sortedPeriodArray = mantenimientosPendientesArray.sort();
+        for (let indexFilt = 0; indexFilt < arrayFiltered.length; indexFilt++) {
+          const elementFiltered = arrayFiltered[indexFilt];
+          let estadoFiltrado = elementFiltered.status;
+          if (estadoFiltrado == 200) {
+            $(".alerta-no-data").eq(0).fadeOut("slow");
+            let oNumberFilt = elementFiltered.idControlMantenimiento+"-"+elementFiltered.idSolicitudMantenimiento;
+            let oEquipmentFilt = elementFiltered.descripcionEquipo;
+            let oDeptoFilt = elementFiltered.departamentoP;
+            let oStatusFilt = elementFiltered.estadoControlMantenimiento;
+            let oSDateFilt = elementFiltered.fechaSolicitudMantenimiento;
+            let oDateFilt = elementFiltered.fechaControlMantenimiento;
+            let oClassFilt = "success";
+
+            if(oStatusFilt == "Diagnosticado"){
+              oClassFilt = "danger";
+            }
+    
+            if(oStatusFilt == "En reparación"){
+              oClassFilt = "warning";
+            }
+    
+            if(oStatusFilt == "Finalizado"){
+              oClassFilt = "success";
+            }
+
+            $("#mantenimientosFiltradosFecha").append(
+              "<tr class='maintinance-filtered'>"
+                +"<td>"+oNumberFilt+"</td>"+"<input type='hidden' value="+elementFiltered.idControlMantenimiento+" class='order-number'>"
+                +"<td>"+oEquipmentFilt+"<span class='order-description' style='display:none;'>"+oEquipmentFilt+"</span></td>"
+                +"<td><span class='badge badge-"+oClassFilt+"' style='width:120px;'>"+oStatusFilt+"</span><span class='order-status' style='display:none;'>"+oStatusFilt+"</span></td>"
+                +"<td>"
+                  +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oSDateFilt+"</div>"+"<input type='hidden' value="+oSDateFilt+" class='order-sdate'>"
+                +"</td>"
+                +"<td>"
+                  +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDateFilt+"</div>"+"<input type='hidden' value="+oDateFilt+" class='order-odate'>"
+                +"</td>"
+                +"<td>"
+                  +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDeptoFilt+"</div>"+"<input type='hidden' value="+oDeptoFilt+" class='order-odate'>"
+                +"</td>"
+                
+               +"</tr>");
+          }
+              
+          if (estadoFiltrado == 500) {
+            $(".alerta-no-data").eq(0).fadeIn();
+          }
+
+          if (indexFilt == (arrayFiltered.length-1)) {
+            $("#page_loader").fadeOut("slow");
+          }
+        }
+        
+      }
+    });
+  });
 
   //isFirstFilter
   //dFrom; dTo;
@@ -265,19 +351,53 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
         arrayFiltered = JSON.parse(data);
         console.log("data filtrada");
         console.dir(arrayFiltered);
+        let sortedPeriodArray = mantenimientosPendientesArray.sort();
         for (let indexFilt = 0; indexFilt < arrayFiltered.length; indexFilt++) {
-          const element = arrayFiltered[indexFilt];
-          if (indexFilt == 0) {
-            let estadoFiltrado = element.status;
-            if (estadoFiltrado == 200) {
-              $(".alerta-no-data").eq(0).fadeOut("slow");
-              
+          const elementFiltered = arrayFiltered[indexFilt];
+          let estadoFiltrado = elementFiltered.status;
+          if (estadoFiltrado == 200) {
+            $(".alerta-no-data").eq(0).fadeOut("slow");
+            let oNumberFilt = elementFiltered.idControlMantenimiento+"-"+elementFiltered.idSolicitudMantenimiento;
+            let oEquipmentFilt = elementFiltered.descripcionEquipo;
+            let oDeptoFilt = elementFiltered.departamentoP;
+            let oStatusFilt = elementFiltered.estadoControlMantenimiento;
+            let oSDateFilt = elementFiltered.fechaSolicitudMantenimiento;
+            let oDateFilt = elementFiltered.fechaControlMantenimiento;
+            let oClassFilt = "success";
+
+            if(oStatusFilt == "Diagnosticado"){
+              oClassFilt = "danger";
             }
-            if (estadoFiltrado == 500) {
-              $(".alerta-no-data").eq(0).fadeIn();
+    
+            if(oStatusFilt == "En reparación"){
+              oClassFilt = "warning";
             }
+    
+            if(oStatusFilt == "Finalizado"){
+              oClassFilt = "success";
+            }
+
+            $("#mantenimientosFiltradosFecha").append(
+              "<tr class='maintinance-filtered'>"
+                +"<td>"+oNumberFilt+"</td>"+"<input type='hidden' value="+elementFiltered.idControlMantenimiento+" class='order-number'>"
+                +"<td>"+oEquipmentFilt+"<span class='order-description' style='display:none;'>"+oEquipmentFilt+"</span></td>"
+                +"<td><span class='badge badge-"+oClassFilt+"' style='width:120px;'>"+oStatusFilt+"</span><span class='order-status' style='display:none;'>"+oStatusFilt+"</span></td>"
+                +"<td>"
+                  +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oSDateFilt+"</div>"+"<input type='hidden' value="+oSDateFilt+" class='order-sdate'>"
+                +"</td>"
+                +"<td>"
+                  +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDateFilt+"</div>"+"<input type='hidden' value="+oDateFilt+" class='order-odate'>"
+                +"</td>"
+                +"<td>"
+                  +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDeptoFilt+"</div>"+"<input type='hidden' value="+oDeptoFilt+" class='order-odate'>"
+                +"</td>"
+                
+               +"</tr>");
           }
-          
+              
+          if (estadoFiltrado == 500) {
+            $(".alerta-no-data").eq(0).fadeIn();
+          }
         }
         
       }

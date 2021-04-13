@@ -438,9 +438,13 @@ if ( $detect->isMobile() ) {
                     <input id="end" type="date" class="datepicker form-control">
                   </div>
                 </div>
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
+                <div class="row" style="margin-top:6px;">
+                  <div class="col-md-12" style="text-align:right;">
+                    <button type="button" class="btn btn-warning btn-sm boton-filtrar">Buscar
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </div>
                   
                 </div>
               </div>
@@ -479,7 +483,7 @@ if ( $detect->isMobile() ) {
                     </thead>
                     <tbody id="mantenimientosFiltradosFecha"></tbody>
                     <tfoot>
-                      <div class="alert alert-danger alerta-no-data" style="display:none;">Por el momento no existen datos para esta tabla. Puedes buscar seleccionando dos fechas diferentes.</div>
+                      <div class="alert alert-danger alerta-no-data" style="display:none;">Al parecer, por el momento no existen datos para esta tabla este mes. Puedes buscar seleccionando dos fechas diferentes.</div>
                     </tfoot>
                   </table>
                 </div>
