@@ -421,30 +421,64 @@ if ( $detect->isMobile() ) {
               <div class="card-header border-transparent">
                 <h3 class="card-title">Mantenimientos filtrados por fecha</h3>
 
-                <div class="card-tools">
-                <div class="row">
-                  <div class="col-sm-6">
+                <?php
+    require_once "../Mobile_Detect.php";
+    $detect = new Mobile_Detect;
+
+    if ( $detect->isMobile() ) {
+        echo "<div class='card-tools' style='width:100%;'>
+                <div class='row' style='margin-top:6px;'>
+                  <div class='col-md-6 col-sm-6 col-xs-6'  style='width:50%;'>
                     Desde
                   </div>
-                  <div class="col-sm-6">
+                  <div class='col-md-6 col-sm-6 col-xs-6'  style='width:50%;'>
                     Hasta
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-sm-6">
-                    <input id="beginn" type="date" class="datepicker form-control">
+                <div class='row'>
+                  <div class='col-md-6 col-sm-6 col-xs-6'  style='width:50%;'>
+                    <input id='beginn' type='date' class='datepicker form-control'>
                   </div>
-                  <div class="col-sm-6">
-                    <input id="end" type="date" class="datepicker form-control">
+                  <div class='col-md-6 col-sm-6 col-xs-6'  style='width:50%;'>
+                    <input id='end' type='date' class='datepicker form-control'>
                   </div>
                 </div>
-                <div class="row" style="margin-top:6px;">
-                  <div class="col-md-12" style="text-align:right;">
-                    <button type="button" class="btn btn-warning btn-sm boton-filtrar">Buscar
-                      <i class="fas fa-search"></i>
+                <div class='row' style='margin-top:6px;'>
+                  <div class='col-md-12' style='text-align:right;'>
+                    <button type='button' class='btn btn-warning btn-sm boton-filtrar'>Buscar
+                      <i class='fas fa-search'></i>
                     </button>
                   </div>
+                </div>";
+    }else{
+        echo "<div class='card-tools'>
+                <div class='row'>
+                  <div class='col-sm-6'>
+                    Desde
+                  </div>
+                  <div class='col-sm-6'>
+                    Hasta
+                  </div>
                 </div>
+                <div class='row'>
+                  <div class='col-sm-6'>
+                    <input id='beginn' type='date' class='datepicker form-control'>
+                  </div>
+                  <div class='col-sm-6'>
+                    <input id='end' type='date' class='datepicker form-control'>
+                  </div>
+                </div>
+                <div class='row' style='margin-top:6px;'>
+                  <div class='col-md-12' style='text-align:right;'>
+                    <button type='button' class='btn btn-warning btn-sm boton-filtrar'>Buscar
+                      <i class='fas fa-search'></i>
+                    </button>
+                  </div>
+                </div>";
+              }
+    ?>
+                
+                
                   
                 </div>
               </div>
