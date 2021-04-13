@@ -39,8 +39,8 @@ opcion = 4;
       "columns":[
           {"data": "idCargo"},
           {"data": "cargo"},
-          {"data": "departamento"},
-          {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-warning btnEditar'><i class='material-icons' >edit</i></button><button class='btn btn-danger btnBorrar'><i class='material-icons'>delete</i></button></div></div>" }
+          {"data": "departamento"}
+          //{"defaultContent": ""} //"<div class='text-center'><div class='btn-group'><button class='btn btn-warning btnEditar'><i class='material-icons' >edit</i></button><button class='btn btn-danger btnBorrar'><i class='material-icons'>delete</i></button></div></div>" 
       ]
   });  
 

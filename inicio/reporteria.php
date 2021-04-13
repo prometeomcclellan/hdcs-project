@@ -415,6 +415,89 @@ if ( $detect->isMobile() ) {
       <div class="container">
         <!-- Info boxes -->
         <div class="row">
+        <div class="col-md-12">
+            <!-- TABLE: LATEST ORDERS -->
+            <div class="card">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Mantenimientos filtrados por fecha</h3>
+
+                <div class="card-tools">
+                <div class="row">
+                  <div class="col-sm-6">
+                    Desde
+                  </div>
+                  <div class="col-sm-6">
+                    Hasta
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <input id="beginn" type="date" class="datepicker form-control">
+                  </div>
+                  <div class="col-sm-6">
+                    <input id="end" type="date" class="datepicker form-control">
+                  </div>
+                </div>
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <style>
+              #table-wrapper {
+ 	              height: 300px;
+	              
+	              padding: 0px;
+	              margin: 0px auto 0px auto;
+	              overflow: auto;
+	              
+              }
+
+              table {
+	              width: 100%;
+                max-height: 300px;
+	              padding: 15px;
+	              text-align: left;
+	              border-collapse: collapse;
+	              
+              }
+              </style>
+              <div class="card-body p-0">
+                <div id="table-wrapper" class="table-responsive">
+                  <table id="tablaMantFilt" class="table table-striped table-hover m-0 tabla-data">
+                    <thead>
+                    <tr>
+                    <th>Número Orden</th>
+                      <th>Equipo</th>
+                      <th>Estado</th>
+                      <th>Fecha Solicitud</th>
+                      <th>Fecha Mantenimiento</th>
+                      <th>Departamento</th>
+                    </tr>
+                    </thead>
+                    <tbody id="mantenimientosFiltradosFecha"></tbody>
+                    <tfoot>
+                      <div class="alert alert-danger alerta-no-data" style="display:none;">Por el momento no existen datos para esta tabla. Puedes buscar seleccionando dos fechas diferentes.</div>
+                    </tfoot>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <!-- a href="/HDCS/forms/equipo/index.php" class="btn btn-sm btn-info float-left">Crear Solicitud</a -->
+                
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+
+          
+        </div>
 
         <div class="col-md-12">
             <!-- TABLE: LATEST ORDERS -->
@@ -451,7 +534,7 @@ if ( $detect->isMobile() ) {
               </style>
               <div class="card-body p-0">
                 <div id="table-wrapper" class="table-responsive">
-                  <table class="table table-striped table-hover m-0">
+                  <table id="tablaMantXUsuario" class="table table-striped table-hover m-0 tabla-data">
                     <thead>
                     <tr>
                     <?php
@@ -484,7 +567,7 @@ if ( $detect->isMobile() ) {
               <!-- /.card-body -->
               <div class="card-footer clearfix">
                 <!-- a href="/HDCS/forms/equipo/index.php" class="btn btn-sm btn-info float-left">Crear Solicitud</a -->
-                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right" id="allOrdersButton">Ver Todas</a>
+                
               </div>
               <!-- /.card-footer -->
             </div>
@@ -540,7 +623,7 @@ if ( $detect->isMobile() ) {
               </style>
               <div class="card-body p-0">
                 <div id="table-wrapper" class="table-responsive">
-                  <table class="table table-striped table-hover m-0">
+                  <table id="tablaMantPend" class="table table-striped table-hover m-0 tabla-data">
                     <thead>
                     <tr>
                     <th>Número Orden</th>
@@ -559,7 +642,7 @@ if ( $detect->isMobile() ) {
               <!-- /.card-body -->
               <div class="card-footer clearfix">
                 <!-- a href="/HDCS/forms/equipo/index.php" class="btn btn-sm btn-info float-left">Crear Solicitud</a -->
-                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right" id="allOrdersButton">Ver Todas</a>
+                
               </div>
               <!-- /.card-footer -->
             </div>
@@ -598,7 +681,15 @@ if ( $detect->isMobile() ) {
 
 
 <!-- ./wrapper -->
-<div class="spinner-border" id="page_loader" style="position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 45vw;z-index: 1060;display:inherit;top: 30%;"></div>
+<?php
+    require_once "../Mobile_Detect.php";
+    $detect = new Mobile_Detect;
+  if ( $detect->isMobile() ) {
+    echo "<div class='spinner-border' id='page_loader' style='position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 25vw;z-index: 1060;display:inherit;top: 40%;'></div>";
+  }else{
+    echo "<div class='spinner-border' id='page_loader' style='position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 45vw;z-index: 1060;display:inherit;top: 30%;'></div>";
+  }
+?>
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
@@ -630,6 +721,12 @@ if ( $detect->isMobile() ) {
      <script src="plugins/popper/popper.min.js"></script>    
         
      <script src="plugins/sweetalert2/sweetalert2.all.min.js"></script>
+
+     <script src="dist/js/html2pdf.bundle.min.js"></script>
+<script src="dist/js/FileSaver.js"></script>
+<script lang="javascript" src="dist/js/xlsx.full.min.js"></script>
+<script src="dist/js/tableexport.js"></script>
+<script src="dist/js/xlsx.core.min.js"></script>
 
 <script src="../codigo.js"></script>
 
@@ -769,7 +866,7 @@ if ( $detect->isMobile() ) {
               <!-- /.card-body -->
               <div class="card-footer clearfix">
                 <a href="/HDCS/forms/equipo/index.php Solicitud</a>
-                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Ver Todas</a>
+                
               </div>
               <!-- /.card-footer -->
             </div>
@@ -849,7 +946,7 @@ if ( $detect->isMobile() ) {
               <!-- /.card-body -->
               <div class="card-footer clearfix">
                 <a href="/HDCS/forms/equipo/index.php Solicitud</a>
-                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Ver Todas</a>
+                
               </div>
               <!-- /.card-footer -->
             </div>

@@ -971,7 +971,15 @@
 <script src="dist/js/tableexport.js"></script>
 <script src="dist/js/xlsx.core.min.js"></script>
 
-<div class="spinner-border" id="page_loader" style="position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 45vw;z-index: 1060;display:inherit;top: 30%;"></div>
+<?php
+    require_once "../Mobile_Detect.php";
+    $detect = new Mobile_Detect;
+  if ( $detect->isMobile() ) {
+    echo "<div class='spinner-border' id='page_loader' style='position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 25vw;z-index: 1060;display:inherit;top: 40%;'></div>";
+  }else{
+    echo "<div class='spinner-border' id='page_loader' style='position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 45vw;z-index: 1060;display:inherit;top: 30%;'></div>";
+  }
+?>
 
 <!-- Modal -->
 <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">

@@ -418,7 +418,7 @@ if ( $detect->isMobile() ) {
             <h2>Cod empleado: <?php echo $_SESSION["s_codEmpleado"]?></h2>
         -->
             <ol class="breadcrumb mb-4">
-              <li class="breadcrumb-item"><a href="usuarioINDEX.php">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="../../inicio/dashboard.php">Dashboard</a></li>
               <li class="breadcrumb-item active">Solicitud mantenimiento</li>
             </ol>
         </header> 
@@ -441,7 +441,7 @@ if ( $detect->isMobile() ) {
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">        
-                    <table id="tablaSolMant" class="table table-striped table-bordered table-condensed" style="width:100%" >
+                    <table id="tablaSolMant" class="table table-striped table-bordered table-condensed tabla-data" style="width:100%" >
                         <thead class="text-center">
                             <tr>
                                 <th>ID</th>
@@ -720,7 +720,15 @@ if ( $detect->isMobile() ) {
         </div>
     </div>
 </div> 
-
+<?php
+    require_once "../../Mobile_Detect.php";
+    $detect = new Mobile_Detect;
+  if ( $detect->isMobile() ) {
+    echo "<div class='spinner-border' id='page_loader' style='position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 25vw;z-index: 1060;display:inherit;top: 40%;'></div>";
+  }else{
+    echo "<div class='spinner-border' id='page_loader' style='position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 45vw;z-index: 1060;display:inherit;top: 30%;'></div>";
+  }
+?>
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
 <script src="../../inicio/plugins/jquery/jquery.min.js"></script>
@@ -752,7 +760,11 @@ if ( $detect->isMobile() ) {
      <script src="../../assets/popper/popper.min.js"></script>    
         
      <script src="../../assets/plugins/sweetalert2/sweetalert2.all.min.js"></script>
-
+     <script src="../../inicio/dist/js/html2pdf.bundle.min.js"></script>
+<script src="../../inicio/dist/js/FileSaver.js"></script>
+<script lang="javascript" src="../../inicio/dist/js/xlsx.full.min.js"></script>
+<script src="../../inicio/dist/js/tableexport.js"></script>
+<script src="../../inicio/dist/js/xlsx.core.min.js"></script>
 <script src="../../codigo.js"></script>
 <!--footer -->
 <?php include "../footer.php"; ?>

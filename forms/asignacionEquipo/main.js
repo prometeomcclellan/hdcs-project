@@ -45,14 +45,6 @@ opcion = 4;
       "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },
     "initComplete": function(settings, json) {
-      //alert( 'DataTables has finished its initialisation.' );
-      let editarContainer = document.getElementsByClassName("btnEditar");
-        //alert(editarContainer.length)
-        for (let index = 0; index < editarContainer.length; index++) {
-          const element = editarContainer[index];
-          $(".btnEditar").eq(index).removeClass("btn-primary");
-          $(".btnEditar").eq(index).addClass("btn-warning");
-        }
 
         $(".page-link").eq(1).css("background-color", "#1a3c8a");
         $(".page-link").eq(1).css("border-color", "#1a3c8a");
@@ -90,7 +82,7 @@ opcion = 4;
               } 
           },
           {"data": "empleado"},
-          {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-primary btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
+          {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-warning btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
       ],
 
 
@@ -100,7 +92,7 @@ opcion = 4;
       "buttons":[ 
 
         //EXCEL
-        {
+        /*{
           extend:    'excelHtml5',
           text:      '<i class="fas fa-file-excel"></i> ',
           titleAttr: 'Exportar a Excel',
@@ -218,7 +210,7 @@ opcion = 4;
               repeatHeading: true,    // Repeat the heading row at the top of each page
               repeatCol: 'A:A',       // Repeat column A (for pages wider than a single printed page)
           },
-        },
+        }, */
       ],
   });  
 

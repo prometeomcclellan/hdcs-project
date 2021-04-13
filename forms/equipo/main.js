@@ -51,6 +51,7 @@ let diccionarioModelos = [];
 
 
   tablaEquipo = $('#tablaEquipo').DataTable({  
+    "sScrollY": (200),
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },
@@ -63,6 +64,9 @@ let diccionarioModelos = [];
           $(".btnEditar").eq(index).removeClass("btn-primary");
           $(".btnEditar").eq(index).addClass("btn-warning");
         }
+
+        $('#tablaEquipo').css("height", "300px");
+        $('#tablaEquipo').css("max-height", "300px");
 
         $(".page-link").eq(1).css("background-color", "#1a3c8a");
         $(".page-link").eq(1).css("border-color", "#1a3c8a");

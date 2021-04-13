@@ -12,6 +12,7 @@ let isPhoto = false;
   let deptCountArray = [];
   let notificacionesIdsArray = [];
   let arrayFilter = [];
+  let arrayFiltered = [];
   let tableHeight = 300;
   let deptosHeight = 0;
 
@@ -53,6 +54,9 @@ let isPhoto = false;
   const className = "active";
   let indexThumb; let thumbElements;
   let thumbElement;
+
+  let isFirstFilter = true;
+  let dFrom; let dTo;
 
   let wrapperWidth;
   let percentWidth;
@@ -228,6 +232,60 @@ if (urlString == -1) {
 //alert(currentUrl)
 if(currentUrl == "/HDCS/inicio/reporteria.php"){
 
+  //isFirstFilter
+  //dFrom; dTo;
+
+  if (isFirstFilter == true) {
+    var thisDate = new Date();
+    var firstDay = new Date(thisDate.getFullYear(), thisDate.getMonth(), 1);
+    //let dYear = ;
+    let esteMes = firstDay.getMonth();
+    let elMes = esteMes+1;
+    let esteDia = thisDate.getDate();
+
+    if (elMes < 10) {
+      elMes = "0"+elMes;
+    }else{}
+
+    if (esteDia < 10) {
+      esteDia = "0"+esteDia;
+    }else{}
+
+    dFrom = firstDay.getFullYear()+"-"+elMes+"-0"+1;
+    dTo = firstDay.getFullYear()+"-"+elMes+"-"+esteDia;
+    //alert(dFrom+", "+dTo) C:\xampp\htdocs\HDCS\bd\get_mantenimientos_por_periodo.php
+    // C:\xampp\htdocs\HDCS\bd\get_control_mantenimiento_pendiente.php
+    $.ajax({
+      type: "post",
+      crossOrigin: true,
+      url: "../bd/get_mantenimientos_por_periodo.php",
+      data: {from:dFrom, to:dTo},
+      async: false,
+      success: function (data) {
+        arrayFiltered = JSON.parse(data);
+        console.log("data filtrada");
+        console.dir(arrayFiltered);
+        for (let indexFilt = 0; indexFilt < arrayFiltered.length; indexFilt++) {
+          const element = arrayFiltered[indexFilt];
+          if (indexFilt == 0) {
+            let estadoFiltrado = element.status;
+            if (estadoFiltrado == 200) {
+              $(".alerta-no-data").eq(0).fadeOut("slow");
+              
+            }
+            if (estadoFiltrado == 500) {
+              $(".alerta-no-data").eq(0).fadeIn();
+            }
+          }
+          
+        }
+        
+      }
+    });
+  }else{
+    //alert("no")
+  }
+  
   //console.log("Mi array");
   //console.dir(userCountArray);
 
@@ -1501,7 +1559,9 @@ fotoStatus = localStorage.getItem("fotoStatus");
       var element = document.getElementsByClassName('print-container');
       var botonesAccion = document.getElementsByClassName("boton-accion");
 
+      if(currentUrl == "/HDCS/inicio/dashboard.php") {
       document.getElementById('repSegEst').style.height = "auto";
+      }
 
       for (let indexA = 0; indexA < botonesAccion.length; indexA++) {
         const element = botonesAccion[indexA];
@@ -1523,7 +1583,10 @@ fotoStatus = localStorage.getItem("fotoStatus");
           element.style.display = "inherit";
         }
 
-      document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
+        if(currentUrl == "/HDCS/inicio/dashboard.php") {
+          document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
+          }
+      
         
       });
     });
@@ -1829,6 +1892,7 @@ $(".logout-button").click(function(){
     const element = tablaContainer[indexTabla];
     titulo = $(".file-title").eq(indexTabla).val();
     let myTableId = element.id;
+  
   TableExport(document.getElementById(myTableId), {
     headers: true,                      // (Boolean), display table headers (th or td elements) in the <thead>, (default: true)
     footers: true,                      // (Boolean), display table footers (th or td elements) in the <tfoot>, (default: false)
@@ -1891,11 +1955,11 @@ $(".logout-button").click(function(){
       for (let indexBoton = 0; indexBoton < botoneras.length; indexBoton++) {
         $(".tableexport-caption").eq(indexBoton).prepend(
           "<button type='button' tableexport-id='bbb618"
-          +indexBoton+"-todas' class='btn btn-info crear boton-accion boton-crear create-orders-button' style='width:110px;'>Nueva <i class='fas fa-plus'></i></span></button>"
+          +indexBoton+"-todas' class='btn btn-info crear boton-accion boton-crear create-orders-button' style='width:110px;margin-right:6px'>Nueva <i class='fas fa-plus'></i></span></button>"
           +"<button type='button' tableexport-id='bba618"
-          +indexBoton+"-todas' class='btn btn-secondary todas boton-accion boton-todas all-orders-button' style='width:110px;'>Todas <i class='fas fa-eye'></i></span></button>"
+          +indexBoton+"-todas' class='btn btn-secondary todas boton-accion boton-todas all-orders-button' style='width:110px;margin-right:6px'>Todas <i class='fas fa-eye'></i></span></button>"
           +"<button type='button' tableexport-id='baa618"
-          +indexBoton+"-pdf' class='btn btn-danger pdf boton-accion boton-pdf' style='width:110px;'><span id='pdfIconContainer'>Pdf <i class='fas fa-file-pdf'></i></span></button>"
+          +indexBoton+"-pdf' class='btn btn-danger pdf boton-accion boton-pdf' style='width:110px;margin-right:6px'><span id='pdfIconContainer'>Pdf <i class='fas fa-file-pdf'></i></span></button>"
           );
         // 
         if (indexBoton == (botoneras.length-1)) {
@@ -1959,7 +2023,10 @@ $(".logout-button").click(function(){
     var widthT = tblthis.offsetWidth;
     captionS[pdftIndex].style.display = "none";
 
-    document.getElementById('repSegEst').style.height = "auto";
+    if(currentUrl == "/HDCS/inicio/dashboard.php") {
+      document.getElementById('repSegEst').style.height = "auto";
+      }
+    
 
     for (let indexA = 0; indexA < botonesAccion.length; indexA++) {
       const element = botonesAccion[indexA];
@@ -1986,39 +2053,51 @@ $(".logout-button").click(function(){
 
       }
 
-     
-    document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
-      
+      if(currentUrl == "/HDCS/inicio/dashboard.php") {
+        document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
+        }
     });
   });
 
   $(".all-orders-button").click(function(){
     let ordersIndex = $(".all-orders-button").index(this);
-    //alert(ordersIndex)
-    if(ordersIndex == 0){
-      if (tableHeight == 300) {
-        $("#table-wrapper").css("max-height", "auto");
-        $("#table-wrapper").css("height", "auto");
-        tableHeight = 0;
-      }else{
-        $("#table-wrapper").css("max-height", "300px");
-        $("#table-wrapper").css("height", "300px");
-        tableHeight = 300;
+    let contenedor = document.getElementsByClassName("dataTables_scrollBody").eq(0);
+      let scrollHeight = contenedor.clientHeight;
+    //alert(currentUrl) 
+
+    if(currentUrl == "/HDCS/inicio/dashboard.php"){
+      if(ordersIndex == 0){
+        if (tableHeight == 300) {
+          $("#table-wrapper").css("max-height", "auto");
+          $("#table-wrapper").css("height", "auto");
+          tableHeight = 0;
+        }else{
+          $("#table-wrapper").css("max-height", "300px");
+          $("#table-wrapper").css("height", "300px");
+          tableHeight = 300;
+        }
       }
+      if(ordersIndex == 1){
+        deptosHeight = document.getElementById('repSegEst').clientHeight;
+        if (deptosHeight == mantPorDepHeight) {
+          $("#repSegEst").css("max-height", "auto");
+          $("#repSegEst").css("height", "auto");
+          deptosHeight = 0;
+        }else{
+          $("#repSegEst").css("max-height", mantPorDepHeight+"px");
+          $("#repSegEst").css("height", mantPorDepHeight+"px");
+          deptosHeight = mantPorDepHeight;
+        }
+      }
+    }else{
+      
+
+      alert(scrollHeight);
+      $('.dataTables_scrollBody').css('height', ($(window).height() - 200));  
     }
 
-    if(ordersIndex == 1){
-      deptosHeight = document.getElementById('repSegEst').clientHeight;
-      if (deptosHeight == mantPorDepHeight) {
-        $("#repSegEst").css("max-height", "auto");
-        $("#repSegEst").css("height", "auto");
-        deptosHeight = 0;
-      }else{
-        $("#repSegEst").css("max-height", mantPorDepHeight+"px");
-        $("#repSegEst").css("height", mantPorDepHeight+"px");
-        deptosHeight = mantPorDepHeight;
-      }
-    }
+    
+    
   });
 
 }); // document ready
