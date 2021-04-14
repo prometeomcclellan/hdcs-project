@@ -3,20 +3,19 @@ $("#page_loader").fadeIn();
 $(document).ready(function() {
   $("#page_loader").fadeOut("slow");
   //  rol-admin  rol-todos
-/*
+
   
-*/
+
   let isPhoto = false;
   var currentUrl = location.pathname;
-  let loginUrl = "HDCS/index.php";
-  //alert(currentUrl.indexOf(loginUrl))
-  if (currentUrl.indexOf(loginUrl) == 1) {
-    //alert("login")
-  }else{
-    let cargoIni = localStorage.getItem('cargoIni');
-    if (cargoIni == null) {
-      //window.open("../../HDCS/forms/tecnico/index.php", "_self");
-    }
+  let urlFilter = "inicio";
+  let urlString;
+
+  urlString = currentUrl.indexOf("HDCS/index.php");
+  alert(urlString)
+if (urlString == -1) {}else{
+  let cargoIni = localStorage.getItem('cargoIni');
+  
   let rolTodosContainer = document.getElementsByClassName("rol-todos");
   let rolAdminContainer = document.getElementsByClassName("rol-admin");
   let rolTecnicoContainer = document.getElementsByClassName("rol-tecnico");
@@ -44,7 +43,10 @@ $(document).ready(function() {
   }else{
 
   }
-  }
+}
+
+  
+  
 
   let mantenimientosArray = [];
   let mantenimientosArrayX = [];
@@ -85,8 +87,8 @@ $(document).ready(function() {
 
   let outUrl;
   let outCallUrl;
-  let urlString;
-  let urlFilter = "inicio";
+  
+  
 
   let tiempoNotificacion = 0;
   let estadoNotificacion = "";
@@ -112,6 +114,8 @@ $(document).ready(function() {
     }
     
 }
+
+
 
 let ahora = new Date();
     let ahoraAnio = ahora.getFullYear();
