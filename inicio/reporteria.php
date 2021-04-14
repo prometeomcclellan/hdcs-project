@@ -397,7 +397,7 @@ if ( $detect->isMobile() ) {
       <div class="container">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Centro de Información</h1>
+            <h1 class="m-0 text-dark">Centro de Reportes</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -517,7 +517,7 @@ if ( $detect->isMobile() ) {
                     </thead>
                     <tbody id="mantenimientosFiltradosFecha"></tbody>
                     <tfoot>
-                      <div class="alert alert-danger alerta-no-data" style="display:none;">Al parecer, por el momento no existen datos para esta tabla este mes. Puedes buscar seleccionando dos fechas diferentes.</div>
+                      <div class="alert alert-danger alerta-no-data" style="display:none;">Al parecer, por el momento no existen datos para este periodo. Puedes buscar seleccionando dos fechas diferentes.</div>
                     </tfoot>
                   </table>
                 </div>

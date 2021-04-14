@@ -128,7 +128,7 @@
         <div class="image">
 
         <a href="#" class="d-block user-info" data-toggle="modal" data-target="#editUserModal">
-            <i  id="editUserIcon" class="fas fa-edit edit-user-icon" style="font-size: 1.3rem;padding: 6px;border-radius: 50%;color: #fed11f;text-align: center;position: absolute;top: 45%;right: 3%;z-index: 999;"></i>
+            <i  id="editUserIcon" class="fas fa-edit edit-user-icon rol-admin" style="font-size: 1.3rem;padding: 6px;border-radius: 50%;color: #fed11f;text-align: center;position: absolute;top: 45%;right: 3%;z-index: 999;"></i>
         </a>
 
         <a id="usuarioNombreN" href="#" class="d-block user-info" data-toggle="modal" data-target="#editUserModal">
@@ -148,7 +148,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">  
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview rol-admin">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-laptop"></i>
               <i class="fas fa-angle-left right"></i>
@@ -248,7 +248,7 @@
               </li>
             </ul>
           </li>
-          <div class="dropdown-divider"></div>
+          <div class="dropdown-divider rol-admin"></div>
           <li class="nav-item  has-treeview">
             <a href="" class="nav-link">
               <i class="nav-icon fa fa-users"></i>
@@ -258,7 +258,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
+              <li class="nav-item rol-admin">
                 <a href="/HDCS/forms/usuario/index.php" class="nav-link">
                 <i class="nav-icon fa fa-user"></i>
                 <p>
@@ -266,7 +266,7 @@
                 </p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item rol-admin">
                 <a href="/HDCS/forms/empleado/index.php" class="nav-link">
                 <i class="nav-icon fas fa-user-tie"></i>
                 <p>
@@ -274,7 +274,7 @@
                 </p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item rol-admin">
                 <a href="/HDCS/forms/cargo/index.php" class="nav-link">
                 <i class="nav-icon fas fa-user-tag"></i>
                 <p>
@@ -282,7 +282,7 @@
                 </p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item rol-tecnico">
                 <a href="/HDCS/forms/tecnico/index.php" class="nav-link">
                 <i class="nav-icon fas fa-users-cog"></i>
                 <p>
@@ -290,7 +290,7 @@
                 </p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item rol-personal">
                 <a href="/HDCS/forms/personal/index.php" class="nav-link">
                 <i class="nav-icon fas fa-user-friends"></i>
                 <p>
@@ -301,7 +301,7 @@
             </ul>
           </li>
           <div class="dropdown-divider"></div>
-          <li class="nav-item  has-treeview">
+          <li class="nav-item  has-treeview rol-admin">
             <a href="/HDCS/inicio/dashboard.php" class="nav-link">
               <i class="nav-icon fas fa-wrench"></i>
               <i class="fas fa-angle-left right"></i>
@@ -354,8 +354,8 @@
               
             </ul>
           </li>
-          <div class="dropdown-divider"></div>
-          <li class="nav-item">
+          <div class="dropdown-divider rol-admin"></div>
+          <li class="nav-item rol-admin">
             <a href="/HDCS/forms/departamento/index.php" class="nav-link">
               <i class="nav-icon fas fa-network-wired"></i>
               <p>
@@ -373,9 +373,9 @@
 
             if ($uriCheck == 1) {
               //echo str_contains($thisUri, $uriFilter);
-              echo "<a href='reporteria.php' class='nav-link'>";
+              echo "<a href='reporteria.php' class='nav-link rol-admin'>";
             }else{
-              echo "<a href='../../reporteria.php' class='nav-link'>";
+              echo "<a href='../../reporteria.php' class='nav-link rol-admin'>";
             }
             ?>
 
@@ -429,7 +429,7 @@
 
         <div class="print-container" style="width:100%">
         <input type="hidden" class="file-title" value="mantenimientos-fecha-">
-        <div class="row">
+        <div class="row rol-todos">
             <div class="col-12 col-sm-12 col-md-12">
                 <strong>Solicitudes de mantenimiento</strong>
                 
@@ -487,7 +487,7 @@
           
           </div>
 
-          <div class="row">
+          <div class="row rol-todos">
             <div class="col-md-12">
             <!-- TABLE: LATEST ORDERS -->
             <div class="card">
@@ -503,68 +503,7 @@
     require_once "../Mobile_Detect.php";
     $detect = new Mobile_Detect;
 
-    if ( $detect->isMobile() ) {
-      /*echo "<nav class='navbar navbar-expand' style='text-align:right;'>
-      <ul class='navbar-nav ml-auto'>
-
-      <li class='nav-item dropdown'>
-        <a class='nav-link' href='https://app.chaport.com/#/chats' target='blank'>
-          <i class='far fa-comments' style='color:transparent;'></i>
-          <span class='badge badge-danger navbar-badge'></span>
-        </a>
-        <div class='dropdown-menu dropdown-menu-lg dropdown-menu-right'></div>
-      </li>
-      
-      <li class='nav-item dropdown'>
-      <a class='nav-link' href='https://app.chaport.com/#/chats' target='blank'>
-      <i class='far fa-comments' style='color:transparent;'></i>
-      <span class='badge badge-danger navbar-badge'></span>
-    </a>
-    <div class='dropdown-menu dropdown-menu-lg dropdown-menu-right'></div>
-      </li>
-      
-      <li class='nav-item dropdown'>
-        <a class='nav-link boton-accion-mobile boton-pdf' href='#' target='blank'>
-          <i class='fas fa-file-pdf'></i>
-          <span class='badge badge-danger navbar-badge'></span>
-        </a>
-        <div class='dropdown-menu dropdown-menu-lg dropdown-menu-right'></div>
-      </li>
-      
-      <li class='nav-item dropdown'>
-        <a class='nav-link boton-accion-mobile boton-ver' href='#' target='blank'>
-          <i class='fas fa-eye'></i>
-          <span class='badge badge-danger navbar-badge'></span>
-        </a>
-        <div class='dropdown-menu dropdown-menu-lg dropdown-menu-right'></div>
-      </li>
-    </ul>
-    </nav>";
-    */
-    }else{
-        /*echo "<div class='col-md-2'></div>
-        <div class='col-md-2'>
-        
-        </div>
-        <div class='col-md-2'>
-        
-        </div>
-        <div class='col-md-2'>
-        
-        </div>
-        <div class='col-md-2'>
-        <a id='generarPdfBoton' href='#' style='text-decoration: none;' class='btn btn-sm btn-danger pdf-widget float-right boton-accion boton-pdf'>
-          <span id='pdfIconContainer'>
-            Pdf <i class='fas fa-file-pdf'></i>
-          </span>
-        </a>
-        </div>
-        
-        <div class='col-md-2'>
-        <a href='javascript:void(0)' class='btn btn-sm btn-secondary float-right all-orders-button boton-accion' id='verMantenimientoBoton'>Ver Todas</a>
-        </div>";
-        */
-    }
+    if ( $detect->isMobile() ) {}else{}
     ?>
                   
                 </div>
@@ -627,99 +566,32 @@
 
         </div>
           <!-- /.print-container -->
-          <div class="row">
+          <div class="row rol-admin">
             <div class="col-md-12">
             <div class="card">
               <div class="card-header border-transparent">
-              
-
-            <div class="card-tools" style="width:100%;">
-
-            
+                <div class="card-tools" style="width:100%;">
 
             <div class="row" style="width:100%;">
               <div class="col-md-2"><h3 class="card-title">Reportes Varios</h3></div>
               <div class="col-md-10" style="width:100%;">
                 <div class="row">
                 <?php
-    require_once "../Mobile_Detect.php";
-    $detect = new Mobile_Detect;
-
-    if ( $detect->isMobile() ) {
-      /*echo "<nav class='navbar navbar-expand' style='text-align:right;'>
-      <ul class='navbar-nav ml-auto'>
-
-      <li class='nav-item dropdown'>
-        <a class='nav-link' href='https://app.chaport.com/#/chats' target='blank'>
-          <i class='far fa-comments' style='color:transparent;'></i>
-          <span class='badge badge-danger navbar-badge'></span>
-        </a>
-        <div class='dropdown-menu dropdown-menu-lg dropdown-menu-right'></div>
-      </li>
-      <li class='nav-item dropdown'>
-      <a class='nav-link' href='https://app.chaport.com/#/chats' target='blank'>
-      <i class='far fa-comments' style='color:transparent;'></i>
-      <span class='badge badge-danger navbar-badge'></span>
-    </a>
-    <div class='dropdown-menu dropdown-menu-lg dropdown-menu-right'></div>
-      </li>
-      
-      
-      <li class='nav-item dropdown'>
-        <a class='nav-link boton-accion-mobile boton-pdf' href='#' target='blank'>
-          <i class='fas fa-file-pdf'></i>
-          <span class='badge badge-danger navbar-badge'></span>
-        </a>
-        <div class='dropdown-menu dropdown-menu-lg dropdown-menu-right'></div>
-      </li>
-      
-      <li class='nav-item dropdown'>
-        <a class='nav-link boton-accion-mobile boton-ver' href='#' target='blank'>
-          <i class='fas fa-eye'></i>
-          <span class='badge badge-danger navbar-badge'></span>
-        </a>
-        <div class='dropdown-menu dropdown-menu-lg dropdown-menu-right'></div>
-      </li>
-    </ul>
-    </nav>";
-    */
-    }else{
-        /*echo "<div class='col-md-2'></div>
-        <div class='col-md-2'>
-        
-        </div>
-        <div class='col-md-2'>
-        
-        </div>
-        <div class='col-md-2'>
-        
-        </div>
-        <div class='col-md-2'>
-        <a id='generarPdfBoton' href='#' style='text-decoration: none;' class='btn btn-sm btn-danger pdf-widget float-right boton-accion boton-pdf'>
-          <span id='pdfIconContainer'>
-            Pdf <i class='fas fa-file-pdf'></i>
-          </span>
-        </a>
-        </div>
-        
-        <div class='col-md-2'>
-        <a href='javascript:void(0)' class='btn btn-sm btn-secondary float-right all-orders-button boton-accion' id='verReportesBoton'>Ver Todas</a>
-        </div>";
-        */
-    }
-    ?>
-                  
+                  require_once "../Mobile_Detect.php";
+                  $detect = new Mobile_Detect;
+                  if ( $detect->isMobile() ) {}else{}
+                ?>
                 </div>
               </div>
             </div>
            
+                  </div>
                 </div>
-                </div>
-                </div>
+              </div>
             </div>
           </div>
 
-          <div class="print-container" style="width:100%">
+          <div class="print-container rol-admin" style="width:100%">
           <input type="hidden" class="file-title" value="mantenimientos-deptos-fecha-">
           <div class="row">
           <div class="col-md-3">

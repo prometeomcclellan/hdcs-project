@@ -1,7 +1,39 @@
 $("#page_loader").fadeIn();
+
 $(document).ready(function() {
   $("#page_loader").fadeOut("slow");
-let isPhoto = false;
+  //  rol-admin  rol-todos
+
+  let cargoIni = localStorage.getItem('cargoIni');
+  let rolTodosContainer = document.getElementsByClassName("rol-todos");
+  let rolAdminContainer = document.getElementsByClassName("rol-admin");
+  let rolTecnicoContainer = document.getElementsByClassName("rol-tecnico");
+  let rolPersonalContainer = document.getElementsByClassName("rol-personal");
+
+  if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
+    != "admin") {
+    $("#usuarioNombre").attr("data-target", "");
+    for (let indexRol = 0; indexRol < rolAdminContainer.length; indexRol++) {
+      const element = rolAdminContainer[indexRol];
+      element.style.display = "none";
+    }
+    if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
+    == "tecnico") {
+    for (let indexPersonal = 0; indexPersonal < rolPersonalContainer.length; indexPersonal++) {
+      const elementPersonal = rolPersonalContainer[indexPersonal];
+      elementPersonal.style.display = "none";
+    }
+   }else{
+    for (let indexTecnico = 0; indexTecnico < rolTecnicoContainer.length; indexTecnico++) {
+      const elementTecnico = rolTecnicoContainer[indexTecnico];
+      elementTecnico.style.display = "none";
+    }
+   }
+  }else{
+
+  }
+
+  let isPhoto = false;
   var currentUrl = location.pathname;
   let mantenimientosArray = [];
   let mantenimientosArrayX = [];
@@ -58,6 +90,8 @@ let isPhoto = false;
   let isFirstFilter = true;
   let dFrom; let dTo;
 
+  let loginRedirectUrl;
+
   let wrapperWidth;
   let percentWidth;
   function percentwidth(elem){
@@ -104,8 +138,7 @@ $('#formLogin').submit(function(e){
   var _password =$.trim($("#password").val());
   //var _abierta =$.trim($("#abierta").val());  
   let sAbierta = document.getElementById("abierta").checked;
-
-  //alert(sAbierta)
+  let cargoU = localStorage.getItem('cargoIni');
     
   if(usuario.length == "" || password == ""){
     Swal.fire({
@@ -135,11 +168,26 @@ $('#formLogin').submit(function(e){
           if(thisData[0].status == 500){
             Swal.fire({
               type:'error',
-              title:'Usuario / password incorrecta   o se encuentra inactivo ',
+              title:'Usuario / contraseña incorrecta o se encuentra inactivo ',
             });
           }else{
             let idDeUsuario = thisData[0].idUsuario;
+            let cargoIni = thisData[0].cargo;
             localStorage.setItem("idDeUsuario", idDeUsuario);
+            localStorage.setItem("cargoIni", cargoIni);
+
+            if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
+            != "admin") {
+              if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
+            == "tecnico") {
+              loginRedirectUrl = "../HDCS/forms/tecnico/index.php";
+            }else{
+              loginRedirectUrl = "../HDCS/forms/personal/index.php";
+            }
+            }else{
+              loginRedirectUrl = "../HDCS/inicio/dashboard.php";
+            }
+            
 
             if (sAbierta == true) {
               localStorage.setItem("esSesion", true);
@@ -170,8 +218,6 @@ $('#formLogin').submit(function(e){
                 async: false,
                 data: {idUsuario:idDeUsuario}, 
                   success:function(dataName){
-                    //console.log("del nombre");
-                    //console.log(dataName);
                   if(dataName.toString().trim() == "0"){}else{
                     localStorage.setItem( "usuarioNombre", dataName.toString().trim());
                   }
@@ -185,13 +231,10 @@ $('#formLogin').submit(function(e){
               confirmButtonText:'Ingresar'
             }).then((result) => {
                 if(result.value){
-                  //window.location.href = "forms/controlMantenimiento/index.php";
-                  window.location.href = "../HDCS/inicio/dashboard.php";
-                  // http://localhost/HDCS/dashboard/index2.html
+                  window.location.href = loginRedirectUrl;
                 }
               })       
           }
-          /**/
         } 
       });
     }       

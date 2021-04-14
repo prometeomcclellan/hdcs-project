@@ -3,6 +3,8 @@
 	include_once 'conexion.php';
 	$objeto = new Conexion();
 	$conexion = $objeto->Conectar();
+	require_once('conn.php');
+	$conn = new mysqli($servername, $username, $password, $dbname);
 	$data = array();
 
 	
@@ -31,17 +33,37 @@
 	    $codEmpleado = $dat["codEmpleado"];
 	    $estado = $dat["estado"];
 
-	    $estado = intval($estado);
+		$sqlCargo = "SELECT * FROM empleado
+            WHERE codEmpleado = '".$codEmpleado."'";
+			$resultCargo = $conn->query($sqlCargo);
+            if($resultCargo){
+			  while($rowCargo = $resultCargo->fetch_assoc()) {
+				$idCargo = $rowCargo["idCargo"];
+				
+				$sqlCargoN = "SELECT * FROM cargo
+				WHERE idCargo = '".$idCargo."'";
+				$resultCargoN = $conn->query($sqlCargoN);
+				
+				if($resultCargoN){
+					$rowCargoN = $resultCargoN->fetch_assoc();
+					$cargo = $rowCargoN["cargo"];
 
-		$response = array(
-			'status' => 200,
-			'nombreEmpleado' => $nombreEmpleado,
-			'idUsuario' => $idUsuario,
-			'codEmpleado' => $codEmpleado,
-			'estado' => $estado
-		);
+					$estado = intval($estado);
 
-		array_push($data, $response);
+					$response = array(
+						'status' => 200,
+						'nombreEmpleado' => $nombreEmpleado,
+						'idUsuario' => $idUsuario,
+						'codEmpleado' => $codEmpleado,
+						'cargo' => $cargo,
+						'estado' => $estado
+					);
+					array_push($data, $response);
+				}
+			  }
+			}
+
+	    
     } 
 
     //$dataX =null;
@@ -51,6 +73,7 @@
 		$_SESSION["s_idUsuario"] = $idUsuario; 
 		$_SESSION["s_estadoUsuario"] = $estado; 
 		$_SESSION["s_codEmpleado"] = $codEmpleado;
+		$_SESSION["s_cargo"] = $cargo;
 		//$_SESSION["s_fotoUsuario"] = $fotoUsuario;
 		$dataX = $nombreEmpleado;
 
@@ -60,6 +83,7 @@
 	   	$_SESSION["s_idUsuario"] = null; 
 	    $_SESSION["s_estadoUsuario"] = null; 
 	    $_SESSION["s_codEmpleado"] = null;
+		$_SESSION["s_cargo"] = null;
 		//$_SESSION["s_fotoUsuario"] = null;
 		
 		$response = array(
