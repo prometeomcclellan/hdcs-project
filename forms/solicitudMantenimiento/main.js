@@ -59,7 +59,7 @@ opcion = 4;
       ],
       
       //para usar los botones   
-      responsive: "true",
+    /*  responsive: "true",
       dom: 'lBfrtip',       
       "buttons":[ 
 
@@ -184,6 +184,7 @@ opcion = 4;
           },
         },
       ],
+      */
   });  
 
 
@@ -216,7 +217,7 @@ opcion = 4;
   $("#btnBuscar").click(function(){
     $('#modalCREAR').css("opacity", ".1");
     $("#formEquipo").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
     $(".modal-titles").text("Buscar equipo");          
     $("#modalEquipo").modal("show");     //cuando hacen click sobre buscar, se abrira la modal de equipo 
@@ -274,7 +275,7 @@ opcion = 4;
   $("#btnBuscarU").click(function(){
     $('#modalUPDATE').css("opacity", ".1");
     $("#formEquipo").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
     $(".modal-titles").text("Buscar equipo");          
     $("#modalEquipo").modal("show");     //cuando hacen click sobre buscar, se abrira la modal de equipo 
@@ -334,9 +335,9 @@ opcion = 4;
     opcion = 1; //alta
     $("#formSolManC").trigger("reset");
     $('#fechaSM').focus();
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#28a745"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Nueva solicitud mantenimiento");          
     $("#modalCREAR").modal("show");       
   });   
@@ -408,9 +409,9 @@ opcion = 4;
     $("#fechaSMU").val(_fechaSM);
     $("#Pre_DiagU").val(_preDiag);
     
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardarU").css("background-color", "#003399"); 
+    $("#btnGuardarU").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Modificar solicitud mantenimiento");
     $("#modalUPDATE").modal("show"); 
         
@@ -457,9 +458,9 @@ opcion = 4;
     opcion = 3; //eliminar   
 
     $("#panel_eliminar").html("Pre_Diagnostico: " + diagnostico);
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Eliminar Solicitud de Matenimiento");            
     $("#modalEliminar").modal("show");  
   });

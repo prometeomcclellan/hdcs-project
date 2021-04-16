@@ -53,9 +53,9 @@ opcion = 4;
     opcion = 1; //alta
     $("#formModeloC").trigger("reset");
     $('#modelo').focus();
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#28a745"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Nuevo Modelo");          
     $("#modalCREAR").modal("show");       
   });   
@@ -101,9 +101,9 @@ opcion = 4;
     opcion = 2; //editar
     $("#modeloU").val(_modelo);
     
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardarU").css("background-color", "#003399"); 
+    $("#btnGuardarU").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Modificar Modelo");
     $("#modalUPDATE").modal("show"); 
     
@@ -166,9 +166,9 @@ opcion = 4;
     opcion = 3; //eliminar   
 
     $("#panel_eliminar").html("Modelo: " + _modelo);
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Eliminar Modelo");            
     $("#modalEliminar").modal("show");  
   });

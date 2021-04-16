@@ -70,9 +70,9 @@ $(document).ready(function() {
     opcion = 1; //alta
     $("#formDepartamentos").trigger("reset");
     $('#departamento').focus();
-    //$(".modal-header").css("background-color", "#003399"); 
+    $(".modal-header").css("background-color", "#1a3c8a"); 
     $(".modal-header").css("color", "white");
-    //$("#btnGuardar").css("background-color", "#28a745"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Nuevo Departamento");          
     $("#modalCRUD").modal("show");       
   });    
@@ -89,9 +89,9 @@ $(document).ready(function() {
     opcion = 2; //editar
     
     $('#departamento').focus();
-    //$(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    //$("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Modificar Departamento");            
     $("#modalCRUD").modal("show");    
   });
@@ -105,9 +105,9 @@ $(document).ready(function() {
     opcion = 3; //eliminar   
 
     $("#panel_eliminar").html("Departamento: " + depto);
-    //$(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    //$("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Eliminar Departamento");            
     $("#modalEliminar").modal("show");  
   });

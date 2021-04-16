@@ -1,22 +1,17 @@
 <!-- Esta parte de codigo de php, evita el poder abrir la pagina despues de hacer cerrado sesión -->
 <?php 
-
     session_start(); //variable de sesión para el usuario
     $usuario = intval($_SESSION["s_idUsuario"]);
-
 ?> 
 
 <!--header -->
 <?php include "../header.php"; ?>
-
 <title>Actualización control mantenimiento</title>
 <meta name="keywords" content="Dashboard" />
 		<meta name="description" content="CURLP Admin Official Site">
 		<meta name="author" content="Omar McClellan, Mapphash Group">
-
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
-
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="../../inicio/plugins/fontawesome-free/css/all.min.css">
   <!-- overlayScrollbars -->
@@ -63,22 +58,21 @@
   <nav class="main-header navbar navbar-expand navbar-dark navbar-reverse" style="background-color: #1a3c8a;color:white;">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-    <?php
-              require_once "../../Mobile_Detect.php";
-              $detect = new Mobile_Detect;
- 
-// Any mobile device (phones or tablets).
-if ( $detect->isMobile() ) {
-  echo "<li id='dbarTogglerM' class='nav-item'>";
-}else{
-  echo "<li id='dbarToggler' class='nav-item topnav-toggler'>";
-}
-          ?>
+        <?php
+          require_once "../../Mobile_Detect.php";
+          $detect = new Mobile_Detect;
+          // Any mobile device (phones or tablets).
+          if ( $detect->isMobile() ) {
+            echo "<li id='dbarTogglerM' class='nav-item'>";
+          }else{
+            echo "<li id='dbarToggler' class='nav-item topnav-toggler'>";
+          }
+        ?>
       
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="../../inicio/dashboard.php" class="nav-link">Inicio</a>
+        <a href="../../inicio/dashboard.php" class="nav-link rol-admin">Inicio</a>
       </li>
     </ul>
 
@@ -86,7 +80,7 @@ if ( $detect->isMobile() ) {
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown rol-tecnico">
         <a class="nav-link" href="https://app.chaport.com/#/chats" target="blank">
           <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge"></span>
@@ -94,7 +88,7 @@ if ( $detect->isMobile() ) {
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"></div>
       </li>
       <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown rol-admin">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
           <span class="badge badge-danger navbar-badge notificaciones-conteo"></span>
@@ -382,7 +376,7 @@ if ( $detect->isMobile() ) {
               //echo str_contains($thisUri, $uriFilter);
               echo "<a href='reporteria.php' class='nav-link rol-admin'>";
             }else{
-              echo "<a href='../../reporteria.php' class='nav-link rol-admin'>";
+              echo "<a href='../../inicio/reporteria.php' class='nav-link rol-admin'>";
             }
             ?>
 

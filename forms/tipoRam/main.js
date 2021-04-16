@@ -61,9 +61,9 @@ $(document).ready(function() {
     opcion = 1; //alta
     $("#formTipoRam").trigger("reset");
     $('#tipoRam').focus();
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#28a745"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Nueva Tipo Ram");          
     $("#modalCRUD").modal("show");       
   });    
@@ -79,9 +79,9 @@ $(document).ready(function() {
 
     opcion = 2; //editar
     
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Modificar Tipo Ram");            
     $("#modalCRUD").modal("show");   
   });
@@ -95,9 +95,9 @@ $(document).ready(function() {
     opcion = 3; //eliminar   
 
     $("#panel_eliminar").html("Tipo Ram: " + tRam);
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Eliminar Tipo Ram");            
     $("#modalEliminar").modal("show");  
   });

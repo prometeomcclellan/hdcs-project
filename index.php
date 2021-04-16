@@ -1,6 +1,8 @@
 <script>
     let miUsuarioId = localStorage.getItem('esSesion');
-      if(miUsuarioId == 'false'){}else{
+      if(miUsuarioId == 'false' || miUsuarioId == null){
+        //window.open('/HDCS/index.php', '_self');
+      }else{
         window.open('inicio/dashboard.php', '_self');
       }
 </script>
@@ -58,12 +60,6 @@ if ( $detect->isMobile() ) {
   <div class="" style="overflow:hidden;">
     <div class="row">
     <style>
-        .gradiente {
-        background-image: linear-gradient(to right, #1a3c8a, #fed11f);
-        }
-        {
-          background-image: linear-gradient(to left,#1a3c8a, #fed11f);
-        }
         .no-cursor:hover{
           cursor : default;
         }

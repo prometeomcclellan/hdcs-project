@@ -20,7 +20,8 @@ opcion = 4;
 
 //MOSTRAR ---------------------------------------------------------------------------------------
 //DataTable que carga la tabla de inicio del index
-  tablaSolMant = $('#tablaSolMant').DataTable({  
+  tablaSolMant = $('#tablaSolMant').DataTable({
+    "sScrollY": (200),
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },
@@ -56,7 +57,7 @@ opcion = 4;
       
       //para usar los botones   
       responsive: "true",
-      dom: 'lBfrtip',       
+    /*  dom: 'lBfrtip',       
       "buttons":[ 
 
 
@@ -100,6 +101,7 @@ opcion = 4;
           },
         },
       ],
+      */
   });  
 
 

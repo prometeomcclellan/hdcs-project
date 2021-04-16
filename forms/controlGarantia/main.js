@@ -83,7 +83,7 @@ opcion = 4;
       ],
       
       //para usar los botones   
-      responsive: "true",
+      /*responsive: "true",
       dom: 'lBfrtip',       
       "buttons":[ 
 
@@ -208,7 +208,7 @@ opcion = 4;
           },
         },
       ],
-
+*/
   });  
 
 //DataTable que carga los equipos
@@ -241,7 +241,7 @@ opcion = 4;
   $("#btnBuscar").click(function(){
     $('#modalCREAR').css("opacity", ".1");
     $("#formEquipo").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
     $(".modal-titles").text("Buscar equipo");          
     $("#modalEquipo").modal("show");     //cuando hacen click sobre buscar, se abrira la modal de equipo 
@@ -304,7 +304,7 @@ opcion = 4;
   $("#btnBuscarU").click(function(){
     $('#modalUPDATE').css("opacity", ".1");
     $("#formEquipo").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
     $(".modal-titles").text("Buscar equipo");          
     $("#modalEquipo").modal("show");     //cuando hacen click sobre buscar, se abrira la modal de equipo 
@@ -363,7 +363,7 @@ opcion = 4;
   $("#btnAgregar").click(function(){
     $('#modalCREAR').css("opacity", ".1");
     $("#formEquipoNew").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
     $(".modal-titles").text("Agregar nuevo equipo");          
     $("#modalEquipo").modal("show");     //cuando hacen click sobre buscar, se abrira la modal de equipo 
@@ -388,9 +388,9 @@ opcion = 4;
   $("#btnNuevo").click(function(){
     opcion = 1; //alta
     $("#formControlGarantiaC").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#28a745"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Nuevo control garantía");          
     $("#modalCREAR").modal("show");
 
@@ -469,9 +469,9 @@ opcion = 4;
     $("#telefonoU").val(_telefono);
     $("#eMailU").val(_eMail);
 
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardarU").css("background-color", "#003399"); 
+    $("#btnGuardarU").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Modificar Control garantía");
     $("#modalUPDATE").modal("show"); 
     
@@ -563,9 +563,9 @@ opcion = 4;
     opcion = 3; //eliminar   
 
     $("#panel_eliminar").html("Control con ID: " + _idControlGarantia);
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Eliminar control garantía");            
     $("#modalEliminar").modal("show");  
   });

@@ -130,7 +130,7 @@ console.log(diccionarioControlMant);
       
       
       //para usar los botones   
-      responsive: "true",
+    /*  responsive: "true",
       dom: 'lBfrtip',       
       "buttons":[ 
 
@@ -255,6 +255,7 @@ console.log(diccionarioControlMant);
           },
         },
       ],
+      */
   });  
 
 //DataTable que carga las solicitudes de mantenimiento
@@ -290,7 +291,7 @@ console.log(diccionarioControlMant);
   $("#btnBuscar").click(function(){
     $('#modalCREAR').css("opacity", ".1");
     $("#formSolMant").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
     $(".modal-titles").text("Buscar solicitud mantenimiento");          
     $("#modalSolMant").modal("show");     //cuando hacen click sobre buscar, se abrira la modal de solictud de mantenimiento.  
@@ -339,7 +340,7 @@ console.log(diccionarioControlMant);
   $("#btnBuscarU").click(function(){
     $('#modalUPDATE').css("opacity", ".1");
     $("#formSolMant").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
     $(".modal-titles").text("Buscar solicitud mantenimiento");          
     $("#modalSolMant").modal("show");     //cuando hacen click sobre buscar, se abrira la modal de solictud de mantenimiento.  
@@ -394,9 +395,9 @@ console.log(diccionarioControlMant);
   $("#btnNuevo").click(function(){
     opcion = 1; //alta
     $("#formControlMantC").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#28a745"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Nuevo control de mantenimiento");          
     $("#modalCREAR").modal("show");
 
@@ -470,9 +471,9 @@ console.log(diccionarioControlMant);
     $("#fechaControlU").val(_fechaControlMant);
     $("#observacionU").val(_observacion);
     
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardarU").css("background-color", "#003399"); 
+    $("#btnGuardarU").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Modificar control de mantenimiento");
     $("#modalUPDATE").modal("show"); 
     
@@ -587,9 +588,9 @@ console.log(diccionarioControlMant);
     opcion = 3; //eliminar   
 
     $("#panel_eliminar").html("Control con ID: " + _idControlMant);
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Eliminar Control de Mantenimiento");            
     $("#modalEliminar").modal("show");  
   });

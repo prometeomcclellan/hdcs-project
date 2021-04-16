@@ -59,9 +59,9 @@ $(document).ready(function() {
     id=null;
     opcion = 1; //alta
     $("#formTipoDisco").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#28a745"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Nuevo Tipo Disco");          
     $("#modalCRUD").modal("show");       
   });    
@@ -77,9 +77,9 @@ $(document).ready(function() {
 
     opcion = 2; //editar
     
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Modificar Tipo Disco");            
     $("#modalCRUD").modal("show");    
   });
@@ -93,9 +93,9 @@ $(document).ready(function() {
     opcion = 3; //eliminar   
 
     $("#panel_eliminar").html("Tipo Disco: " + tDisco);
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Eliminar Tipo Disco");            
     $("#modalEliminar").modal("show");  
   });

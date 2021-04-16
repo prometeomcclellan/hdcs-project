@@ -1,7 +1,7 @@
 <!-- Esta parte de codigo de php, evita el poder abrir la pagina despues de hacer cerrado sesión -->
 <?php 
 session_start();
-
+$usuario = intval($_SESSION["s_idUsuario"]);
 ?>
 
 
@@ -77,7 +77,7 @@ if ( $detect->isMobile() ) {
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="../../inicio/dashboard.php" class="nav-link">Inicio</a>
+        <a href="../../inicio/dashboard.php" class="nav-link rol-admin">Inicio</a>
       </li>
     </ul>
 
@@ -85,7 +85,7 @@ if ( $detect->isMobile() ) {
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown rol-tecnico">
         <a class="nav-link" href="https://app.chaport.com/#/chats" target="blank">
           <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge"></span>
@@ -93,7 +93,7 @@ if ( $detect->isMobile() ) {
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"></div>
       </li>
       <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown rol-admin">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
           <span class="badge badge-danger navbar-badge notificaciones-conteo"></span>
@@ -381,7 +381,7 @@ if ( $detect->isMobile() ) {
               //echo str_contains($thisUri, $uriFilter);
               echo "<a href='reporteria.php' class='nav-link rol-admin'>";
             }else{
-              echo "<a href='../../reporteria.php' class='nav-link rol-admin'>";
+              echo "<a href='../../inicio/reporteria.php' class='nav-link rol-admin'>";
             }
             ?>
 
@@ -414,7 +414,7 @@ if ( $detect->isMobile() ) {
           ?>
     <div class="container">
         <header>
-            <h1 class="mt-4"><b>Bienvenido <?php echo $_SESSION["s_usuario"]?> al sistema de </b></h1>
+            <h1 class="mt-4"><b>Bienvenido <?phpsession_start(); echo $_SESSION["s_usuario"]?> al sistema de </b></h1>
             <h1 class="mt-0"><b>registro de solicitud mantenimiento </b></h1>
        <!--     
             <h2>Usuario: <?php echo $_SESSION["s_idUsuario"]?></h2>

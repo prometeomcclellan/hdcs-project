@@ -248,7 +248,7 @@ opcion = 4;
   $("#btnBuscar").click(function(){
     $('#modalCREAR').css("opacity", ".1");
     $("#formEquipo").trigger("reset");
-    //$(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
     $(".modal-titles").text("Buscar equipo");          
     $("#modalEquipo").modal("show");     //cuando hacen click sobre buscar, se abrira la modal de equipo 

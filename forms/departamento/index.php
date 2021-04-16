@@ -154,8 +154,8 @@ if ( $detect->isMobile() ) {
       <!-- Sidebar Menu -->
       <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">  
-          <li class="nav-item has-treeview">
-            <a href="/HDCS/forms/equipo/index.php" class="nav-link">
+          <li class="nav-item has-treeview rol-admin">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-laptop"></i>
               <i class="fas fa-angle-left right"></i>
               <p>
@@ -254,9 +254,9 @@ if ( $detect->isMobile() ) {
               </li>
             </ul>
           </li>
-          <div class="dropdown-divider"></div>
+          <div class="dropdown-divider rol-admin"></div>
           <li class="nav-item  has-treeview">
-            <a href="/HDCS/forms/usuario/index.php" class="nav-link">
+            <a href="" class="nav-link">
               <i class="nav-icon fa fa-users"></i>
               <i class="fas fa-angle-left right"></i>
               <p>
@@ -264,7 +264,7 @@ if ( $detect->isMobile() ) {
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
+              <li class="nav-item rol-admin">
                 <a href="/HDCS/forms/usuario/index.php" class="nav-link">
                 <i class="nav-icon fa fa-user"></i>
                 <p>
@@ -272,7 +272,7 @@ if ( $detect->isMobile() ) {
                 </p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item rol-admin">
                 <a href="/HDCS/forms/empleado/index.php" class="nav-link">
                 <i class="nav-icon fas fa-user-tie"></i>
                 <p>
@@ -280,7 +280,7 @@ if ( $detect->isMobile() ) {
                 </p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item rol-admin">
                 <a href="/HDCS/forms/cargo/index.php" class="nav-link">
                 <i class="nav-icon fas fa-user-tag"></i>
                 <p>
@@ -288,7 +288,7 @@ if ( $detect->isMobile() ) {
                 </p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item rol-tecnico">
                 <a href="/HDCS/forms/tecnico/index.php" class="nav-link">
                 <i class="nav-icon fas fa-users-cog"></i>
                 <p>
@@ -296,7 +296,7 @@ if ( $detect->isMobile() ) {
                 </p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item rol-personal">
                 <a href="/HDCS/forms/personal/index.php" class="nav-link">
                 <i class="nav-icon fas fa-user-friends"></i>
                 <p>
@@ -307,7 +307,7 @@ if ( $detect->isMobile() ) {
             </ul>
           </li>
           <div class="dropdown-divider"></div>
-          <li class="nav-item  has-treeview">
+          <li class="nav-item  has-treeview rol-admin">
             <a href="/HDCS/inicio/dashboard.php" class="nav-link">
               <i class="nav-icon fas fa-wrench"></i>
               <i class="fas fa-angle-left right"></i>
@@ -360,8 +360,8 @@ if ( $detect->isMobile() ) {
               
             </ul>
           </li>
-          <div class="dropdown-divider"></div>
-          <li class="nav-item">
+          <div class="dropdown-divider rol-admin"></div>
+          <li class="nav-item rol-admin">
             <a href="/HDCS/forms/departamento/index.php" class="nav-link">
               <i class="nav-icon fas fa-network-wired"></i>
               <p>
@@ -371,6 +371,7 @@ if ( $detect->isMobile() ) {
           </li>
           
           <li class="nav-item">
+          
           <?php 
             $thisUri = $_SERVER['REQUEST_URI'];
             $uriFilter = "inicio";
@@ -378,13 +379,16 @@ if ( $detect->isMobile() ) {
 
             if ($uriCheck == 1) {
               //echo str_contains($thisUri, $uriFilter);
-              echo "<a href='reporteria.php' class='nav-link'>";
+              echo "<a href='reporteria.php' class='nav-link rol-admin'>";
             }else{
-              echo "<a href='../../inicio/reporteria.php' class='nav-link'>";
+              echo "<a href='../../inicio/reporteria.php' class='nav-link rol-admin'>";
             }
             ?>
+
+            
               <i class="nav-icon fa fa-file" aria-hidden="true"></i>
               <p>
+              
                 Reportería
               </p>
             </a>
@@ -474,7 +478,7 @@ if ( $detect->isMobile() ) {
 <div class="modal fade" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header gradiente-horizontal">
+            <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
                 <button type="button" class="close" style="color:white;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
@@ -488,7 +492,7 @@ if ( $detect->isMobile() ) {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                <button type="submit" id="btnGuardar" class="btn btn-dark gradiente-horizontal">Guardar</button>
+                <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
             </div>
         </form>    
         </div>
@@ -501,7 +505,7 @@ if ( $detect->isMobile() ) {
 <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog"  role="document">
         <div class="modal-content">
-            <div class="modal-header gradiente-horizontal" style="background-color: red; color:white;">
+            <div class="modal-header" style="background-color: red; color:white;">
                 <h5 class="modal-title"  id="exampleModalLabel"></h5>
                 <button type="button" class="close" style="color:white;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>

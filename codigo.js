@@ -3,13 +3,14 @@ $("#page_loader").fadeIn();
 $(document).ready(function() {
   $("#page_loader").fadeOut("slow");
   //  rol-admin  rol-todos
-/*
-  
-*/
+
   let isPhoto = false;
   var currentUrl = location.pathname;
   let loginUrl = "HDCS/index.php";
   //alert(currentUrl.indexOf(loginUrl))
+  /*
+  
+*/
   if (currentUrl.indexOf(loginUrl) == 1) {
     //alert("login")
   }else{
@@ -17,6 +18,7 @@ $(document).ready(function() {
     if (cargoIni == null) {
       //window.open("../../HDCS/forms/tecnico/index.php", "_self");
     }
+    let brandLink = document.getElementsByClassName("brand-link");
   let rolTodosContainer = document.getElementsByClassName("rol-todos");
   let rolAdminContainer = document.getElementsByClassName("rol-admin");
   let rolTecnicoContainer = document.getElementsByClassName("rol-tecnico");
@@ -25,6 +27,12 @@ $(document).ready(function() {
   if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
     != "admin") {
     $("#usuarioNombre").attr("data-target", "");
+    
+    for (let indexBr = 0; indexBr < brandLink.length; indexBr++) {
+      const elementBr = brandLink[indexBr];
+      elementBr.href = "#";
+    }
+    
     for (let indexRol = 0; indexRol < rolAdminContainer.length; indexRol++) {
       const element = rolAdminContainer[indexRol];
       element.style.display = "none";
@@ -42,7 +50,14 @@ $(document).ready(function() {
     }
    }
   }else{
-
+    for (let indexPersonal = 0; indexPersonal < rolPersonalContainer.length; indexPersonal++) {
+      const elementPersonal = rolPersonalContainer[indexPersonal];
+      elementPersonal.style.display = "none";
+    }
+    for (let indexTecnico = 0; indexTecnico < rolTecnicoContainer.length; indexTecnico++) {
+      const elementTecnico = rolTecnicoContainer[indexTecnico];
+      elementTecnico.style.display = "none";
+    }
   }
   }
 
@@ -99,9 +114,13 @@ $(document).ready(function() {
   let thumbElement;
 
   let isFirstFilter = true;
-  let dFrom; let dTo;
+  let dFrom; let dTo; let fromTo;
 
   let loginRedirectUrl;
+
+  let sizeFile;
+  let pesoDeImagen;
+  let isMb;
 
   let wrapperWidth;
   let percentWidth;
@@ -302,74 +321,91 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
   $(".boton-filtrar").click(function(){
     //alert(dFrom+", "+dTo);
     $("#mantenimientosFiltradosFecha").empty();
-    $("#page_loader").fadeIn();
+    
 
+    fromTo = dFrom>dTo;
+    //alert(fromTo)
+    if (fromTo == true) {
+      $(document).Toasts('create', {
+        class: 'bg-warning', 
+        title: "Error",
+        subtitle: 'Cerrar',
+        autohide: true,
+        delay: 6000,
+        body: 'La fecha inicial no puede ser mayor a la final.'
+      })
+    }else{
+      $("#page_loader").fadeIn();
+      $.ajax({
+        type: "post",
+        crossOrigin: true,
+        url: "../bd/get_mantenimientos_por_periodo.php",
+        data: {from:dFrom, to:dTo},
+        async: false,
+        success: function (data) {
+          arrayFiltered = JSON.parse(data);
+          console.log("data filtrada");
+          console.dir(arrayFiltered);
+          let sortedPeriodArray = mantenimientosPendientesArray.sort();
+          for (let indexFilt = 0; indexFilt < arrayFiltered.length; indexFilt++) {
+            const elementFiltered = arrayFiltered[indexFilt];
+            let estadoFiltrado = elementFiltered.status;
+            if (estadoFiltrado == 200) {
+              $(".alerta-no-data").eq(0).fadeOut("slow");
+              let oNumberFilt = elementFiltered.idControlMantenimiento+"-"+elementFiltered.idSolicitudMantenimiento;
+              let oEquipmentFilt = elementFiltered.descripcionEquipo;
+              let oDeptoFilt = elementFiltered.departamentoP;
+              let oStatusFilt = elementFiltered.estadoControlMantenimiento;
+              let oSDateFilt = elementFiltered.fechaSolicitudMantenimiento;
+              let oDateFilt = elementFiltered.fechaControlMantenimiento;
+              let oClassFilt = "success";
   
-    $.ajax({
-      type: "post",
-      crossOrigin: true,
-      url: "../bd/get_mantenimientos_por_periodo.php",
-      data: {from:dFrom, to:dTo},
-      async: false,
-      success: function (data) {
-        arrayFiltered = JSON.parse(data);
-        console.log("data filtrada");
-        console.dir(arrayFiltered);
-        let sortedPeriodArray = mantenimientosPendientesArray.sort();
-        for (let indexFilt = 0; indexFilt < arrayFiltered.length; indexFilt++) {
-          const elementFiltered = arrayFiltered[indexFilt];
-          let estadoFiltrado = elementFiltered.status;
-          if (estadoFiltrado == 200) {
-            $(".alerta-no-data").eq(0).fadeOut("slow");
-            let oNumberFilt = elementFiltered.idControlMantenimiento+"-"+elementFiltered.idSolicitudMantenimiento;
-            let oEquipmentFilt = elementFiltered.descripcionEquipo;
-            let oDeptoFilt = elementFiltered.departamentoP;
-            let oStatusFilt = elementFiltered.estadoControlMantenimiento;
-            let oSDateFilt = elementFiltered.fechaSolicitudMantenimiento;
-            let oDateFilt = elementFiltered.fechaControlMantenimiento;
-            let oClassFilt = "success";
-
-            if(oStatusFilt == "Diagnosticado"){
-              oClassFilt = "danger";
+              if(oStatusFilt == "Diagnosticado"){
+                oClassFilt = "danger";
+              }
+      
+              if(oStatusFilt == "En reparación"){
+                oClassFilt = "warning";
+              }
+      
+              if(oStatusFilt == "Finalizado"){
+                oClassFilt = "success";
+              }
+  
+              $("#mantenimientosFiltradosFecha").append(
+                "<tr class='maintinance-filtered'>"
+                  +"<td>"+oNumberFilt+"</td>"+"<input type='hidden' value="+elementFiltered.idControlMantenimiento+" class='order-number'>"
+                  +"<td>"+oEquipmentFilt+"<span class='order-description' style='display:none;'>"+oEquipmentFilt+"</span></td>"
+                  +"<td><span class='badge badge-"+oClassFilt+"' style='width:120px;'>"+oStatusFilt+"</span><span class='order-status' style='display:none;'>"+oStatusFilt+"</span></td>"
+                  +"<td>"
+                    +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oSDateFilt+"</div>"+"<input type='hidden' value="+oSDateFilt+" class='order-sdate'>"
+                  +"</td>"
+                  +"<td>"
+                    +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDateFilt+"</div>"+"<input type='hidden' value="+oDateFilt+" class='order-odate'>"
+                  +"</td>"
+                  +"<td>"
+                    +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDeptoFilt+"</div>"+"<input type='hidden' value="+oDeptoFilt+" class='order-odate'>"
+                  +"</td>"
+                  
+                 +"</tr>");
             }
-    
-            if(oStatusFilt == "En reparación"){
-              oClassFilt = "warning";
-            }
-    
-            if(oStatusFilt == "Finalizado"){
-              oClassFilt = "success";
-            }
-
-            $("#mantenimientosFiltradosFecha").append(
-              "<tr class='maintinance-filtered'>"
-                +"<td>"+oNumberFilt+"</td>"+"<input type='hidden' value="+elementFiltered.idControlMantenimiento+" class='order-number'>"
-                +"<td>"+oEquipmentFilt+"<span class='order-description' style='display:none;'>"+oEquipmentFilt+"</span></td>"
-                +"<td><span class='badge badge-"+oClassFilt+"' style='width:120px;'>"+oStatusFilt+"</span><span class='order-status' style='display:none;'>"+oStatusFilt+"</span></td>"
-                +"<td>"
-                  +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oSDateFilt+"</div>"+"<input type='hidden' value="+oSDateFilt+" class='order-sdate'>"
-                +"</td>"
-                +"<td>"
-                  +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDateFilt+"</div>"+"<input type='hidden' value="+oDateFilt+" class='order-odate'>"
-                +"</td>"
-                +"<td>"
-                  +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDeptoFilt+"</div>"+"<input type='hidden' value="+oDeptoFilt+" class='order-odate'>"
-                +"</td>"
                 
-               +"</tr>");
+            if (estadoFiltrado == 500) {
+              $(".alerta-no-data").eq(0).fadeIn();
+            }
+  
+            if (indexFilt == (arrayFiltered.length-1)) {
+              $("#page_loader").fadeOut("slow");
+            }
           }
-              
-          if (estadoFiltrado == 500) {
-            $(".alerta-no-data").eq(0).fadeIn();
-          }
-
-          if (indexFilt == (arrayFiltered.length-1)) {
-            $("#page_loader").fadeOut("slow");
-          }
+          
         }
-        
-      }
-    });
+      });
+    }
+  
+    /*
+    
+    */
   });
 
   //isFirstFilter
@@ -1472,9 +1508,9 @@ fotoStatus = localStorage.getItem("fotoStatus");
         {
 
           //alert(Math.round(input.files[0].size/1024));
-          let sizeFile = Math.round(input.files[0].size);
-          let pesoDeImagen = formatBytes(sizeFile,2);
-          let isMb = pesoDeImagen.indexOf("MB");
+          sizeFile = Math.round(input.files[0].size);
+          pesoDeImagen = formatBytes(sizeFile,2);
+          isMb = pesoDeImagen.indexOf("MB");
 
           if (isMb != -1) {
             let mbPrefix = pesoDeImagen.substring(0,1);//+1
@@ -2070,7 +2106,7 @@ $(".logout-button").click(function(){
   TableExport(document.getElementById(myTableId), {
     headers: true,                      // (Boolean), display table headers (th or td elements) in the <thead>, (default: true)
     footers: true,                      // (Boolean), display table footers (th or td elements) in the <tfoot>, (default: false)
-    formats: ["xlsx", "csv", "txt"],    // (String[]), filetype(s) for the export, (default: ['xlsx', 'csv', 'txt'])
+    formats: ["xlsx"],    // (String[]), filetype(s) for the export, (default: ['xlsx', 'csv', 'txt'])
     filename: titulo+fechaActual,                     // (id, String), filename for the downloaded file, (default: 'id')
     bootstrap: false,                   // (Boolean), style buttons using bootstrap, (default: true)
     exportButtons: true,                // (Boolean), automatically generate the built-in export buttons for each of the specified formats (default: true)
@@ -2104,24 +2140,11 @@ $(".logout-button").click(function(){
             $(".xlsx").eq(indexXlsx).removeClass("button-default");
             $(".xlsx").eq(indexXlsx).addClass("btn");
             $(".xlsx").eq(indexXlsx).addClass("btn-success");
-            $(".csv").eq(indexXlsx).removeClass("button-default");
-            $(".csv").eq(indexXlsx).addClass("btn");
-            $(".csv").eq(indexXlsx).addClass("btn-primary");
-            $(".txt").eq(indexXlsx).removeClass("button-default");
-            $(".txt").eq(indexXlsx).addClass("btn");
-            $(".txt").eq(indexXlsx).addClass("btn-warning");
             $(".xlsx").eq(indexXlsx).css("margin-right", "6px");
-            $(".csv").eq(indexXlsx).css("margin-right", "6px");
-            $(".txt").eq(indexXlsx).css("margin-right", "6px");
             $(".xlsx").eq(indexXlsx).css("width", "110px");
-            $(".csv").eq(indexXlsx).css("width", "110px");
-            $(".txt").eq(indexXlsx).css("width", "110px");
             $(".xlsx").eq(indexXlsx).text("");
-            $(".csv").eq(indexXlsx).text("");
-            $(".txt").eq(indexXlsx).text("");
             $(".xlsx").eq(indexXlsx).append(" <span>Excel <i class='fas fa-file-excel'></i></span>");
-            $(".csv").eq(indexXlsx).append(" <span>Csv <i class='fas fa-file-csv'></i></span>");
-            $(".txt").eq(indexXlsx).append(" <span>Txt <i class='fa fa-file'></i></span>");
+            
           }
       }
     }
@@ -2143,24 +2166,10 @@ $(".logout-button").click(function(){
             $(".xlsx").eq(indexXlsx).removeClass("button-default");
             $(".xlsx").eq(indexXlsx).addClass("btn");
             $(".xlsx").eq(indexXlsx).addClass("btn-success");
-            $(".csv").eq(indexXlsx).removeClass("button-default");
-            $(".csv").eq(indexXlsx).addClass("btn");
-            $(".csv").eq(indexXlsx).addClass("btn-primary");
-            $(".txt").eq(indexXlsx).removeClass("button-default");
-            $(".txt").eq(indexXlsx).addClass("btn");
-            $(".txt").eq(indexXlsx).addClass("btn-warning");
             $(".xlsx").eq(indexXlsx).css("margin-right", "6px");
-            $(".csv").eq(indexXlsx).css("margin-right", "6px");
-            $(".txt").eq(indexXlsx).css("margin-right", "6px");
             $(".xlsx").eq(indexXlsx).css("width", "110px");
-            $(".csv").eq(indexXlsx).css("width", "110px");
-            $(".txt").eq(indexXlsx).css("width", "110px");
             $(".xlsx").eq(indexXlsx).text("");
-            $(".csv").eq(indexXlsx).text("");
-            $(".txt").eq(indexXlsx).text("");
             $(".xlsx").eq(indexXlsx).append(" <span>Excel <i class='fas fa-file-excel'></i></span>");
-            $(".csv").eq(indexXlsx).append(" <span>Csv <i class='fas fa-file-csv'></i></span>");
-            $(".txt").eq(indexXlsx).append(" <span>Txt <i class='fa fa-file'></i></span>");
           }
         }
       }

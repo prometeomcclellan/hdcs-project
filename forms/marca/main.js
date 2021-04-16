@@ -60,9 +60,9 @@ $(document).ready(function() {
     opcion = 1; //alta
     $("#formMarcas").trigger("reset");
     $('#marca').focus();
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#28a745"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Nueva Marca");          
     $("#modalCRUD").modal("show");       
   });    
@@ -78,9 +78,9 @@ $(document).ready(function() {
 
     $("#marca").val(marca);
     
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Modificar Marca");            
     $("#modalCRUD").modal("show");      
   });
@@ -94,9 +94,9 @@ $(document).ready(function() {
     opcion = 3; //eliminar   
 
     $("#panel_eliminar").html("Marca: " + marca);
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Eliminar Marca");            
     $("#modalEliminar").modal("show");  
   });

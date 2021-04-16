@@ -63,9 +63,9 @@ $(document).ready(function() {
     opcion = 1; //alta
     $("#formCapacidad").trigger("reset");
     $('#capacidad').focus();
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#28a745"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Nueva Capacidad");          
     $("#modalCRUD").modal("show");       
   });    

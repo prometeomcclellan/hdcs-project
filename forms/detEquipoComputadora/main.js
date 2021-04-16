@@ -128,9 +128,9 @@ opcion = 4;
   $("#btnNuevo").click(function(){
     opcion = 1; //alta
     $("#formDetalleEquipoC").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#28a745"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Nuevo Detalle de Equipo");          
     $("#modalCREAR").modal("show");       
   });   
@@ -184,9 +184,9 @@ opcion = 4;
 
     //alert(_tipoDisco);
 
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardarU").css("background-color", "#003399"); 
+    $("#btnGuardarU").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Modificar Detalle de Equipo");
     $("#modalUPDATE").modal("show"); 
 
@@ -330,9 +330,9 @@ opcion = 4;
     opcion = 3; //eliminar   
 
     $("#panel_eliminar").html("Código de Serie: " + _serie);
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Eliminar Detalle Equipo");            
     $("#modalEliminar").modal("show");  
   });
