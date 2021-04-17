@@ -50,12 +50,13 @@ let diccionarioModelos = [];
   
 
 
-  tablaEquipo = $('#tablaEquipo').DataTable({  
-    "sScrollY": (200),
+  tablaEquipo = $('#tablaEquipo').DataTable({
+    //"sScrollY": (200), 
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },
     "initComplete": function(settings, json) {
+
       //alert( 'DataTables has finished its initialisation.' );
       let editarContainer = document.getElementsByClassName("btnEditar");
         //alert(editarContainer.length)
@@ -91,10 +92,6 @@ let diccionarioModelos = [];
       ]
   });  
 
-  setTimeout(() => {
-    
-  }, 6000);
-    
 
   //NUEVO  ---------------------------------------------------------------------------------------
   $("#btnNuevo").click(function(){

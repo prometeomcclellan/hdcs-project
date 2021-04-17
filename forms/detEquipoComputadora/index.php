@@ -439,7 +439,8 @@ if ( $detect->isMobile() ) {
 </style>
     <div class="container caja">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 print-container">
+            <input type="hidden" class="file-title" value="detalle-equipos-fecha-">
             <div class="table-responsive">        
                 <table id="tablaDetalleEquipo" class="table table-striped table-bordered table-condensed tabla-data" style="width:100%" >
                     <thead class="text-center">

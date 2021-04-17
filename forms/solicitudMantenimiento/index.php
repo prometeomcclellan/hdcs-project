@@ -699,7 +699,8 @@ if ( $detect->isMobile() ) {
                     <div class="modal-body">
 
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 print-container">
+                            <input type="hidden" class="file-title" value="solicitudes-mantenimiento-fecha-">
                                 <div class="table-responsive">        
                                     <table id="tablaEquipo" class="table table-striped table-bordered table-condensed" style="width:100%" >
                                         <thead class="text-center">

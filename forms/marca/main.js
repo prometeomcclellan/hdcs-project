@@ -3,7 +3,7 @@ $(document).ready(function() {
   var fila; //captura la fila, para editar o eliminar
   opcion = 4;
       
-  tablaMarcas = $('#tablaMarcas').DataTable({  
+  tablaMarcas = $('#tablaMarcas').DataTable({ 
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },

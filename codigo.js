@@ -1,7 +1,7 @@
 $("#page_loader").fadeIn();
 
 $(document).ready(function() {
-  $("#page_loader").fadeOut("slow");
+  
   //  rol-admin  rol-todos
 
   let isPhoto = false;
@@ -121,6 +121,8 @@ $(document).ready(function() {
   let sizeFile;
   let pesoDeImagen;
   let isMb;
+
+  let temporizador;
 
   let wrapperWidth;
   let percentWidth;
@@ -2092,17 +2094,41 @@ $(".logout-button").click(function(){
   })
 
 
-  
+  //alert(currentUrl)
 
-  var tablaContainer = document.getElementsByClassName('tabla-data');
-  
-  //let excelIndex = $(".boton-excel").index(this);
-//alert("voy")
+  if (currentUrl == "/HDCS/inicio/dashboard.php") {temporizador = 3000;}
+  if (currentUrl == "/HDCS/forms/equipo/index.php") {temporizador = 6000;}
+  if (currentUrl == "/HDCS/forms/asignacionEquipo/index.php") {temporizador = 9000;}
+  if (currentUrl == "/HDCS/forms/capacidad/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/cargo/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/controlGarantia/index.php") {temporizador = 3000;}
+  if (currentUrl == "/HDCS/forms/controlMantenimiento/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/departamento/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/detEquipoComputadora/index.php") {temporizador = 5000;}
+  if (currentUrl == "/HDCS/forms/empleado/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/empresaGarantia/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/equipo/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/estadoControlMantenimiento/index.php") {temporizador = 0;}
+  if (currentUrl == "/HDCS/forms/marca/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/modelo/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/personal/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/solicitudMantenimiento/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/tecnico/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/tipoDisco/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/tipoEquipo/index.php") {temporizador = 6000;}
+  if (currentUrl == "/HDCS/forms/tipoMantenimiento/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/tipoRam/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/usuario/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/velocidadRam/index.php") {temporizador = 4000;}
+
+    setTimeout(() => {
+    var tablaContainer = document.getElementsByClassName('tabla-data');
+  //alert(tablaContainer.length)
   for (let indexTabla = 0; indexTabla < tablaContainer.length; indexTabla++) {
     const element = tablaContainer[indexTabla];
     titulo = $(".file-title").eq(indexTabla).val();
     let myTableId = element.id;
-  
+  //alert(myTableId)
   TableExport(document.getElementById(myTableId), {
     headers: true,                      // (Boolean), display table headers (th or td elements) in the <thead>, (default: true)
     footers: true,                      // (Boolean), display table footers (th or td elements) in the <tfoot>, (default: false)
@@ -2140,6 +2166,8 @@ $(".logout-button").click(function(){
             $(".xlsx").eq(indexXlsx).removeClass("button-default");
             $(".xlsx").eq(indexXlsx).addClass("btn");
             $(".xlsx").eq(indexXlsx).addClass("btn-success");
+            $(".xlsx").eq(indexXlsx).addClass("boton-accion");
+            $(".xlsx").eq(indexXlsx).addClass("boton-excel");
             $(".xlsx").eq(indexXlsx).css("margin-right", "6px");
             $(".xlsx").eq(indexXlsx).css("width", "110px");
             $(".xlsx").eq(indexXlsx).text("");
@@ -2166,6 +2194,7 @@ $(".logout-button").click(function(){
             $(".xlsx").eq(indexXlsx).removeClass("button-default");
             $(".xlsx").eq(indexXlsx).addClass("btn");
             $(".xlsx").eq(indexXlsx).addClass("btn-success");
+            $(".xlsx").eq(indexXlsx).addClass("boton-accion");
             $(".xlsx").eq(indexXlsx).css("margin-right", "6px");
             $(".xlsx").eq(indexXlsx).css("width", "110px");
             $(".xlsx").eq(indexXlsx).text("");
@@ -2174,24 +2203,24 @@ $(".logout-button").click(function(){
         }
       }
     }
-    
-
+   }
   }
 
-  }
-  
   $(".create-orders-button").click(function(evc){
     //alert("voy");
     evc.preventDefault();
     evc.stopPropagation();
     window.open("/HDCS/forms/solicitudMantenimiento/index.php", "_self");
   });
-  
+
   $(".boton-pdf").click(function(evpdf){
     //alert("voy");
     evpdf.preventDefault();
     evpdf.stopPropagation();
     let pdftIndex = $(".boton-pdf").index(this);
+    $("#page_loader").fadeIn();
+
+
     if (window.matchMedia("(max-width: 700px)").matches) {
       escala = 1;
     }else{
@@ -2200,11 +2229,23 @@ $(".logout-button").click(function(){
     
     var element = document.getElementsByClassName('print-container');
     var elementTitle = document.getElementsByClassName('file-title');
+    
+    let miContenedor = document.getElementsByClassName("tableexport-caption");
+    //alert(miContenedor.length)
+    $('div.dataTables_scrollBody').height("auto");
+
     var botonesAccion = document.getElementsByClassName("boton-accion");
     var captionS = document.getElementsByClassName("tableexport-caption");
     var tblthis = document.getElementsByTagName("table")[pdftIndex];
     var widthT = tblthis.offsetWidth;
-    captionS[pdftIndex].style.display = "none";
+
+    for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {
+      const elementBA = botonesAccion[indexBA];
+      elementBA.style.display = "none";
+    }
+    //captionS[pdftIndex].style.display = "none";
+    //$(".tableexport-caption").eq(pdftIndex).find("boton-accion").css("display", "none");
+
 
     if(currentUrl == "/HDCS/inicio/dashboard.php") {
       document.getElementById('repSegEst').style.height = "auto";
@@ -2221,20 +2262,29 @@ $(".logout-button").click(function(){
 
     var opt = {
       margin:       1,
+      pagebreak: {avoid: 'tr'},
       filename:     'myfile.pdf',
       image:        { type: 'jpeg', quality: 0.98 },
       html2canvas:  { scale: 1},
-      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      jsPDF:        { unit: 'in', format: 'legal', orientation: 'landscape' }
     };
     html2pdf().set(opt).from(elem).toPdf().save(titulo+fechaActual+'.pdf').then(function(pdf) {
-      captionS[pdftIndex].style.display = "inherit";
-      captionS[pdftIndex].style.width = widthT+"px";
+      //captionS[pdftIndex].style.display = "inherit";
+      //captionS[pdftIndex].style.width = widthT+"px";
+      for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {
+        const elementBA = botonesAccion[indexBA];
+        elementBA.style.display = "inherit";
+      }
       
       for (let indexB = 0; indexB < botonesAccion.length; indexB++) {
         const element = botonesAccion[indexB];
         //element.style.display = "inherit";
 
       }
+
+      $('div.dataTables_scrollBody').height(300);
+
+      $("#page_loader").fadeOut("slow");
 
       if(currentUrl == "/HDCS/inicio/dashboard.php") {
         document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
@@ -2282,5 +2332,8 @@ $(".logout-button").click(function(){
     
     
   });
+  $("#page_loader").fadeOut("slow");
+  }, temporizador);
+
 
 }); // document ready

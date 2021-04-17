@@ -89,7 +89,7 @@ console.log(diccionarioControlMant);
 //MOSTRAR ---------------------------------------------------------------------------------------
 //DataTable que carga la tabla de inicio del index
   tablaControlMant = $('#tablaControlMant').DataTable({
-    "sScrollY": (200), 
+    
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },

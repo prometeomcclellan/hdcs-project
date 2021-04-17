@@ -503,7 +503,8 @@ if ( $detect->isMobile() ) {
               }
               </style>
               <div class="card-body p-0">
-                <div id="table-wrapper" class="table-responsive">
+                <div id="table-wrapper" class="table-responsive print-container">
+            <input type="hidden" class="file-title" value="mantenimientos-filtrados-fecha-">
                   <table id="tablaMantFilt" class="table table-striped table-hover m-0 tabla-data">
                     <thead>
                     <tr>
@@ -571,7 +572,8 @@ if ( $detect->isMobile() ) {
               }
               </style>
               <div class="card-body p-0">
-                <div id="table-wrapper" class="table-responsive">
+                <div id="table-wrapper" class="table-responsive print-container">
+            <input type="hidden" class="file-title" value="mantenimientos-por-usuario-fecha-">
                   <table id="tablaMantXUsuario" class="table table-striped table-hover m-0 tabla-data">
                     <thead>
                     <tr>
@@ -660,7 +662,8 @@ if ( $detect->isMobile() ) {
               }
               </style>
               <div class="card-body p-0">
-                <div id="table-wrapper" class="table-responsive">
+                <div id="table-wrapper" class="table-responsive print-container">
+                <input type="hidden" class="file-title" value="mantenimientos-pendientes-por-depto-fecha-">
                   <table id="tablaMantPend" class="table table-striped table-hover m-0 tabla-data">
                     <thead>
                     <tr>
