@@ -27,13 +27,16 @@
     $resultado->execute();
     $dataX = $resultado->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach($dataX as $dat) {     
-	    $nombreEmpleado = $dat["empleado"]; 
-	    $idUsuario = $dat["idUsuario"];     
-	    $codEmpleado = $dat["codEmpleado"];
-	    $estado = $dat["estado"];
+	//echo $resultado->rowCount();
 
-		$sqlCargo = "SELECT * FROM empleado
+	if($resultado->rowCount() > 0){
+		foreach($dataX as $dat) {     
+			$nombreEmpleado = $dat["empleado"]; 
+			$idUsuario = $dat["idUsuario"];     
+			$codEmpleado = $dat["codEmpleado"];
+			$estado = $dat["estado"];
+
+			$sqlCargo = "SELECT * FROM empleado
             WHERE codEmpleado = '".$codEmpleado."'";
 			$resultCargo = $conn->query($sqlCargo);
             if($resultCargo){
@@ -50,6 +53,13 @@
 
 					$estado = intval($estado);
 
+					$_SESSION["s_usuario"] = $usuario; // variables de sesión
+					$_SESSION["s_idUsuario"] = $idUsuario; 
+					$_SESSION["s_estadoUsuario"] = $estado; 
+					$_SESSION["s_codEmpleado"] = $codEmpleado;
+					$_SESSION["s_cargo"] = $cargo;
+					$dataX = $nombreEmpleado;
+
 					$response = array(
 						'status' => 200,
 						'nombreEmpleado' => $nombreEmpleado,
@@ -63,38 +73,26 @@
 			  }
 			}
 
-	    
-    } 
-
-    //$dataX =null;
-    if($resultado->rowCount() > 0){
-
-		$_SESSION["s_usuario"] = $usuario; // variables de sesión
-		$_SESSION["s_idUsuario"] = $idUsuario; 
-		$_SESSION["s_estadoUsuario"] = $estado; 
-		$_SESSION["s_codEmpleado"] = $codEmpleado;
-		$_SESSION["s_cargo"] = $cargo;
-		//$_SESSION["s_fotoUsuario"] = $fotoUsuario;
-		$dataX = $nombreEmpleado;
-
-		setcookie('usuario_cookie', $idUsuario,  $sessionTime);
-    }else{
-	    $_SESSION["s_usuario"] = null;
-	   	$_SESSION["s_idUsuario"] = null; 
-	    $_SESSION["s_estadoUsuario"] = null; 
-	    $_SESSION["s_codEmpleado"] = null;
-		$_SESSION["s_cargo"] = null;
-		//$_SESSION["s_fotoUsuario"] = null;
-		
-		$response = array(
-			'status' => 500
-		);
-
-		array_push($data, $response);
+			
+	
+			setcookie('usuario_cookie', $idUsuario,  $sessionTime);
+		}
+	}else{
+			$_SESSION["s_usuario"] = null;
+			   $_SESSION["s_idUsuario"] = null; 
+			$_SESSION["s_estadoUsuario"] = null; 
+			$_SESSION["s_codEmpleado"] = null;
+			$_SESSION["s_cargo"] = null;
+			
+			$response = array(
+				'status' => 500
+			);
+	
+			array_push($data, $response);
 	}
 
-//print json_encode($data);
 echo json_encode($data, JSON_UNESCAPED_UNICODE);
+
 $conexion=null;
 
 /**/
