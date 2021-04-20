@@ -430,6 +430,7 @@
 
         <div class="print-container" style="width:100%">
         <input type="hidden" class="file-title" value="mantenimientos-fecha-">
+        <h1 type="hidden" class="documento-title" style="display:none;">Solicitudes de Mantenimiento Fecha</h1>
         <div class="row rol-todos">
             <div class="col-12 col-sm-12 col-md-12">
                 <strong>Solicitudes de mantenimiento</strong>
@@ -594,6 +595,7 @@
 
           <div class="print-container rol-admin" style="width:100%">
           <input type="hidden" class="file-title" value="mantenimientos-deptos-fecha-">
+          <h1 type="hidden" class="documento-title" style="display:none;">Reportes Varios Fecha</h1>
           <div class="row">
           <div class="col-md-3">
           <!-- Info Boxes Style 2 -->
@@ -830,6 +832,7 @@
      <script src="plugins/popper/popper.min.js"></script>    
         
      <script src="plugins/sweetalert2/sweetalert2.all.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
 
 <script src="../codigo.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/polyfills.umd.js"></script>
@@ -843,6 +846,7 @@
 <script lang="javascript" src="dist/js/xlsx.full.min.js"></script>
 <script src="dist/js/tableexport.js"></script>
 <script src="dist/js/xlsx.core.min.js"></script>
+<script type="text/javascript" src="../assets/jquery/tableExport.js"></script>
 
 <?php
     require_once "../Mobile_Detect.php";

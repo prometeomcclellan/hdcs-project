@@ -25,12 +25,16 @@ body{
 	margin-top: 0px;
 }
 
+/*
 #nuevo {
-	margin-bottom: : 500px;
+	margin-bottom: -500px;
 }
+*/
+
+#btnNuevo{ height: 50px !important;max-height: 50px !important;}
 
 .modal-dialog {
-  margin-top: 300px;
+  margin-top: 0px;
 }
 
 #encabezado {

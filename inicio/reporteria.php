@@ -505,6 +505,7 @@ if ( $detect->isMobile() ) {
               <div class="card-body p-0">
                 <div id="table-wrapper" class="table-responsive print-container">
             <input type="hidden" class="file-title" value="mantenimientos-filtrados-fecha-">
+            <h1 type="hidden" class="documento-title" style="display:none;">Mantenimientos Filtrados Por Depto, Fecha</h1>
                   <table id="tablaMantFilt" class="table table-striped table-hover m-0 tabla-data">
                     <thead>
                     <tr>
@@ -574,6 +575,7 @@ if ( $detect->isMobile() ) {
               <div class="card-body p-0">
                 <div id="table-wrapper" class="table-responsive print-container">
             <input type="hidden" class="file-title" value="mantenimientos-por-usuario-fecha-">
+            <h1 type="hidden" class="documento-title" style="display:none;">Mantenimientos Por Usuario, Fecha</h1>
                   <table id="tablaMantXUsuario" class="table table-striped table-hover m-0 tabla-data">
                     <thead>
                     <tr>
@@ -664,6 +666,7 @@ if ( $detect->isMobile() ) {
               <div class="card-body p-0">
                 <div id="table-wrapper" class="table-responsive print-container">
                 <input type="hidden" class="file-title" value="mantenimientos-pendientes-por-depto-fecha-">
+                <h1 type="hidden" class="documento-title" style="display:none;">Mantenimientos Pendientes Por Depto Fecha</h1>
                   <table id="tablaMantPend" class="table table-striped table-hover m-0 tabla-data">
                     <thead>
                     <tr>
@@ -986,7 +989,7 @@ if ( $detect->isMobile() ) {
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-                <a href="/HDCS/forms/equipo/index.php Solicitud</a>
+                <a href="/HDCS/forms/equipo/index.php"> Solicitud</a>
                 
               </div>
               <!-- /.card-footer -->
@@ -999,6 +1002,85 @@ if ( $detect->isMobile() ) {
       </div>
     </div>
   </div>
+</div>
+
+<!--Modal para CREAR  X-->
+<div class="modal fade" id="modalCREARX" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="modalCuadro">
+            <div class="modal-header"  style="background-color: #1a3c8a;color:white;">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" style="color:white;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formSolManC">    
+                <div class="modal-body">
+
+
+                    <h5><b><i>Datos del equipo</i></b></h5> <hr>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Código equipo:</label>
+                                <input type="text" class="form-control" id="codEquipo" disabled="true" required autofocus>
+                            </div>
+                        </div> 
+                        <div class="col-lg-6">
+                            <button id="btnBuscar" type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalEquipo"><i class="material-icons">search</i>  | Buscar</button>   
+                        </div>    
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Descripción equipo:</label>
+                                <input type="textarea" class="form-control" id="descripcionEquipo" disabled="true" >
+                            </div>
+                        </div> 
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Tipo equipo:</label>
+                                <input type="text" class="form-control" id="tipoEquipo" disabled="true" >
+                            </div>
+                        </div>    
+                    </div>  
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Modelo equipo:</label>
+                                <input type="text" class="form-control" id="modeloEquipo" disabled="true" >
+                            </div>
+                        </div> 
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">ServiceTag equipo:</label>
+                                <input type="text" class="form-control" id="serviceTagEquipo" disabled="true" >
+                            </div>
+                        </div>    
+                    </div> 
+
+
+                    <hr id="linea2">
+                    <h5 id="h5"><b><i>Datos de solicitud</i></b></h5> <hr>
+                    <div class="form-group">
+                        <label for="nombre" class="col-form-label">Fecha solicitud:</label>
+                        <input type="date" class="form-control" id="fechaInput" required autofocus>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nombre" class="col-form-label">Descripción falla:</label>
+                        <textarea type="text" class="form-control " id="Pre_Diag" required autofocus></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+                </div>
+            </form>    
+        </div>
+    </div>
 </div>
 
 <!--Modal para CREAR-->

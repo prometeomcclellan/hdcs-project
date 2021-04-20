@@ -71,6 +71,8 @@ let diccionarioModelos = [];
 
         $(".page-link").eq(1).css("background-color", "#1a3c8a");
         $(".page-link").eq(1).css("border-color", "#1a3c8a");
+
+        $('div.dataTables_scrollBody').height(300);
     },
       
       "ajax":{            

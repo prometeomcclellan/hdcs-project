@@ -1,7 +1,7 @@
 <!-- Esta parte de codigo de php, evita el poder abrir la pagina despues de hacer cerrado sesión -->
 <?php 
 session_start();
-$usuario = intval($_SESSION["s_idUsuario"]);
+//$usuario = intval($_SESSION["s_idUsuario"]);
 ?>
 
 
@@ -431,7 +431,7 @@ if ( $detect->isMobile() ) {
     <div class="container">
         <div class="row">
             <div class="col-lg-12">            
-                <button id="btnNuevo" type="button" class="btn btn-warning" data-toggle="modal"><i class="material-icons" id="nuevo">add_box</i>  | Registrar solicitud</button> 
+                <button id="btnNuevo" type="button" class="btn btn-warning" data-toggle="modalCREAR"><i class="material-icons" id="">add_box</i>  | Registrar solicitud</button> 
             </div>    
         </div>    
     </div>    
@@ -443,7 +443,9 @@ if ( $detect->isMobile() ) {
 </style>
     <div class="container caja">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 print-container">
+            <input type="hidden" class="file-title" value="control-personal-fecha-">
+            <h1 type="hidden" class="documento-title" style="display:none;">Contro de Personal Fecha</h1>
                 <div class="table-responsive">        
                     <table id="tablaSolMant" class="table table-striped table-bordered table-condensed tabla-data" style="width:100%" >
                         <thead class="text-center">
@@ -486,8 +488,84 @@ if ( $detect->isMobile() ) {
     </div>   
 </footer>
     
+<!--Modal para CREAR X-->
+<div class="modal fade" id="modalCREARX" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="modalCuadro">
+            <div class="modal-header"  style="background-color: #1a3c8a;color:white;">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" style="color:white;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formSolManC">    
+                <div class="modal-body">
 
 
+                    <h5><b><i>Datos del equipo</i></b></h5> <hr>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Código equipo:</label>
+                                <input type="text" class="form-control" id="codEquipo" disabled="true" required autofocus>
+                            </div>
+                        </div> 
+                        <div class="col-lg-6">
+                            <button id="btnBuscar" type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalEquipo"><i class="material-icons">search</i>  | Buscar</button>   
+                        </div>    
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Descripción equipo:</label>
+                                <input type="textarea" class="form-control" id="descripcionEquipo" disabled="true" >
+                            </div>
+                        </div> 
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Tipo equipo:</label>
+                                <input type="text" class="form-control" id="tipoEquipo" disabled="true" >
+                            </div>
+                        </div>    
+                    </div>  
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Modelo equipo:</label>
+                                <input type="text" class="form-control" id="modeloEquipo" disabled="true" >
+                            </div>
+                        </div> 
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">ServiceTag equipo:</label>
+                                <input type="text" class="form-control" id="serviceTagEquipo" disabled="true" >
+                            </div>
+                        </div>    
+                    </div> 
+
+
+                    <hr id="linea2">
+                    <h5 id="h5"><b><i>Datos de solicitud</i></b></h5> <hr>
+                    <div class="form-group">
+                        <label for="nombre" class="col-form-label">Fecha solicitud:</label>
+                        <input type="date" class="form-control" id="fechaInput" required autofocus>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nombre" class="col-form-label">Descripción falla:</label>
+                        <textarea type="text" class="form-control " id="Pre_Diag" required autofocus></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+                </div>
+            </form>    
+        </div>
+    </div>
+</div>
 
 
 <!--Modal para CREAR-->

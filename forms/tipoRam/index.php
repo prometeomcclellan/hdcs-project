@@ -437,6 +437,7 @@ if ( $detect->isMobile() ) {
         <div class="row">
             <div class="col-lg-12 print-container">
             <input type="hidden" class="file-title" value="tipo-ram-fecha-">
+            <h1 type="hidden" class="documento-title" style="display:none;">Tipo Ram, Fecha</h1>
             <div class="table-responsive">        
                 <table id="tablaTipoRam" class="table table-striped table-bordered table-condensed tabla-data" style="width:100%" >
                     <thead class="text-center">

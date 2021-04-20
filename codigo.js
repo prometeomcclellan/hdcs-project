@@ -1,6 +1,11 @@
 $("#page_loader").fadeIn();
 
 $(document).ready(function() {
+
+  
+  
+
+  
   
   //  rol-admin  rol-todos
 
@@ -14,6 +19,10 @@ $(document).ready(function() {
   if (currentUrl.indexOf(loginUrl) == 1) {
     //alert("login")
   }else{
+    let esSesion = localStorage.getItem("esSesion");
+    //if (esSesion == false || esSesion == null || esSesion == "false") {
+      //alert("prohibido");
+    //}else{
     let cargoIni = localStorage.getItem('cargoIni');
     if (cargoIni == null) {
       //window.open("../../HDCS/forms/tecnico/index.php", "_self");
@@ -59,7 +68,8 @@ $(document).ready(function() {
       elementTecnico.style.display = "none";
     }
   }
-  }
+//}
+}
 
   let mantenimientosArray = [];
   let mantenimientosArrayX = [];
@@ -123,6 +133,7 @@ $(document).ready(function() {
   let isMb;
 
   let temporizador;
+  let titulo_doc;
 
   let wrapperWidth;
   let percentWidth;
@@ -278,8 +289,12 @@ urlString = currentUrl.indexOf(urlFilter);
 
 if (urlString == -1) {
   outCallUrl = "../../forms/usuario/crud.php";
+  //alert(document.getElementsByClassName('dataTables_scrollBody').length)
 }else{
   outCallUrl = "../forms/usuario/crud.php";
+  
+  $('div.dataTables_scrollBody').height(300);
+  
 }
  /**/ 
 
@@ -1767,6 +1782,8 @@ fotoStatus = localStorage.getItem("fotoStatus");
       }else{
         escala = 2;
       }
+
+      var doc = new jsPDF(); 
       
       var element = document.getElementsByClassName('print-container');
       var botonesAccion = document.getElementsByClassName("boton-accion");
@@ -1782,6 +1799,8 @@ fotoStatus = localStorage.getItem("fotoStatus");
 
       let elem = element[printIndex];
       let fechaActual = new Date();
+      //doc.text("Título Documento", 20, 20);
+
       var opt = {
         margin:       1,
         filename:     'myfile.pdf',
@@ -2095,7 +2114,7 @@ $(".logout-button").click(function(){
 
 
   //alert(currentUrl)
-
+/*
   if (currentUrl == "/HDCS/inicio/dashboard.php") {temporizador = 3000;}
   if (currentUrl == "/HDCS/forms/equipo/index.php") {temporizador = 6000;}
   if (currentUrl == "/HDCS/forms/asignacionEquipo/index.php") {temporizador = 9000;}
@@ -2120,31 +2139,54 @@ $(".logout-button").click(function(){
   if (currentUrl == "/HDCS/forms/tipoRam/index.php") {temporizador = 4000;}
   if (currentUrl == "/HDCS/forms/usuario/index.php") {temporizador = 2000;}
   if (currentUrl == "/HDCS/forms/velocidadRam/index.php") {temporizador = 4000;}
+  */
 
-    setTimeout(() => {
+  //alert(urlFilter)
+            urlString = currentUrl.indexOf(urlFilter);
+
+            
+
+    //setTimeout(() => {
     var tablaContainer = document.getElementsByClassName('tabla-data');
   //alert(tablaContainer.length)
   for (let indexTabla = 0; indexTabla < tablaContainer.length; indexTabla++) {
     const element = tablaContainer[indexTabla];
     titulo = $(".file-title").eq(indexTabla).val();
+    titulo_doc = $(".document-title").eq(indexTabla).val();
     let myTableId = element.id;
   //alert(myTableId)
+  /*
+  $('#'+myTableId).tableExport({
+    filename: 'table_%DD%-%MM%-%YY%',
+    format: "xlsx",
+    onbefore: function() {
+      alert('The export of tables begins!');
+    },
+    onafter: function() {
+      alert('Export complete :)');
+    },
+  });
+*/
   TableExport(document.getElementById(myTableId), {
-    headers: true,                      // (Boolean), display table headers (th or td elements) in the <thead>, (default: true)
-    footers: true,                      // (Boolean), display table footers (th or td elements) in the <tfoot>, (default: false)
-    formats: ["xlsx"],    // (String[]), filetype(s) for the export, (default: ['xlsx', 'csv', 'txt'])
-    filename: titulo+fechaActual,                     // (id, String), filename for the downloaded file, (default: 'id')
-    bootstrap: false,                   // (Boolean), style buttons using bootstrap, (default: true)
-    exportButtons: true,                // (Boolean), automatically generate the built-in export buttons for each of the specified formats (default: true)
-    position: "top",                 // (top, bottom), position of the caption element relative to table, (default: 'bottom')
-    ignoreRows: null,                   // (Number, Number[]), row indices to exclude from the exported file(s) (default: null)
-    ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file(s) (default: null)
-    trimWhitespace: true,               // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: false)
-    RTL: false,                         // (Boolean), set direction of the worksheet to right-to-left (default: false)
-    sheetname: "id"                     // (id, String), sheet name for the exported spreadsheet, (default: 'id')
+    
+    headers: true,
+    footers: true,
+    formats: ["xlsx"],
+    filename: titulo+fechaActual,
+    bootstrap: false,
+    exportButtons: true,
+    position: "top",
+    ignoreRows: null,
+    ignoreCols: null,
+    trimWhitespace: true,
+    RTL: false,
+    sheetname: "Reporte "+fechaActual
   });
 
   if (indexTabla == (tablaContainer.length-1)) {
+
+    
+
     let botoneras = document.getElementsByClassName("tableexport-caption");
     if (window.matchMedia("(max-width: 700px)").matches) {
       for (let indexBoton = 0; indexBoton < botoneras.length; indexBoton++) {
@@ -2161,6 +2203,16 @@ $(".logout-button").click(function(){
 
         if (indexBoton == (botoneras.length-1)) {
           let botonesXlsx = document.getElementsByClassName("xlsx");
+
+          alert(urlFilter)
+            urlString = currentUrl.indexOf(urlFilter);
+
+            if (urlString == -1) {
+              alert(document.getElementsByClassName('dataTables_scrollBody').length);
+              //$('div.dataTables_scrollBody').height(300);
+            }else{
+            }
+
           for (let indexXlsx = 0; indexXlsx < botonesXlsx.length; indexXlsx++) {
             const elementXlsx = botonesXlsx[indexXlsx];
             $(".xlsx").eq(indexXlsx).removeClass("button-default");
@@ -2172,6 +2224,7 @@ $(".logout-button").click(function(){
             $(".xlsx").eq(indexXlsx).css("width", "110px");
             $(".xlsx").eq(indexXlsx).text("");
             $(".xlsx").eq(indexXlsx).append(" <span>Excel <i class='fas fa-file-excel'></i></span>");
+            
             
           }
       }
@@ -2199,6 +2252,7 @@ $(".logout-button").click(function(){
             $(".xlsx").eq(indexXlsx).css("width", "110px");
             $(".xlsx").eq(indexXlsx).text("");
             $(".xlsx").eq(indexXlsx).append(" <span>Excel <i class='fas fa-file-excel'></i></span>");
+            
           }
         }
       }
@@ -2238,6 +2292,7 @@ $(".logout-button").click(function(){
     var captionS = document.getElementsByClassName("tableexport-caption");
     var tblthis = document.getElementsByTagName("table")[pdftIndex];
     var widthT = tblthis.offsetWidth;
+    let doc = new jsPDF();
 
     for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {
       const elementBA = botonesAccion[indexBA];
@@ -2259,6 +2314,10 @@ $(".logout-button").click(function(){
 
     let elem = element[pdftIndex];
     titulo = $(".file-title").eq(pdftIndex).val();
+    titulo_doc = $(".documento-title").eq(pdftIndex).text();
+    $(".documento-title").eq(pdftIndex).text(titulo_doc+" "+fechaActual);
+    $(".documento-title").eq(pdftIndex).css("display", "inherit");
+    //alert(titulo_doc)
 
     var opt = {
       margin:       1,
@@ -2268,9 +2327,18 @@ $(".logout-button").click(function(){
       html2canvas:  { scale: 1},
       jsPDF:        { unit: 'in', format: 'legal', orientation: 'landscape' }
     };
+
+    
     html2pdf().set(opt).from(elem).toPdf().save(titulo+fechaActual+'.pdf').then(function(pdf) {
       //captionS[pdftIndex].style.display = "inherit";
       //captionS[pdftIndex].style.width = widthT+"px";
+      //alert(titulo_doc)
+      //doc.text("Hello Title", 50, 30);
+      
+      $(".documento-title").eq(pdftIndex).css("display", "none");
+      
+      
+
       for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {
         const elementBA = botonesAccion[indexBA];
         elementBA.style.display = "inherit";
@@ -2283,12 +2351,11 @@ $(".logout-button").click(function(){
       }
 
       $('div.dataTables_scrollBody').height(300);
-
-      $("#page_loader").fadeOut("slow");
-
       if(currentUrl == "/HDCS/inicio/dashboard.php") {
         document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
         }
+
+        $("#page_loader").fadeOut("slow");
     });
   });
 
@@ -2325,15 +2392,17 @@ $(".logout-button").click(function(){
     }else{
       
 
-      alert(scrollHeight);
-      $('.dataTables_scrollBody').css('height', ($(window).height() - 200));  
+      //alert(scrollHeight);
+      $('.dataTables_scrollBody').css('height', 300);  
     }
 
     
     
   });
   $("#page_loader").fadeOut("slow");
-  }, temporizador);
+//  }, temporizador);
+
+
 
 
 }); // document ready

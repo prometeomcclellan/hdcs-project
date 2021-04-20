@@ -1,7 +1,7 @@
 <!-- Esta parte de codigo de php, evita el poder abrir la pagina despues de hacer cerrado sesión -->
 <?php 
     session_start(); //variable de sesión para el usuario
-    $usuario = intval($_SESSION["s_idUsuario"]);
+    //$usuario = intval($_SESSION["s_idUsuario"]);
 ?> 
 
 <!--header -->
@@ -433,7 +433,9 @@ if ( $detect->isMobile() ) {
 </style>
     <div class="container caja">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 print-container">
+            <input type="hidden" class="file-title" value="control-técnico-fecha-">
+            <h1 type="hidden" class="documento-title" style="display:none;">Contro de Técnicos Fecha</h1>
             <div class="table-responsive">        
                 <table id="tablaControlMant" class="table table-striped table-bordered table-condensed tabla-data" style="width:100%" >
                     <thead class="text-center">

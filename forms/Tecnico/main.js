@@ -130,7 +130,7 @@ console.log(diccionarioControlMant);
       
       //para usar los botones   
       responsive: "true",
-      dom: 'lBfrtip',       
+    /*  dom: 'lBfrtip',       
       "buttons":[ 
 
 
@@ -175,6 +175,7 @@ console.log(diccionarioControlMant);
         },
 
       ],
+      */
   });  
 
 //DataTable que carga las solicitudes de mantenimiento
