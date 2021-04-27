@@ -1,4 +1,22 @@
 
+<?php 
+session_start();
+if(session_id() == ''){
+  //session has not started
+  //echo "<div id='id_sesion' style='width:100vw;text-align:center;'>".session_id()."</div>";
+  echo "<script>
+          localStorage.setItem('isSession', false);
+        </script>";
+}else{
+  //echo "<div id='id_sesion' style='width:100vw;text-align:center;'>".session_id()."</div>";
+  echo "<script>
+          localStorage.setItem('isSession', true);
+        </script>";
+}
+
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +48,7 @@
   <link rel="stylesheet" href="plugins/sweetalert2/sweetalert2.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+
 <style>
 .all-orders-button{}
 .boton-accion {width:120px;margin-right:6px;}

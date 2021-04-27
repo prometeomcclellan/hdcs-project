@@ -4,9 +4,6 @@ $(document).ready(function() {
 
   
   
-
-  
-  
   //  rol-admin  rol-todos
 
   let isPhoto = false;
@@ -19,10 +16,25 @@ $(document).ready(function() {
   if (currentUrl.indexOf(loginUrl) == 1) {
     //alert("login")
   }else{
-    let esSesion = localStorage.getItem("esSesion");
-    //if (esSesion == false || esSesion == null || esSesion == "false") {
-      //alert("prohibido");
-    //}else{
+
+    /*
+    if(document.referrer == location.href){
+      location.href = 'error.php';
+    }else{}
+    */
+
+    let esInicio = localStorage.getItem("esInicio");
+
+    let esSesion = localStorage.getItem("isSession");
+    //alert(esSesion);
+    if (esSesion == true) {
+      
+    }else{}
+
+    if (esInicio == false || esInicio == null || esInicio == "false") {
+      document.body.style.display = "none";
+      location.href = '../index.php';
+    }else{
     let cargoIni = localStorage.getItem('cargoIni');
     if (cargoIni == null) {
       //window.open("../../HDCS/forms/tecnico/index.php", "_self");
@@ -68,7 +80,7 @@ $(document).ready(function() {
       elementTecnico.style.display = "none";
     }
   }
-//}
+}
 }
 
   let mantenimientosArray = [];
@@ -213,7 +225,11 @@ $('#formLogin').submit(function(e){
               type:'error',
               title:'Usuario / contraseña incorrecta o se encuentra inactivo ',
             });
+            esInicio = false;
+            localStorage.setItem("esInicio", esInicio);
           }else{
+            esInicio = true;
+            localStorage.setItem("esInicio", esInicio);
             let idDeUsuario = thisData[0].idUsuario;
             let cargoIni = thisData[0].cargo;
             localStorage.setItem("idDeUsuario", idDeUsuario);

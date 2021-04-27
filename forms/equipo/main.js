@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+  let esSesion = localStorage.getItem("esSesion");
+  alert(esSesion)
 var id, opcion;
 var fila; //captura la fila, para editar o eliminar
 var diccionarioTipoEquipo = [];
