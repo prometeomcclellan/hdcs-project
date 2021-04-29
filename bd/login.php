@@ -7,12 +7,9 @@
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	$data = array();
 
-	
 	$sessionTime = 365 * 24 * 60 * 60; // 1 año de duración
 	session_set_cookie_params($sessionTime, '/', 'localhost.com');
 	session_start();
-
-	//print_r($conexion);   probamos si esta bien la conexión con la base de datos.
 
 	//recepción de datos enviados mediante POST desde ajax
 	$usuario = (isset($_POST['usuario'])) ? $_POST['usuario'] : '';
@@ -26,8 +23,6 @@
     $resultado->bindValue(2, $pass); 
     $resultado->execute();
     $dataX = $resultado->fetchAll(PDO::FETCH_ASSOC);
-
-	//echo $resultado->rowCount();
 
 	if($resultado->rowCount() > 0){
 		foreach($dataX as $dat) {     
@@ -79,7 +74,7 @@
 		}
 	}else{
 			$_SESSION["s_usuario"] = null;
-			   $_SESSION["s_idUsuario"] = null; 
+			$_SESSION["s_idUsuario"] = null; 
 			$_SESSION["s_estadoUsuario"] = null; 
 			$_SESSION["s_codEmpleado"] = null;
 			$_SESSION["s_cargo"] = null;

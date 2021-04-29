@@ -1,21 +1,49 @@
 $("#page_loader").fadeIn();
 
 $(document).ready(function() {
-  $("#page_loader").fadeOut("slow");
-  //  rol-admin  rol-todos
 
   
+  
+  //  rol-admin  rol-todos
 
   let isPhoto = false;
   var currentUrl = location.pathname;
-  let urlFilter = "inicio";
-  let urlString;
-
-  urlString = currentUrl.indexOf("HDCS/index.php");
-  alert(urlString)
-if (urlString == -1) {}else{
-  let cargoIni = localStorage.getItem('cargoIni');
+  let loginUrl = "HDCS/index.php";
+  //alert(currentUrl.indexOf(loginUrl))
+  /*
   
+*/
+  if (currentUrl.indexOf(loginUrl) == 1) {
+    //alert("login")
+  }else{
+
+    /*
+    if(document.referrer == location.href){
+      location.href = 'error.php';
+    }else{}
+    */
+
+    let esInicio = localStorage.getItem("esInicio");
+
+    let esSesion = localStorage.getItem("isSession");
+    //alert(esSesion);
+    if (esSesion == true) {
+    }else{  //location.href = '../index.php';
+      //document.body.style.display = "none";
+      //window.open('../index.php', "_self");
+      //location.href = '../index.php';
+      
+      }
+
+    if (esInicio == false || esInicio == null || esInicio == "false") {
+      document.body.style.display = "none";
+      location.href = '../index.php';
+    }else{
+    let cargoIni = localStorage.getItem('cargoIni');
+    if (cargoIni == null) {
+      //window.open("../../HDCS/forms/tecnico/index.php", "_self");
+    }
+    let brandLink = document.getElementsByClassName("brand-link");
   let rolTodosContainer = document.getElementsByClassName("rol-todos");
   let rolAdminContainer = document.getElementsByClassName("rol-admin");
   let rolTecnicoContainer = document.getElementsByClassName("rol-tecnico");
@@ -24,6 +52,12 @@ if (urlString == -1) {}else{
   if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
     != "admin") {
     $("#usuarioNombre").attr("data-target", "");
+    
+    for (let indexBr = 0; indexBr < brandLink.length; indexBr++) {
+      const elementBr = brandLink[indexBr];
+      elementBr.href = "#";
+    }
+    
     for (let indexRol = 0; indexRol < rolAdminContainer.length; indexRol++) {
       const element = rolAdminContainer[indexRol];
       element.style.display = "none";
@@ -41,12 +75,18 @@ if (urlString == -1) {}else{
     }
    }
   }else{
-
+    for (let indexPersonal = 0; indexPersonal < rolPersonalContainer.length; indexPersonal++) {
+      const elementPersonal = rolPersonalContainer[indexPersonal];
+      elementPersonal.style.display = "none";
+    }
+    for (let indexTecnico = 0; indexTecnico < rolTecnicoContainer.length; indexTecnico++) {
+      const elementTecnico = rolTecnicoContainer[indexTecnico];
+      elementTecnico.style.display = "none";
+    }
   }
 }
 
-  
-  
+
 
   let mantenimientosArray = [];
   let mantenimientosArrayX = [];
@@ -87,8 +127,8 @@ if (urlString == -1) {}else{
 
   let outUrl;
   let outCallUrl;
-  
-  
+  let urlString;
+  let urlFilter = "inicio";
 
   let tiempoNotificacion = 0;
   let estadoNotificacion = "";
@@ -101,9 +141,16 @@ if (urlString == -1) {}else{
   let thumbElement;
 
   let isFirstFilter = true;
-  let dFrom; let dTo;
+  let dFrom; let dTo; let fromTo;
 
   let loginRedirectUrl;
+
+  let sizeFile;
+  let pesoDeImagen;
+  let isMb;
+
+  let temporizador;
+  let titulo_doc;
 
   let wrapperWidth;
   let percentWidth;
@@ -114,8 +161,6 @@ if (urlString == -1) {}else{
     }
     
 }
-
-
 
 let ahora = new Date();
     let ahoraAnio = ahora.getFullYear();
@@ -185,7 +230,11 @@ $('#formLogin').submit(function(e){
               type:'error',
               title:'Usuario / contraseña incorrecta o se encuentra inactivo ',
             });
+            esInicio = false;
+            localStorage.setItem("esInicio", esInicio);
           }else{
+            esInicio = true;
+            localStorage.setItem("esInicio", esInicio);
             let idDeUsuario = thisData[0].idUsuario;
             let cargoIni = thisData[0].cargo;
             localStorage.setItem("idDeUsuario", idDeUsuario);
@@ -261,8 +310,12 @@ urlString = currentUrl.indexOf(urlFilter);
 
 if (urlString == -1) {
   outCallUrl = "../../forms/usuario/crud.php";
+  //alert(document.getElementsByClassName('dataTables_scrollBody').length)
 }else{
   outCallUrl = "../forms/usuario/crud.php";
+  
+  $('div.dataTables_scrollBody').height(300);
+  
 }
  /**/ 
 
@@ -306,74 +359,91 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
   $(".boton-filtrar").click(function(){
     //alert(dFrom+", "+dTo);
     $("#mantenimientosFiltradosFecha").empty();
-    $("#page_loader").fadeIn();
+    
 
+    fromTo = dFrom>dTo;
+    //alert(fromTo)
+    if (fromTo == true) {
+      $(document).Toasts('create', {
+        class: 'bg-warning', 
+        title: "Error",
+        subtitle: 'Cerrar',
+        autohide: true,
+        delay: 6000,
+        body: 'La fecha inicial no puede ser mayor a la final.'
+      })
+    }else{
+      $("#page_loader").fadeIn();
+      $.ajax({
+        type: "post",
+        crossOrigin: true,
+        url: "../bd/get_mantenimientos_por_periodo.php",
+        data: {from:dFrom, to:dTo},
+        async: false,
+        success: function (data) {
+          arrayFiltered = JSON.parse(data);
+          console.log("data filtrada");
+          console.dir(arrayFiltered);
+          let sortedPeriodArray = mantenimientosPendientesArray.sort();
+          for (let indexFilt = 0; indexFilt < arrayFiltered.length; indexFilt++) {
+            const elementFiltered = arrayFiltered[indexFilt];
+            let estadoFiltrado = elementFiltered.status;
+            if (estadoFiltrado == 200) {
+              $(".alerta-no-data").eq(0).fadeOut("slow");
+              let oNumberFilt = elementFiltered.idControlMantenimiento+"-"+elementFiltered.idSolicitudMantenimiento;
+              let oEquipmentFilt = elementFiltered.descripcionEquipo;
+              let oDeptoFilt = elementFiltered.departamentoP;
+              let oStatusFilt = elementFiltered.estadoControlMantenimiento;
+              let oSDateFilt = elementFiltered.fechaSolicitudMantenimiento;
+              let oDateFilt = elementFiltered.fechaControlMantenimiento;
+              let oClassFilt = "success";
   
-    $.ajax({
-      type: "post",
-      crossOrigin: true,
-      url: "../bd/get_mantenimientos_por_periodo.php",
-      data: {from:dFrom, to:dTo},
-      async: false,
-      success: function (data) {
-        arrayFiltered = JSON.parse(data);
-        console.log("data filtrada");
-        console.dir(arrayFiltered);
-        let sortedPeriodArray = mantenimientosPendientesArray.sort();
-        for (let indexFilt = 0; indexFilt < arrayFiltered.length; indexFilt++) {
-          const elementFiltered = arrayFiltered[indexFilt];
-          let estadoFiltrado = elementFiltered.status;
-          if (estadoFiltrado == 200) {
-            $(".alerta-no-data").eq(0).fadeOut("slow");
-            let oNumberFilt = elementFiltered.idControlMantenimiento+"-"+elementFiltered.idSolicitudMantenimiento;
-            let oEquipmentFilt = elementFiltered.descripcionEquipo;
-            let oDeptoFilt = elementFiltered.departamentoP;
-            let oStatusFilt = elementFiltered.estadoControlMantenimiento;
-            let oSDateFilt = elementFiltered.fechaSolicitudMantenimiento;
-            let oDateFilt = elementFiltered.fechaControlMantenimiento;
-            let oClassFilt = "success";
-
-            if(oStatusFilt == "Diagnosticado"){
-              oClassFilt = "danger";
+              if(oStatusFilt == "Diagnosticado"){
+                oClassFilt = "danger";
+              }
+      
+              if(oStatusFilt == "En reparación"){
+                oClassFilt = "warning";
+              }
+      
+              if(oStatusFilt == "Finalizado"){
+                oClassFilt = "success";
+              }
+  
+              $("#mantenimientosFiltradosFecha").append(
+                "<tr class='maintinance-filtered'>"
+                  +"<td>"+oNumberFilt+"</td>"+"<input type='hidden' value="+elementFiltered.idControlMantenimiento+" class='order-number'>"
+                  +"<td>"+oEquipmentFilt+"<span class='order-description' style='display:none;'>"+oEquipmentFilt+"</span></td>"
+                  +"<td><span class='badge badge-"+oClassFilt+"' style='width:120px;'>"+oStatusFilt+"</span><span class='order-status' style='display:none;'>"+oStatusFilt+"</span></td>"
+                  +"<td>"
+                    +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oSDateFilt+"</div>"+"<input type='hidden' value="+oSDateFilt+" class='order-sdate'>"
+                  +"</td>"
+                  +"<td>"
+                    +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDateFilt+"</div>"+"<input type='hidden' value="+oDateFilt+" class='order-odate'>"
+                  +"</td>"
+                  +"<td>"
+                    +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDeptoFilt+"</div>"+"<input type='hidden' value="+oDeptoFilt+" class='order-odate'>"
+                  +"</td>"
+                  
+                 +"</tr>");
             }
-    
-            if(oStatusFilt == "En reparación"){
-              oClassFilt = "warning";
-            }
-    
-            if(oStatusFilt == "Finalizado"){
-              oClassFilt = "success";
-            }
-
-            $("#mantenimientosFiltradosFecha").append(
-              "<tr class='maintinance-filtered'>"
-                +"<td>"+oNumberFilt+"</td>"+"<input type='hidden' value="+elementFiltered.idControlMantenimiento+" class='order-number'>"
-                +"<td>"+oEquipmentFilt+"<span class='order-description' style='display:none;'>"+oEquipmentFilt+"</span></td>"
-                +"<td><span class='badge badge-"+oClassFilt+"' style='width:120px;'>"+oStatusFilt+"</span><span class='order-status' style='display:none;'>"+oStatusFilt+"</span></td>"
-                +"<td>"
-                  +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oSDateFilt+"</div>"+"<input type='hidden' value="+oSDateFilt+" class='order-sdate'>"
-                +"</td>"
-                +"<td>"
-                  +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDateFilt+"</div>"+"<input type='hidden' value="+oDateFilt+" class='order-odate'>"
-                +"</td>"
-                +"<td>"
-                  +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDeptoFilt+"</div>"+"<input type='hidden' value="+oDeptoFilt+" class='order-odate'>"
-                +"</td>"
                 
-               +"</tr>");
+            if (estadoFiltrado == 500) {
+              $(".alerta-no-data").eq(0).fadeIn();
+            }
+  
+            if (indexFilt == (arrayFiltered.length-1)) {
+              $("#page_loader").fadeOut("slow");
+            }
           }
-              
-          if (estadoFiltrado == 500) {
-            $(".alerta-no-data").eq(0).fadeIn();
-          }
-
-          if (indexFilt == (arrayFiltered.length-1)) {
-            $("#page_loader").fadeOut("slow");
-          }
+          
         }
-        
-      }
-    });
+      });
+    }
+  
+    /*
+    
+    */
   });
 
   //isFirstFilter
@@ -1476,9 +1546,9 @@ fotoStatus = localStorage.getItem("fotoStatus");
         {
 
           //alert(Math.round(input.files[0].size/1024));
-          let sizeFile = Math.round(input.files[0].size);
-          let pesoDeImagen = formatBytes(sizeFile,2);
-          let isMb = pesoDeImagen.indexOf("MB");
+          sizeFile = Math.round(input.files[0].size);
+          pesoDeImagen = formatBytes(sizeFile,2);
+          isMb = pesoDeImagen.indexOf("MB");
 
           if (isMb != -1) {
             let mbPrefix = pesoDeImagen.substring(0,1);//+1
@@ -1733,6 +1803,8 @@ fotoStatus = localStorage.getItem("fotoStatus");
       }else{
         escala = 2;
       }
+
+      var doc = new jsPDF(); 
       
       var element = document.getElementsByClassName('print-container');
       var botonesAccion = document.getElementsByClassName("boton-accion");
@@ -1748,6 +1820,8 @@ fotoStatus = localStorage.getItem("fotoStatus");
 
       let elem = element[printIndex];
       let fechaActual = new Date();
+      //doc.text("Título Documento", 20, 20);
+
       var opt = {
         margin:       1,
         filename:     'myfile.pdf',
@@ -2060,33 +2134,80 @@ $(".logout-button").click(function(){
   })
 
 
-  
+  //alert(currentUrl)
+/*
+  if (currentUrl == "/HDCS/inicio/dashboard.php") {temporizador = 3000;}
+  if (currentUrl == "/HDCS/forms/equipo/index.php") {temporizador = 6000;}
+  if (currentUrl == "/HDCS/forms/asignacionEquipo/index.php") {temporizador = 9000;}
+  if (currentUrl == "/HDCS/forms/capacidad/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/cargo/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/controlGarantia/index.php") {temporizador = 3000;}
+  if (currentUrl == "/HDCS/forms/controlMantenimiento/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/departamento/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/detEquipoComputadora/index.php") {temporizador = 5000;}
+  if (currentUrl == "/HDCS/forms/empleado/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/empresaGarantia/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/equipo/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/estadoControlMantenimiento/index.php") {temporizador = 0;}
+  if (currentUrl == "/HDCS/forms/marca/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/modelo/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/personal/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/solicitudMantenimiento/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/tecnico/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/tipoDisco/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/tipoEquipo/index.php") {temporizador = 6000;}
+  if (currentUrl == "/HDCS/forms/tipoMantenimiento/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/tipoRam/index.php") {temporizador = 4000;}
+  if (currentUrl == "/HDCS/forms/usuario/index.php") {temporizador = 2000;}
+  if (currentUrl == "/HDCS/forms/velocidadRam/index.php") {temporizador = 4000;}
+  */
 
-  var tablaContainer = document.getElementsByClassName('tabla-data');
-  
-  //let excelIndex = $(".boton-excel").index(this);
-//alert("voy")
+  //alert(urlFilter)
+            urlString = currentUrl.indexOf(urlFilter);
+
+            
+
+    //setTimeout(() => {
+    var tablaContainer = document.getElementsByClassName('tabla-data');
+  //alert(tablaContainer.length)
   for (let indexTabla = 0; indexTabla < tablaContainer.length; indexTabla++) {
     const element = tablaContainer[indexTabla];
     titulo = $(".file-title").eq(indexTabla).val();
+    titulo_doc = $(".document-title").eq(indexTabla).val();
     let myTableId = element.id;
-  
+  //alert(myTableId)
+  /*
+  $('#'+myTableId).tableExport({
+    filename: 'table_%DD%-%MM%-%YY%',
+    format: "xlsx",
+    onbefore: function() {
+      alert('The export of tables begins!');
+    },
+    onafter: function() {
+      alert('Export complete :)');
+    },
+  });
+*/
   TableExport(document.getElementById(myTableId), {
-    headers: true,                      // (Boolean), display table headers (th or td elements) in the <thead>, (default: true)
-    footers: true,                      // (Boolean), display table footers (th or td elements) in the <tfoot>, (default: false)
-    formats: ["xlsx", "csv", "txt"],    // (String[]), filetype(s) for the export, (default: ['xlsx', 'csv', 'txt'])
-    filename: titulo+fechaActual,                     // (id, String), filename for the downloaded file, (default: 'id')
-    bootstrap: false,                   // (Boolean), style buttons using bootstrap, (default: true)
-    exportButtons: true,                // (Boolean), automatically generate the built-in export buttons for each of the specified formats (default: true)
-    position: "top",                 // (top, bottom), position of the caption element relative to table, (default: 'bottom')
-    ignoreRows: null,                   // (Number, Number[]), row indices to exclude from the exported file(s) (default: null)
-    ignoreCols: null,                   // (Number, Number[]), column indices to exclude from the exported file(s) (default: null)
-    trimWhitespace: true,               // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: false)
-    RTL: false,                         // (Boolean), set direction of the worksheet to right-to-left (default: false)
-    sheetname: "id"                     // (id, String), sheet name for the exported spreadsheet, (default: 'id')
+    
+    headers: true,
+    footers: true,
+    formats: ["xlsx"],
+    filename: titulo+fechaActual,
+    bootstrap: false,
+    exportButtons: true,
+    position: "top",
+    ignoreRows: null,
+    ignoreCols: null,
+    trimWhitespace: true,
+    RTL: false,
+    sheetname: "Reporte "+fechaActual
   });
 
   if (indexTabla == (tablaContainer.length-1)) {
+
+    
+
     let botoneras = document.getElementsByClassName("tableexport-caption");
     if (window.matchMedia("(max-width: 700px)").matches) {
       for (let indexBoton = 0; indexBoton < botoneras.length; indexBoton++) {
@@ -2103,29 +2224,29 @@ $(".logout-button").click(function(){
 
         if (indexBoton == (botoneras.length-1)) {
           let botonesXlsx = document.getElementsByClassName("xlsx");
+
+          alert(urlFilter)
+            urlString = currentUrl.indexOf(urlFilter);
+
+            if (urlString == -1) {
+              alert(document.getElementsByClassName('dataTables_scrollBody').length);
+              //$('div.dataTables_scrollBody').height(300);
+            }else{
+            }
+
           for (let indexXlsx = 0; indexXlsx < botonesXlsx.length; indexXlsx++) {
             const elementXlsx = botonesXlsx[indexXlsx];
             $(".xlsx").eq(indexXlsx).removeClass("button-default");
             $(".xlsx").eq(indexXlsx).addClass("btn");
             $(".xlsx").eq(indexXlsx).addClass("btn-success");
-            $(".csv").eq(indexXlsx).removeClass("button-default");
-            $(".csv").eq(indexXlsx).addClass("btn");
-            $(".csv").eq(indexXlsx).addClass("btn-primary");
-            $(".txt").eq(indexXlsx).removeClass("button-default");
-            $(".txt").eq(indexXlsx).addClass("btn");
-            $(".txt").eq(indexXlsx).addClass("btn-warning");
+            $(".xlsx").eq(indexXlsx).addClass("boton-accion");
+            $(".xlsx").eq(indexXlsx).addClass("boton-excel");
             $(".xlsx").eq(indexXlsx).css("margin-right", "6px");
-            $(".csv").eq(indexXlsx).css("margin-right", "6px");
-            $(".txt").eq(indexXlsx).css("margin-right", "6px");
             $(".xlsx").eq(indexXlsx).css("width", "110px");
-            $(".csv").eq(indexXlsx).css("width", "110px");
-            $(".txt").eq(indexXlsx).css("width", "110px");
             $(".xlsx").eq(indexXlsx).text("");
-            $(".csv").eq(indexXlsx).text("");
-            $(".txt").eq(indexXlsx).text("");
             $(".xlsx").eq(indexXlsx).append(" <span>Excel <i class='fas fa-file-excel'></i></span>");
-            $(".csv").eq(indexXlsx).append(" <span>Csv <i class='fas fa-file-csv'></i></span>");
-            $(".txt").eq(indexXlsx).append(" <span>Txt <i class='fa fa-file'></i></span>");
+            
+            
           }
       }
     }
@@ -2147,46 +2268,34 @@ $(".logout-button").click(function(){
             $(".xlsx").eq(indexXlsx).removeClass("button-default");
             $(".xlsx").eq(indexXlsx).addClass("btn");
             $(".xlsx").eq(indexXlsx).addClass("btn-success");
-            $(".csv").eq(indexXlsx).removeClass("button-default");
-            $(".csv").eq(indexXlsx).addClass("btn");
-            $(".csv").eq(indexXlsx).addClass("btn-primary");
-            $(".txt").eq(indexXlsx).removeClass("button-default");
-            $(".txt").eq(indexXlsx).addClass("btn");
-            $(".txt").eq(indexXlsx).addClass("btn-warning");
+            $(".xlsx").eq(indexXlsx).addClass("boton-accion");
             $(".xlsx").eq(indexXlsx).css("margin-right", "6px");
-            $(".csv").eq(indexXlsx).css("margin-right", "6px");
-            $(".txt").eq(indexXlsx).css("margin-right", "6px");
             $(".xlsx").eq(indexXlsx).css("width", "110px");
-            $(".csv").eq(indexXlsx).css("width", "110px");
-            $(".txt").eq(indexXlsx).css("width", "110px");
             $(".xlsx").eq(indexXlsx).text("");
-            $(".csv").eq(indexXlsx).text("");
-            $(".txt").eq(indexXlsx).text("");
             $(".xlsx").eq(indexXlsx).append(" <span>Excel <i class='fas fa-file-excel'></i></span>");
-            $(".csv").eq(indexXlsx).append(" <span>Csv <i class='fas fa-file-csv'></i></span>");
-            $(".txt").eq(indexXlsx).append(" <span>Txt <i class='fa fa-file'></i></span>");
+            
           }
         }
       }
     }
-    
-
+   }
   }
 
-  }
-  
   $(".create-orders-button").click(function(evc){
     //alert("voy");
     evc.preventDefault();
     evc.stopPropagation();
     window.open("/HDCS/forms/solicitudMantenimiento/index.php", "_self");
   });
-  
+
   $(".boton-pdf").click(function(evpdf){
     //alert("voy");
     evpdf.preventDefault();
     evpdf.stopPropagation();
     let pdftIndex = $(".boton-pdf").index(this);
+    $("#page_loader").fadeIn();
+
+
     if (window.matchMedia("(max-width: 700px)").matches) {
       escala = 1;
     }else{
@@ -2195,11 +2304,24 @@ $(".logout-button").click(function(){
     
     var element = document.getElementsByClassName('print-container');
     var elementTitle = document.getElementsByClassName('file-title');
+    
+    let miContenedor = document.getElementsByClassName("tableexport-caption");
+    //alert(miContenedor.length)
+    $('div.dataTables_scrollBody').height("auto");
+
     var botonesAccion = document.getElementsByClassName("boton-accion");
     var captionS = document.getElementsByClassName("tableexport-caption");
     var tblthis = document.getElementsByTagName("table")[pdftIndex];
     var widthT = tblthis.offsetWidth;
-    captionS[pdftIndex].style.display = "none";
+    let doc = new jsPDF();
+
+    for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {
+      const elementBA = botonesAccion[indexBA];
+      elementBA.style.display = "none";
+    }
+    //captionS[pdftIndex].style.display = "none";
+    //$(".tableexport-caption").eq(pdftIndex).find("boton-accion").css("display", "none");
+
 
     if(currentUrl == "/HDCS/inicio/dashboard.php") {
       document.getElementById('repSegEst').style.height = "auto";
@@ -2213,17 +2335,35 @@ $(".logout-button").click(function(){
 
     let elem = element[pdftIndex];
     titulo = $(".file-title").eq(pdftIndex).val();
+    titulo_doc = $(".documento-title").eq(pdftIndex).text();
+    $(".documento-title").eq(pdftIndex).text(titulo_doc+" "+fechaActual);
+    $(".documento-title").eq(pdftIndex).css("display", "inherit");
+    //alert(titulo_doc)
 
     var opt = {
       margin:       1,
+      pagebreak: {avoid: 'tr'},
       filename:     'myfile.pdf',
       image:        { type: 'jpeg', quality: 0.98 },
       html2canvas:  { scale: 1},
-      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      jsPDF:        { unit: 'in', format: 'legal', orientation: 'landscape' }
     };
+
+    
     html2pdf().set(opt).from(elem).toPdf().save(titulo+fechaActual+'.pdf').then(function(pdf) {
-      captionS[pdftIndex].style.display = "inherit";
-      captionS[pdftIndex].style.width = widthT+"px";
+      //captionS[pdftIndex].style.display = "inherit";
+      //captionS[pdftIndex].style.width = widthT+"px";
+      //alert(titulo_doc)
+      //doc.text("Hello Title", 50, 30);
+      
+      $(".documento-title").eq(pdftIndex).css("display", "none");
+      
+      
+
+      for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {
+        const elementBA = botonesAccion[indexBA];
+        elementBA.style.display = "inherit";
+      }
       
       for (let indexB = 0; indexB < botonesAccion.length; indexB++) {
         const element = botonesAccion[indexB];
@@ -2231,9 +2371,12 @@ $(".logout-button").click(function(){
 
       }
 
+      $('div.dataTables_scrollBody').height(300);
       if(currentUrl == "/HDCS/inicio/dashboard.php") {
         document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
         }
+
+        $("#page_loader").fadeOut("slow");
     });
   });
 
@@ -2270,12 +2413,17 @@ $(".logout-button").click(function(){
     }else{
       
 
-      alert(scrollHeight);
-      $('.dataTables_scrollBody').css('height', ($(window).height() - 200));  
+      //alert(scrollHeight);
+      $('.dataTables_scrollBody').css('height', 300);  
     }
 
     
     
   });
+  $("#page_loader").fadeOut("slow");
+//  }, temporizador);
+
+
+
 
 }); // document ready

@@ -356,7 +356,7 @@ console.log(diccionarioControlMant);
                 datatype:"json",
                 data: {codEquipo:_codEquipo, observacion:_observacion, selectControlMant:_selectControlMant},
                 success: function(data) {
-                  alert(data);
+                  //alert(data);
                 }
               });
             }else{

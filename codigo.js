@@ -2,87 +2,6 @@ $("#page_loader").fadeIn();
 
 $(document).ready(function() {
 
-  
-  
-  //  rol-admin  rol-todos
-
-  let isPhoto = false;
-  var currentUrl = location.pathname;
-  let loginUrl = "HDCS/index.php";
-  //alert(currentUrl.indexOf(loginUrl))
-  /*
-  
-*/
-  if (currentUrl.indexOf(loginUrl) == 1) {
-    //alert("login")
-  }else{
-
-    /*
-    if(document.referrer == location.href){
-      location.href = 'error.php';
-    }else{}
-    */
-
-    let esInicio = localStorage.getItem("esInicio");
-
-    let esSesion = localStorage.getItem("isSession");
-    //alert(esSesion);
-    if (esSesion == true) {
-      
-    }else{}
-
-    if (esInicio == false || esInicio == null || esInicio == "false") {
-      document.body.style.display = "none";
-      location.href = '../index.php';
-    }else{
-    let cargoIni = localStorage.getItem('cargoIni');
-    if (cargoIni == null) {
-      //window.open("../../HDCS/forms/tecnico/index.php", "_self");
-    }
-    let brandLink = document.getElementsByClassName("brand-link");
-  let rolTodosContainer = document.getElementsByClassName("rol-todos");
-  let rolAdminContainer = document.getElementsByClassName("rol-admin");
-  let rolTecnicoContainer = document.getElementsByClassName("rol-tecnico");
-  let rolPersonalContainer = document.getElementsByClassName("rol-personal");
-
-  if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
-    != "admin") {
-    $("#usuarioNombre").attr("data-target", "");
-    
-    for (let indexBr = 0; indexBr < brandLink.length; indexBr++) {
-      const elementBr = brandLink[indexBr];
-      elementBr.href = "#";
-    }
-    
-    for (let indexRol = 0; indexRol < rolAdminContainer.length; indexRol++) {
-      const element = rolAdminContainer[indexRol];
-      element.style.display = "none";
-    }
-    if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
-    == "tecnico") {
-    for (let indexPersonal = 0; indexPersonal < rolPersonalContainer.length; indexPersonal++) {
-      const elementPersonal = rolPersonalContainer[indexPersonal];
-      elementPersonal.style.display = "none";
-    }
-   }else{
-    for (let indexTecnico = 0; indexTecnico < rolTecnicoContainer.length; indexTecnico++) {
-      const elementTecnico = rolTecnicoContainer[indexTecnico];
-      elementTecnico.style.display = "none";
-    }
-   }
-  }else{
-    for (let indexPersonal = 0; indexPersonal < rolPersonalContainer.length; indexPersonal++) {
-      const elementPersonal = rolPersonalContainer[indexPersonal];
-      elementPersonal.style.display = "none";
-    }
-    for (let indexTecnico = 0; indexTecnico < rolTecnicoContainer.length; indexTecnico++) {
-      const elementTecnico = rolTecnicoContainer[indexTecnico];
-      elementTecnico.style.display = "none";
-    }
-  }
-}
-}
-
   let mantenimientosArray = [];
   let mantenimientosArrayX = [];
   let mantenimientosXUsuarioArray = [];
@@ -122,6 +41,7 @@ $(document).ready(function() {
 
   let outUrl;
   let outCallUrl;
+  let deactivateUrl;
   let urlString;
   let urlFilter = "inicio";
 
@@ -149,6 +69,143 @@ $(document).ready(function() {
 
   let wrapperWidth;
   let percentWidth;
+  
+  //  rol-admin  rol-todos
+
+  let isPhoto = false;
+  var currentUrl = location.pathname;
+  let loginUrl = "HDCS/index.php";
+  let thisHash;
+
+  //alert(currentUrl.indexOf(loginUrl))
+  /*
+  
+*/
+  if (currentUrl.indexOf(loginUrl) == 1) {
+    //alert("login")
+    let esSesion = localStorage.getItem("isSession");
+    //alert(esSesion)
+  }else{
+
+    
+
+    let esInicio = localStorage.getItem("esInicio");
+    thisHash = localStorage.getItem("thisHash");
+    //alert(thisHash)
+
+    urlString = currentUrl.indexOf(urlFilter);
+  if (urlString == -1) {
+    outCallUrl = "../../bd/verificar_sesion.php";
+    outUrl = "../../index.php";
+  }else{
+    outCallUrl = "../bd/verificar_sesion.php";
+    outUrl = "../index.php";
+  }
+
+     
+      $.ajax({
+        url:outCallUrl,
+        type:"POST",
+        async: false,
+        data: {hash: thisHash}, 
+          success:function(dataAccess){
+            let dataDeAcceso = JSON.parse(dataAccess);
+            let  estadoR = dataDeAcceso[0].status;
+            if (estadoR == 200) {
+              console.log("acceso verificado");
+            }
+            if (estadoR == 500) {
+              console.log("acceso no verificado");
+              document.body.style.display = "none";
+              location.href = outUrl;
+            }
+            
+          }      
+        });
+
+   
+    if(document.referrer == location.href){
+      location.href = 'error.php';
+    }else{}
+    /**/
+/*
+    $.ajax({
+      url:"bd/verificar_acceso.php",
+      type:"POST",
+      async: false,
+      data: {idUsuario:idDeUsuario, accessUrl: "login", usuario:_usuario, password:_password,
+      fechaAcceso:fechaAcceso}, 
+        success:function(dataAccess){
+          console.log("acceso creado");
+        }      
+      });
+
+    
+    
+
+    let esSesion = localStorage.getItem("isSession");
+    //alert(esSesion)
+
+    if(esSesion == false){
+      //alert("vamos para afuera")
+    }else{
+      //alert("vamos para adentro")
+    }
+    */
+
+    if (esInicio == false || esInicio == null || esInicio == "false") {
+      document.body.style.display = "none";
+      location.href = '../index.php';
+    }else{
+    let cargoIni = localStorage.getItem('cargoIni');
+    if (cargoIni == null) {
+      //window.open("../../HDCS/forms/tecnico/index.php", "_self");
+    }
+    let brandLink = document.getElementsByClassName("brand-link");
+    let rolTodosContainer = document.getElementsByClassName("rol-todos");
+    let rolAdminContainer = document.getElementsByClassName("rol-admin");
+    let rolTecnicoContainer = document.getElementsByClassName("rol-tecnico");
+    let rolPersonalContainer = document.getElementsByClassName("rol-personal");
+  
+    if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
+    != "admin") {
+    $("#usuarioNombre").attr("data-target", "");
+    
+    for (let indexBr = 0; indexBr < brandLink.length; indexBr++) {
+      const elementBr = brandLink[indexBr];
+      elementBr.href = "#";
+    }
+    
+    for (let indexRol = 0; indexRol < rolAdminContainer.length; indexRol++) {
+      const element = rolAdminContainer[indexRol];
+      element.style.display = "none";
+    }
+    if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
+    == "tecnico") {
+    for (let indexPersonal = 0; indexPersonal < rolPersonalContainer.length; indexPersonal++) {
+      const elementPersonal = rolPersonalContainer[indexPersonal];
+      elementPersonal.style.display = "none";
+    }
+   }else{
+    for (let indexTecnico = 0; indexTecnico < rolTecnicoContainer.length; indexTecnico++) {
+      const elementTecnico = rolTecnicoContainer[indexTecnico];
+      elementTecnico.style.display = "none";
+    }
+   }
+  }else{
+    for (let indexPersonal = 0; indexPersonal < rolPersonalContainer.length; indexPersonal++) {
+      const elementPersonal = rolPersonalContainer[indexPersonal];
+      elementPersonal.style.display = "none";
+    }
+    for (let indexTecnico = 0; indexTecnico < rolTecnicoContainer.length; indexTecnico++) {
+      const elementTecnico = rolTecnicoContainer[indexTecnico];
+      elementTecnico.style.display = "none";
+    }
+  }
+}
+}
+
+  
   function percentwidth(elem){
     if (elem) {
       var pa= elem.offsetParent || elem;
@@ -214,6 +271,8 @@ $('#formLogin').submit(function(e){
           //console.dir(JSON.parse(data));
           //console.dir(thisData); 
           //console.log(thisData[0].status)
+          // llamada a crear acceso de sesion con permiso enviando idUsuario, accessUrl
+          // crear_acceso.php
 
           thisData = JSON.parse(data);
           //thisData = data;
@@ -234,6 +293,54 @@ $('#formLogin').submit(function(e){
             let cargoIni = thisData[0].cargo;
             localStorage.setItem("idDeUsuario", idDeUsuario);
             localStorage.setItem("cargoIni", cargoIni);
+
+            let ahoraAcceso = new Date();
+            let accesoAnio = ahoraAcceso.getFullYear();
+            let accesoMonth = ahoraAcceso.getMonth();
+            let accesoDay = ahoraAcceso.getDate();
+            let accesoHour = ahoraAcceso.getHours();
+            let accesoMinutes = ahoraAcceso.getMinutes();
+            let accesoSeconds = ahoraAcceso.getSeconds();
+            let accesoDia;
+            let accesoMes;
+            if (accesoMonth < 10) {
+              accesoMes = "0"+(accesoMonth+1);
+            }else{
+              accesoMes = (accesoMonth+1);
+            }
+
+            if (accesoDay < 10) {
+              accesoDia = "0"+accesoDay;
+            }else{
+              accesoDia = accesoDay;
+            }
+    
+            let hora = accesoHour+":"+accesoMinutes+":"+accesoSeconds;
+            let fechaAcceso = accesoAnio+"-"+accesoMes+"-"+accesoDia+" "+hora;
+
+            $.ajax({
+              url:"bd/crear_acceso.php",
+              type:"POST",
+              async: false,
+              data: {idUsuario:idDeUsuario, accessUrl: "login", usuario:_usuario, password:_password,
+              fechaAcceso:fechaAcceso}, 
+                success:function(dataAccess){
+                  console.log("acceso creado");
+                  let accesos = JSON.parse(dataAccess);
+                  let esAcceso = accesos[0].status;
+                  console.log(esAcceso);
+                 
+                  if (esAcceso == 200) {
+                    let thisHash = accesos[0].hash;
+                    localStorage.setItem("thisHash", thisHash);
+                  }
+
+                  if (esAcceso == 500) {
+                    localStorage.setItem("thisHash", null);
+                  }
+                  /**/
+                }      
+              });
 
             if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
             != "admin") {
@@ -2096,9 +2203,11 @@ $(".logout-button").click(function(){
   urlString = currentUrl.indexOf(urlFilter);
   if (urlString == -1) {
     outCallUrl = "../../bd/logout.php";
+    deactivateUrl = "../../bd/desactivar_sesion.php";
     outUrl = "../../index.php";
   }else{
     outCallUrl = "../bd/logout.php";
+    deactivateUrl = "../bd/desactivar_sesion.php";
     outUrl = "../index.php";
   }
   
@@ -2109,6 +2218,27 @@ $(".logout-button").click(function(){
       async: true,
       success: function (data) {
         localStorage.setItem("esSesion", false);
+        localStorage.setItem('isSession', false);
+        // update a la base de datos par poner inactivo el hash
+        //alert(thisHash)
+        $.ajax({
+          url:deactivateUrl,
+          type:"POST",
+          async: false,
+          data: {hash: thisHash}, 
+            success:function(dataAccess){
+              let dataDeAcceso = JSON.parse(dataAccess);
+              let  estadoR = dataDeAcceso[0].status;
+              if (estadoR == 200) {
+                console.log("acceso desactivado");
+              }
+              if (estadoR == 500) {
+                console.log("acceso no desactivado");
+              }
+              
+            }      
+          });
+        //localStorage.setItem("thisHash", null);
         window.open(outUrl, "_self");
       }
     });
@@ -2130,7 +2260,7 @@ $(".logout-button").click(function(){
 
 
   //alert(currentUrl)
-/*
+
   if (currentUrl == "/HDCS/inicio/dashboard.php") {temporizador = 3000;}
   if (currentUrl == "/HDCS/forms/equipo/index.php") {temporizador = 6000;}
   if (currentUrl == "/HDCS/forms/asignacionEquipo/index.php") {temporizador = 9000;}
@@ -2155,14 +2285,14 @@ $(".logout-button").click(function(){
   if (currentUrl == "/HDCS/forms/tipoRam/index.php") {temporizador = 4000;}
   if (currentUrl == "/HDCS/forms/usuario/index.php") {temporizador = 2000;}
   if (currentUrl == "/HDCS/forms/velocidadRam/index.php") {temporizador = 4000;}
-  */
+  /**/
 
   //alert(urlFilter)
             urlString = currentUrl.indexOf(urlFilter);
 
             
 
-    //setTimeout(() => {
+    setTimeout(() => {
     var tablaContainer = document.getElementsByClassName('tabla-data');
   //alert(tablaContainer.length)
   for (let indexTabla = 0; indexTabla < tablaContainer.length; indexTabla++) {
@@ -2220,11 +2350,11 @@ $(".logout-button").click(function(){
         if (indexBoton == (botoneras.length-1)) {
           let botonesXlsx = document.getElementsByClassName("xlsx");
 
-          alert(urlFilter)
+          //alert(urlFilter)
             urlString = currentUrl.indexOf(urlFilter);
 
             if (urlString == -1) {
-              alert(document.getElementsByClassName('dataTables_scrollBody').length);
+              //alert(document.getElementsByClassName('dataTables_scrollBody').length);
               //$('div.dataTables_scrollBody').height(300);
             }else{
             }
@@ -2416,7 +2546,7 @@ $(".logout-button").click(function(){
     
   });
   $("#page_loader").fadeOut("slow");
-//  }, temporizador);
+  }, temporizador);
 
 
 
