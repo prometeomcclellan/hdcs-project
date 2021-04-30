@@ -912,6 +912,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
       $("#eIconoUsuarioU").css("display", "none");
     }
 
+    /*
     $("#sbarToggler").click(function(){
       if(percentWidthU <= 80){
         $("#uWrapper").css("width", "100%");
@@ -922,6 +923,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
       wrapperWidthU = percentwidth(elemU);
       percentWidthU = Math.round(wrapperWidthU);
     })
+    */
 
   }
 
@@ -946,6 +948,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
       $("#eIconoUsuarioU").css("display", "none");
     }
 
+    /*
     $(".topnav-toggler").click(function(){
       if(percentWidthU <= 80){
         $("#dWrapper").css("width", "100%");
@@ -956,6 +959,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
       wrapperWidthU = percentwidth(elemU);
       percentWidthU = Math.round(wrapperWidthU);
     })
+    */
 
   }
 
@@ -980,6 +984,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
       $("#eIconoUsuarioU").css("display", "none");
     }
 
+    /*
     $("#dbarToggler").click(function(){
       if(percentWidthU <= 80){
         $("#dWrapper").css("width", "100%");
@@ -990,6 +995,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
       wrapperWidthU = percentwidth(elemU);
       percentWidthU = Math.round(wrapperWidthU);
     })
+    */
 
   }
 
@@ -2008,9 +2014,18 @@ let fechaSolicitud;
   });
 
   
-  $("#saveChangesButton").click(function(){
+  $(".save-changes-button").click(function(){
     
     $("#page_loader").fadeIn();
+
+    urlString = currentUrl.indexOf(urlFilter);
+  if (urlString == -1) {
+    outCallUrl = "../../bd/upload_user_photo.php";
+    //outUrl = "../../index.php";
+  }else{
+    outCallUrl = "../bd/upload_user_photo.php";
+    //outUrl = "../index.php";
+  }
 
 
     if(esCambioFoto == true){
@@ -2018,7 +2033,7 @@ let fechaSolicitud;
       $.ajax({
         type: "post",
         crossOrigin: true,
-        url: "../bd/upload_user_photo.php",
+        url: outCallUrl,
         data: formData,
         processData: false,
         contentType: false,
@@ -2035,8 +2050,17 @@ let fechaSolicitud;
         let esteIdDeUsuarioX = localStorage.getItem("idDeUsuario");
         let esteIdUsuario = parseInt(esteIdDeUsuarioX);
 
+        urlString = currentUrl.indexOf(urlFilter);
+  if (urlString == -1) {
+    outCallUrl = "../../bd/get_user_photo.php";
+    outUrl = "../../bd/update_user_name.php";
+  }else{
+    outCallUrl = "../bd/get_user_photo.php";
+    outUrl = "../bd/update_user_name.php";
+  }
+
         $.ajax({
-          url:"../bd/get_user_photo.php",
+          url:outCallUrl,
           type:"POST",
           async: false,
           data: {idUsuario:esteIdUsuario}, 
@@ -2047,11 +2071,11 @@ let fechaSolicitud;
               }else{
                 localStorage.setItem("fotoStatus", 1);
                 localStorage.setItem( "urlFoto", dataPhoto.toString().trim());
-
-                  if (esCambioUsuario) {
+//alert(esCambioUsuario)
+                  if (esCambioUsuario == true) {
                     // userId uName
                     $.ajax({
-                      url:"../bd/update_user_name.php",
+                      url:outUrl,
                       type:"POST",
                       async: false,
                       data: {userId:esteIdUsuario, uName:uNombre}, 
@@ -2071,8 +2095,7 @@ let fechaSolicitud;
                       });
 
                   }else{
-                    $("#page_loader_afl").fadeOut("slow");
-                    $('#editUserModal').modal('hide');
+                    $("#page_loader").fadeOut("slow");
 
                     $(document).Toasts('create', {
                       class: 'bg-success', 
@@ -2082,6 +2105,11 @@ let fechaSolicitud;
                       delay: 6000,
                       body: 'Los cambios se han realizado Exitosamente!'
                     })
+
+                    
+                    $('#editUserModal').modal('hide');
+                    $(".modal-backdrop").eq(0).removeClass("show");
+                    $(".modal-backdrop").eq(0).css("display", "none");
 
                   }
 

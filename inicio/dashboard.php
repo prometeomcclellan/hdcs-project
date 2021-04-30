@@ -371,6 +371,14 @@ if(session_id() == ''){
                   </p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/HDCS/forms/audiLog/index.php" class="nav-link">
+                  <i class="nav-icon fa fa-book"></i>
+                  <p>
+                    Control de auditorías
+                  </p>
+                </a>
+              </li>
               
             </ul>
           </li>
@@ -939,7 +947,7 @@ if(session_id() == ''){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <!-- button id="saveChangesButton" type="button" class="btn btn-primary" style="background-color: #1a3c8a;">Guardar Cambios</button -->
+        <button id="saveChangesButton" type="button" class="btn btn-primary save-changes-button" style="background-color: #1a3c8a;">Guardar Cambios</button>
       </div>
     </div>
   </div>

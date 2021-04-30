@@ -129,7 +129,7 @@
         <div class="image">
 
         <a href="#" class="d-block user-info" data-toggle="modal" data-target="#editUserModal">
-            <i  id="editUserIcon" class="fas fa-edit edit-user-icon rol-admin" style="font-size: 1.3rem;padding: 6px;border-radius: 50%;color: #fed11f;text-align: center;position: absolute;top: 45%;right: 3%;z-index: 999;"></i>
+            <i  id="editUserIcon" class="fas fa-edit edit-user-icon" style="font-size: 1.3rem;padding: 6px;border-radius: 50%;color: #fed11f;text-align: center;position: absolute;top: 45%;right: 3%;z-index: 999;"></i>
         </a>
 
         <a id="usuarioNombreN" href="#" class="d-block user-info" data-toggle="modal" data-target="#editUserModal">
@@ -349,6 +349,14 @@
                   <i class="nav-icon fas fa-cogs"></i>
                   <p>
                     Tipo mantenimiento
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/HDCS/forms/audiLog/index.php" class="nav-link">
+                  <i class="nav-icon fa fa-book"></i>
+                  <p>
+                    Control de auditorías
                   </p>
                 </a>
               </li>
@@ -697,6 +705,73 @@ if ( $detect->isMobile() ) {
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editUserModalLabel">Editar Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-3">
+                <a href="#" class="d-block">
+                    <i  id="uploadUserPhotoIcon" class="fas fa-user" style="background-color: white;font-size: 5rem;padding: 10px;border-radius: 50%;width: 60px;height: 60px;color: #3c3a3a;text-align: center;padding-top: 10px;padding-left: 30px;"></i>
+                </a>
+
+                <style>
+                  .thumb {
+                    display: block;
+                    overflow: hidden;
+                    width: 106px;
+                    height: 106px;
+                    margin: 5px;
+                    border: 3px solid #fed11f;
+                    background-position: center center;
+                    background-size: cover;
+                  }
+                </style>
+
+                <img id="uploadUserPhotoImg" alt="" class="brand-image thumb"
+                style="opacity: 1; display:none;">
+                <input type="file" id="img" name="img" accept="image/*" style="display:none;">
+            </div>
+            <div class="col-md-9">
+              <ul style="list-style:none;">
+                <!-- li style="margin-top:1%;">
+                    <div class="info">
+                        <input id="inputEditUserName" class="form-control" type="text" name="name-update" placeholder="nombre y apellido">
+                        
+                    </div>
+                </li -->
+                <li style="margin-top:1%;">
+                    <div class="info">
+                        <input id="inputEditUName" class="form-control" type="text" name="uname-update" placeholder="nombre de usuario">
+                        <!-- a id="usuarioNombreUPdate" href="#" class="d-block">Omar McClellan</a -->
+                    </div>
+                </li>
+              </ul>
+                
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <a href="#" class="d-block">
+                <i  id="updateUserPhotoIcon" class="fas fa-camera" style="font-size: 1.5rem;padding: 6px;border-radius: 50%;color: #007bff;text-align: center;float: right;"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary save-changes-button" style="background-color: #1a3c8a;">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
 <?php
     require_once "../../Mobile_Detect.php";
     $detect = new Mobile_Detect;
@@ -706,6 +781,10 @@ if ( $detect->isMobile() ) {
     echo "<div class='spinner-border' id='page_loader' style='position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 45vw;z-index: 1060;display:inherit;top: 30%;'></div>";
   }
 ?>
+
+<!--footer -->
+<?php include "../footer.php"; ?>
+
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
 <script src="../../inicio/plugins/jquery/jquery.min.js"></script>
@@ -743,5 +822,3 @@ if ( $detect->isMobile() ) {
 <script src="../../inicio/dist/js/tableexport.js"></script>
 <script src="../../inicio/dist/js/xlsx.core.min.js"></script>
 <script src="../../codigo.js"></script>
-<!--footer -->
-<?php include "../footer.php"; ?>

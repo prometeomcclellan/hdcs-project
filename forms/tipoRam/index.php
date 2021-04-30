@@ -355,6 +355,14 @@ if ( $detect->isMobile() ) {
                   </p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="/HDCS/forms/audiLog/index.php" class="nav-link">
+                  <i class="nav-icon fa fa-book"></i>
+                  <p>
+                    Control de auditorías
+                  </p>
+                </a>
+              </li>
               
             </ul>
           </li>
