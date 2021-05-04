@@ -246,6 +246,12 @@ let ahora = new Date();
 $('#formLogin').submit(function(e){
   
   e.preventDefault();
+  let checkSession = localStorage.getItem("thisHash");
+            //alert(checkSession)
+  if (checkSession == null || checkSession == "null") {
+  
+             
+            //salert("hey")
   var _usuario = $.trim($("#usuario").val());    
   var _password =$.trim($("#password").val());
   //var _abierta =$.trim($("#abierta").val());  
@@ -341,7 +347,7 @@ $('#formLogin').submit(function(e){
                   /**/
                 }      
               });
-
+            
             if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
             != "admin") {
               if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
@@ -393,8 +399,14 @@ $('#formLogin').submit(function(e){
             Swal.fire({
               type:'success',
               title:'¡Bienvenido ' + thisData[0].nombreEmpleado +'!',
+              allowOutsideClick: false,
+              allowEscapeKey : false,
               confirmButtonColor:'#3085d6',
-              confirmButtonText:'Ingresar'
+              confirmButtonText:'Ingresar',
+              didClose : (toast) => {
+                alert("yeah dude")
+                //localStorage.setItem("thisHash", null);
+              }
             }).then((result) => {
                 if(result.value){
                   window.location.href = loginRedirectUrl;
@@ -403,8 +415,16 @@ $('#formLogin').submit(function(e){
           }
         } 
       });
-    }       
-});
+    }
+         
+
+  }else{
+    Swal.fire({
+      type:'warning',
+      title:'Ya existe una sesión de usuario abierta',
+    });
+  }
+  });
 var formData = new FormData();
 var eFormData = new FormData();
 
@@ -1161,6 +1181,8 @@ fotoStatus = localStorage.getItem("fotoStatus");
           let orderIndex = $(".maintinance").index(this);
           $('.carousel').carousel('pause');
           $('#modalEquipoDetalle').modal('show');
+
+          
           //alert(orderIndex)
           let orderNumber = $(".order-number").eq(orderIndex).val();
           localStorage.setItem("idDeMantenimiento", orderNumber);
@@ -1210,8 +1232,19 @@ fotoStatus = localStorage.getItem("fotoStatus");
             }
 
             if (indexT == (ordersContainer.length-1)) {
+
+              //alert($(this).find("a.boton-edicion").length)
+
+              setTimeout(() => {
+                $(".boton-edicion").click(function(){
+                  //alert($("#manDescripcion").text());
+                });
+              }, 1000);
+
               $(".thumb-nail").click(function(){
                 $(".carousel-item").eq(thumbIndex).removeClass(className);
+
+                
                 
                 indexThumb = $(".thumb-nail").index(this);
                 $(".carousel-item").eq(indexThumb).addClass(className);
@@ -1998,11 +2031,19 @@ let fechaSolicitud;
   
 
   $(".user-info").click(function(){
-    
+    //alert(fotoStatus)
     if(fotoStatus == "0"){}else{
       fotoUrl = localStorage.getItem("urlFoto");
-      $('#uploadUserPhotoImg').css("background-image", "url('" + fotoUrl + "')");
-      $("#uploadUserPhotoImg").css("display", "inherit");
+
+      urlString = currentUrl.indexOf(urlFilter);
+      if (urlString == -1) {
+        fotoUrl = "../"+fotoUrl;
+      }else{
+        fotoUrl = fotoUrl;
+      }
+
+      $('.thumb').eq(0).css("background-image", "url('" + fotoUrl + "')");
+      $(".thumb").eq(0).css("display", "inherit");
       $("#uploadUserPhotoIcon").css("display", "none");
     }
 
@@ -2080,8 +2121,10 @@ let fechaSolicitud;
                       async: false,
                       data: {userId:esteIdUsuario, uName:uNombre}, 
                         success:function(thisDataName){
-                          $("#page_loader_afl").fadeOut("slow");
+                          $("#page_loader").fadeOut("slow");
                           $('#editUserModal').modal('hide');
+                          $(".modal-backdrop").eq(0).removeClass("show");
+                    $(".modal-backdrop").eq(0).css("display", "none");
 
                           $(document).Toasts('create', {
                             class: 'bg-success', 
@@ -2124,16 +2167,25 @@ let fechaSolicitud;
     }else{
       let esteIdDeUsuarioX = localStorage.getItem("idDeUsuario");
         let esteIdUsuario = parseInt(esteIdDeUsuarioX);
+        urlString = currentUrl.indexOf(urlFilter);
+  if (urlString == -1) {
+    outUrl = "../../bd/update_user_name.php";
+  }else{
+    outUrl = "../bd/update_user_name.php";
+  }
+
       if (esCambioUsuario) {
         // userId uName
         $.ajax({
-          url:"../bd/update_user_name.php",
+          url:outUrl,
           type:"POST",
           async: false,
           data: {userId:esteIdUsuario, uName:uNombre}, 
             success:function(thisDataName){
-              $("#page_loader_afl").fadeOut("slow");
+              $("#page_loader").fadeOut("slow");
               $('#editUserModal').modal('hide');
+              $(".modal-backdrop").eq(0).removeClass("show");
+                    $(".modal-backdrop").eq(0).css("display", "none");
 
               $(document).Toasts('create', {
                 class: 'bg-success', 
@@ -2147,8 +2199,10 @@ let fechaSolicitud;
           });
 
       }else{
-        $("#page_loader_afl").fadeOut("slow");
+        $("#page_loader").fadeOut("slow");
         $('#editUserModal').modal('hide');
+        $(".modal-backdrop").eq(0).removeClass("show");
+                    $(".modal-backdrop").eq(0).css("display", "none");
 
         $(document).Toasts('create', {
           class: 'bg-success', 
@@ -2259,6 +2313,7 @@ $(".logout-button").click(function(){
               let  estadoR = dataDeAcceso[0].status;
               if (estadoR == 200) {
                 console.log("acceso desactivado");
+                localStorage.setItem("thisHash", null);
               }
               if (estadoR == 500) {
                 console.log("acceso no desactivado");

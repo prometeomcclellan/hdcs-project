@@ -45,6 +45,11 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <!-- Toastr -->
+    <!-- link rel="stylesheet" href="inicio/plugins/toastr/toastr.min.css" -->
+    
+    
         
     </head>
 <?php
@@ -198,10 +203,16 @@ w.chaportConfig = {
 if(w.chaport)return;v3=w.chaport={};v3._q=[];v3._l={};v3.q=function(){v3._q.push(arguments)};v3.on=function(e,fn){if(!v3._l[e])v3._l[e]=[];v3._l[e].push(fn)};var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://app.chaport.com/javascripts/insert.js';var ss=d.getElementsByTagName('script')[0];ss.parentNode.insertBefore(s,ss)})(window, document);
 </script>
 <!-- End of Chaport Live Chat code -->
-         
+
     </body>
+    <!-- Toastr -->
+  <!-- script src="inicio/plugins/toastr/toastr.min.js"></script -->
+  
+    
 </html>
 
 
 <!-- PLUGGINS: sweetalert2; mensajes de alerta -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <!-- popper: trabaja junto a sweetalert2 -->
