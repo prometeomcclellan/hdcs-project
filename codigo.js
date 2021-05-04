@@ -396,6 +396,8 @@ $('#formLogin').submit(function(e){
                 }      
               });
 
+              window.location.href = loginRedirectUrl;
+              /*
             Swal.fire({
               type:'success',
               title:'¡Bienvenido ' + thisData[0].nombreEmpleado +'!',
@@ -411,7 +413,8 @@ $('#formLogin').submit(function(e){
                 if(result.value){
                   window.location.href = loginRedirectUrl;
                 }
-              })       
+              })
+              */       
           }
         } 
       });
