@@ -2,19 +2,14 @@
 <?php 
 session_start();
 if(session_id() == ''){
-  //session has not started
-  //echo "<div id='id_sesion' style='width:100vw;text-align:center;'>".session_id()."</div>";
   echo "<script>
           localStorage.setItem('isSession', false);
         </script>";
 }else{
-  //echo "<div id='id_sesion' style='width:100vw;text-align:center;'>".session_id()."</div>";
   echo "<script>
           localStorage.setItem('isSession', true);
         </script>";
-}
-
-    
+}    
 ?>
 
 <!DOCTYPE html>
@@ -1221,12 +1216,23 @@ if(session_id() == ''){
       </div>
       <ul class="list-group list-group-flush" id="manDetalles">
       </ul>
-      <div class="card-body">
+      <div id="order_body" class="card-body order-body">
         <a href="#" class="card-link editar-mantenimiento boton-edicion">Editar</a>
         <a href="#" class="card-link finalizar-mantenimiento boton-edicion">Finalizar</a>
       </div>
       <div class="card-footer">
-      
+      <div class="order-status-indicator">
+            <div class="info-box">
+              <span id="status_class" class=""><i id="status_icon" class=""></i></span>
+
+              <div class="info-box-content">
+                <span id="status_title" class="info-box-text top-report-text"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+      </div>
+
+        
       </div>
   </div>
   

@@ -69,38 +69,104 @@ $(document).ready(function() {
 
   let wrapperWidth;
   let percentWidth;
-  
-  //  rol-admin  rol-todos
 
   let isPhoto = false;
   var currentUrl = location.pathname;
   let loginUrl = "HDCS/index.php";
   let thisHash;
 
-  //alert(currentUrl.indexOf(loginUrl))
-  /*
-  
-*/
+  let idDeMantenimiento;
+  let idMantenimiento;
+  let elStatusClass;
+  let elStatusIcon;
+
   if (currentUrl.indexOf(loginUrl) == 1) {
-    //alert("login")
     let esSesion = localStorage.getItem("isSession");
-    //alert(esSesion)
   }else{
 
     
 
     let esInicio = localStorage.getItem("esInicio");
     thisHash = localStorage.getItem("thisHash");
-    //alert(thisHash)
 
     urlString = currentUrl.indexOf(urlFilter);
-  if (urlString == -1) {
-    outCallUrl = "../../bd/verificar_sesion.php";
-    outUrl = "../../index.php";
-  }else{
-    outCallUrl = "../bd/verificar_sesion.php";
-    outUrl = "../index.php";
-  }
+    if (urlString == -1) {
+      outCallUrl = "../../bd/verificar_sesion.php";
+      outUrl = "../../index.php";
+    }else{
+      outCallUrl = "../bd/verificar_sesion.php";
+      outUrl = "../index.php";
+    }
+
+    $(".boton-edicion").click(function(edev){
+      edev.preventDefault();
+      edev.stopPropagation();
+
+      let editIndex = $(".boton-edicion").index(this);
+      let dOrderNumber = localStorage.getItem("idDeMantenimiento");
+      let orderStat = document.getElementById("status_class");
+      let orderStatClass = orderStat.classList;
+      elStatusClass = document.getElementById("status_class");
+      elStatusIcon = document.getElementById("status_icon");
+      //alert(orderStatClass.toString().trim().indexOf("bg-success"))
+      //alert(dOrderNumber)
+      
+      
+      if (editIndex == 0) {
+        alert("voy a editar")
+      }
+
+      if (editIndex == 1) {
+        if (orderStatClass.toString().trim().indexOf("bg-success") == -1) {
+        
+        
+        urlString = currentUrl.indexOf(urlFilter);
+        if (urlString == -1) {
+          outCallUrl = "../../bd/update_estado_mantenimiento.php";
+        }else{
+          outCallUrl = "../bd/update_estado_mantenimiento.php";
+        }
+        //alert(orderNumber)
+        
+        $.ajax({
+          type: "post",
+          crossOrigin: true,
+          url: outCallUrl,
+          data: {idControlMantenimiento:dOrderNumber},
+          async: false,
+          success: function (data) {
+            console.log(data);
+            elStatusClass.className = '';
+            elStatusIcon.className = '';
+            $("#status_title").text("");
+
+            $("#status_class").addClass("info-box-icon elevation-1 bg-success");
+            $("#status_icon").addClass("fas fa-thumbs-up");
+            $("#status_title").text("Finalizado");
+
+            $(document).Toasts('create', {
+              class: 'bg-success', 
+              title: "Finalizado!",
+              subtitle: 'Cerrar',
+              autohide: true,
+              delay: 6000,
+              body: 'Esta orden ha sido finalizada.'
+            })
+          }
+         });
+         
+      }else{
+        $(document).Toasts('create', {
+          class: 'bg-success', 
+          title: "Finalizado!",
+          subtitle: 'Cerrar',
+          autohide: true,
+          delay: 6000,
+          body: 'No más cambios por realizar.'
+        })
+      }
+    }
+    });
 
      
       $.ajax({
@@ -127,40 +193,13 @@ $(document).ready(function() {
     if(document.referrer == location.href){
       location.href = 'error.php';
     }else{}
-    /**/
-/*
-    $.ajax({
-      url:"bd/verificar_acceso.php",
-      type:"POST",
-      async: false,
-      data: {idUsuario:idDeUsuario, accessUrl: "login", usuario:_usuario, password:_password,
-      fechaAcceso:fechaAcceso}, 
-        success:function(dataAccess){
-          console.log("acceso creado");
-        }      
-      });
-
     
-    
-
-    let esSesion = localStorage.getItem("isSession");
-    //alert(esSesion)
-
-    if(esSesion == false){
-      //alert("vamos para afuera")
-    }else{
-      //alert("vamos para adentro")
-    }
-    */
-
     if (esInicio == false || esInicio == null || esInicio == "false") {
       document.body.style.display = "none";
       location.href = '../index.php';
     }else{
     let cargoIni = localStorage.getItem('cargoIni');
-    if (cargoIni == null) {
-      //window.open("../../HDCS/forms/tecnico/index.php", "_self");
-    }
+    if (cargoIni == null) {}
     let brandLink = document.getElementsByClassName("brand-link");
     let rolTodosContainer = document.getElementsByClassName("rol-todos");
     let rolAdminContainer = document.getElementsByClassName("rol-admin");
@@ -214,7 +253,7 @@ $(document).ready(function() {
     
 }
 
-let ahora = new Date();
+    let ahora = new Date();
     let ahoraAnio = ahora.getFullYear();
     let ahoraMonth = ahora.getMonth();
     let ahoraDay = ahora.getDate();
@@ -229,32 +268,21 @@ let ahora = new Date();
       ahoraMes = ahoraMonth;
     }
 
-    if (ahoraDay < 10) {
-      ahoraDia = "0"+ahoraDay;
-    }else{
-      ahoraDia = ahoraDay;
-    }
+    if (ahoraDay < 10) {ahoraDia = "0"+ahoraDay;}else{ahoraDia = ahoraDay;}
 
     let hora = ahoraHour+"_"+ahoraMinutes+"_"+ahoraSeconds;
-
     let fechaActual = ahoraAnio+"-"+ahoraMes+"-"+ahoraDia+"_"+hora;
-
     let titulo = "";
-
-
 
 $('#formLogin').submit(function(e){
   
   e.preventDefault();
   let checkSession = localStorage.getItem("thisHash");
-            //alert(checkSession)
+  
   if (checkSession == null || checkSession == "null") {
   
-             
-            //salert("hey")
   var _usuario = $.trim($("#usuario").val());    
   var _password =$.trim($("#password").val());
-  //var _abierta =$.trim($("#abierta").val());  
   let sAbierta = document.getElementById("abierta").checked;
   let cargoU = localStorage.getItem('cargoIni');
     
@@ -270,18 +298,9 @@ $('#formLogin').submit(function(e){
     $.ajax({
       url:"bd/login.php",
       type:"POST",
-      //datatype: "json",
       data: {usuario:_usuario, password:_password, abierta:sAbierta}, 
-        success:function(data){  
-          //console.log("mi data");
-          //console.dir(JSON.parse(data));
-          //console.dir(thisData); 
-          //console.log(thisData[0].status)
-          // llamada a crear acceso de sesion con permiso enviando idUsuario, accessUrl
-          // crear_acceso.php
-
+        success:function(data){
           thisData = JSON.parse(data);
-          //thisData = data;
                     
           localStorage.setItem("nombreUsuario", thisData[0].nombreEmpleado);  
           
@@ -344,7 +363,6 @@ $('#formLogin').submit(function(e){
                   if (esAcceso == 500) {
                     localStorage.setItem("thisHash", null);
                   }
-                  /**/
                 }      
               });
             
@@ -373,14 +391,12 @@ $('#formLogin').submit(function(e){
               async: false,
               data: {idUsuario:idDeUsuario}, 
                 success:function(dataPhoto){
-                  //console.log("de la foto");
                   if(dataPhoto.toString().trim() == "0"){
                     localStorage.setItem("fotoStatus", 0);
                   }else{
                     localStorage.setItem("fotoStatus", 1);
                     localStorage.setItem( "urlFoto", dataPhoto.toString().trim());
                   }
-                  
                 }      
               });
 
@@ -397,29 +413,11 @@ $('#formLogin').submit(function(e){
               });
 
               window.location.href = loginRedirectUrl;
-              /*
-            Swal.fire({
-              type:'success',
-              title:'¡Bienvenido ' + thisData[0].nombreEmpleado +'!',
-              allowOutsideClick: false,
-              allowEscapeKey : false,
-              confirmButtonColor:'#3085d6',
-              confirmButtonText:'Ingresar',
-              didClose : (toast) => {
-                alert("yeah dude")
-                //localStorage.setItem("thisHash", null);
-              }
-            }).then((result) => {
-                if(result.value){
-                  window.location.href = loginRedirectUrl;
-                }
-              })
-              */       
+                 
           }
         } 
       });
     }
-         
 
   }else{
     Swal.fire({
@@ -428,6 +426,7 @@ $('#formLogin').submit(function(e){
     });
   }
   });
+
 var formData = new FormData();
 var eFormData = new FormData();
 
@@ -435,14 +434,10 @@ urlString = currentUrl.indexOf(urlFilter);
 
 if (urlString == -1) {
   outCallUrl = "../../forms/usuario/crud.php";
-  //alert(document.getElementsByClassName('dataTables_scrollBody').length)
 }else{
   outCallUrl = "../forms/usuario/crud.php";
-  
   $('div.dataTables_scrollBody').height(300);
-  
 }
- /**/ 
 
   $.ajax({
     type: "post",
@@ -451,21 +446,15 @@ if (urlString == -1) {
     data: {opcion:4},
     async: false,
     success: function (data) {
-      //console.log("data de usuarios");
-      //console.dir(JSON.parse(data));
       userCountArray = JSON.parse(data);
-      //console.log(userCountArray.length);
-
       if (userCountArray.length == 0 || userCountArray.length == null) {
         $("#userCount").text(0);
       }else{
         $("#userCount").text(userCountArray.length);
       }
-      
     }
   });
 
-//alert(currentUrl)
 if(currentUrl == "/HDCS/inicio/reporteria.php"){
   
 
@@ -482,12 +471,8 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
   });
 
   $(".boton-filtrar").click(function(){
-    //alert(dFrom+", "+dTo);
     $("#mantenimientosFiltradosFecha").empty();
-    
-
     fromTo = dFrom>dTo;
-    //alert(fromTo)
     if (fromTo == true) {
       $(document).Toasts('create', {
         class: 'bg-warning', 
@@ -549,7 +534,6 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
                   +"<td>"
                     +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDeptoFilt+"</div>"+"<input type='hidden' value="+oDeptoFilt+" class='order-odate'>"
                   +"</td>"
-                  
                  +"</tr>");
             }
                 
@@ -566,18 +550,11 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
       });
     }
   
-    /*
-    
-    */
   });
-
-  //isFirstFilter
-  //dFrom; dTo;
 
   if (isFirstFilter == true) {
     var thisDate = new Date();
     var firstDay = new Date(thisDate.getFullYear(), thisDate.getMonth(), 1);
-    //let dYear = ;
     let esteMes = firstDay.getMonth();
     let elMes = esteMes+1;
     let esteDia = thisDate.getDate();
@@ -592,8 +569,7 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
 
     dFrom = firstDay.getFullYear()+"-"+elMes+"-0"+1;
     dTo = firstDay.getFullYear()+"-"+elMes+"-"+esteDia;
-    //alert(dFrom+", "+dTo) C:\xampp\htdocs\HDCS\bd\get_mantenimientos_por_periodo.php
-    // C:\xampp\htdocs\HDCS\bd\get_control_mantenimiento_pendiente.php
+
     $.ajax({
       type: "post",
       crossOrigin: true,
@@ -644,7 +620,6 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
                 +"<td>"
                   +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDeptoFilt+"</div>"+"<input type='hidden' value="+oDeptoFilt+" class='order-odate'>"
                 +"</td>"
-                
                +"</tr>");
           }
               
@@ -655,15 +630,9 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
         
       }
     });
-  }else{
-    //alert("no")
-  }
+  }else{}
   
-  //console.log("Mi array");
-  //console.dir(userCountArray);
-
-  // mantenimientos por usuario
-  let elemRep = document.getElementById("wrapperRep"); // .offsetWidth; //$("#wrapper").attr("width");
+  let elemRep = document.getElementById("wrapperRep");
   let wrapperWidthR = percentwidth(elemRep);
   
   let percentWidthR = Math.round(wrapperWidthR);
@@ -674,16 +643,13 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
 
   $("#usuarioNombreR").text(nombreU);
 
-  //alert(fotoStatus)
   if(fotoStatus == "0"){}else{
     fotoUrl = localStorage.getItem("urlFoto");
     $('#fotoDeUsuarioR').css("background-image", "url('" + fotoUrl + "')");
     $("#fotoDeUsuarioR").css("display", "inherit");
     $("#iconoUsuarioR").css("display", "none");
   }
-
-  
-
+s
   $.ajax({
     type: "get",
     crossOrigin: true,
@@ -705,9 +671,6 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
         let oSDateP = elementPend.fechaSolicitudMantenimiento;
         let oDateP = elementPend.fechaControlMantenimiento;
         let oClassP = "success";
-        
-
-        //alert(oStatusP) diagnosPercent  repairPercent finishPercent
 
         if(oStatusP == "Diagnosticado"){
           oClassP = "danger";
@@ -732,8 +695,6 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
           $("#diagnosPercent").text(porcentajeD+"%");
           $("#repairPercent").text(porcentajeP+"%");
           $("#finishPercent").text(porcentajeF+"%");
-
-          
         }
 
         $("#mantenimientosPendientesTable").append(
@@ -750,7 +711,6 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
             +"<td>"
               +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDeptoP+"</div>"+"<input type='hidden' value="+oDeptoP+" class='order-odate'>"
             +"</td>"
-            
            +"</tr>");
       }
 
@@ -767,8 +727,6 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
       data: {idUsuario:element.idUsuario},
       async: false,
       success: function (data) {
-        //console.log("datos de mantenimiento por usuario");
-        //console.dir(JSON.parse(data));
         mantenimientosXUsuarioArray = JSON.parse(data);
         let sortedArray = mantenimientosXUsuarioArray.sort();
 
@@ -801,7 +759,6 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
             }
 
             if (window.matchMedia("(max-width: 700px)").matches) {
-              /* The viewport is less than, or equal to, 700 pixels wide */
               if (row_cnt == 0) {
                 $("#mantenimientosXUsuarioTable").append(
                   "<tr class='user-maintinance'>"
@@ -832,7 +789,6 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
                    +"</tr>");
               }
             } else {
-              /* The viewport is greater than 700 pixels wide */
               if (row_cnt == 0) {
                 $("#mantenimientosXUsuarioTable").append(
                   "<tr class='user-maintinance'>"
@@ -873,34 +829,22 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
                    +"</tr>");
               }
             }
-
-            
-            
           }
         }
       }
     });
-
-    
-
-
   }
 
 }  
 
 if(currentUrl == "/HDCS/forms/equipo/index.php"){
-    let elems = document.getElementsByClassName("wrapper"); // .offsetWidth; //$("#wrapper").attr("width");
+    let elems = document.getElementsByClassName("wrapper");
     let elem = elems[0];
     wrapperWidth = percentwidth(elem);
     percentWidth = Math.round(wrapperWidth);
-    //alert(percentWidth)
-    //MOSTRAR ---------------------------------------------------------------------------------------
-//DataTable que carga la tabla de inicio del index
-fotoStatus = localStorage.getItem("fotoStatus");
+    fotoStatus = localStorage.getItem("fotoStatus");
     nombreU = localStorage.getItem("nombreUsuario");
     uNombre = localStorage.getItem("usuarioNombre");
-
-    
 
     $("#eUsuarioNombreN").text(nombreU);
     if(fotoStatus == "0"){}else{
@@ -909,23 +853,15 @@ fotoStatus = localStorage.getItem("fotoStatus");
       $("#eFotoDeUsuario").css("display", "inherit");
       $("#eIconoUsuario").css("display", "none");
     }
-
-    
-
   }
 
   if(currentUrl == "/HDCS/forms/usuario/index.php"){
-    let elemU = document.getElementById("uWrapper"); // .offsetWidth; //$("#wrapper").attr("width");
+    let elemU = document.getElementById("uWrapper");
     let wrapperWidthU = percentwidth(elemU);
     let percentWidthU = Math.round(wrapperWidthU);
-    //alert(percentWidthU)
-    //MOSTRAR ---------------------------------------------------------------------------------------
-//DataTable que carga la tabla de inicio del index
-fotoStatus = localStorage.getItem("fotoStatus");
+    fotoStatus = localStorage.getItem("fotoStatus");
     nombreU = localStorage.getItem("nombreUsuario");
     uNombre = localStorage.getItem("usuarioNombre");
-
-    
 
     $("#eUsuarioNombreU").text(nombreU);
     if(fotoStatus == "0"){}else{
@@ -934,34 +870,15 @@ fotoStatus = localStorage.getItem("fotoStatus");
       $("#eFotoDeUsuarioU").css("display", "inherit");
       $("#eIconoUsuarioU").css("display", "none");
     }
-
-    /*
-    $("#sbarToggler").click(function(){
-      if(percentWidthU <= 80){
-        $("#uWrapper").css("width", "100%");
-      }else{
-        $("#uWrapper").css("width", "80%");
-      }
-      elemU = document.getElementById("uWrapper")
-      wrapperWidthU = percentwidth(elemU);
-      percentWidthU = Math.round(wrapperWidthU);
-    })
-    */
-
   }
 
   if(currentUrl == "/HDCS/forms/departamento/index.php"){
-    let elemU = document.getElementById("dWrapper"); // .offsetWidth; //$("#wrapper").attr("width");
+    let elemU = document.getElementById("dWrapper");
     let wrapperWidthU = percentwidth(elemU);
     let percentWidthU = Math.round(wrapperWidthU);
-    //alert(percentWidthU)
-    //MOSTRAR ---------------------------------------------------------------------------------------
-//DataTable que carga la tabla de inicio del index
-fotoStatus = localStorage.getItem("fotoStatus");
+    fotoStatus = localStorage.getItem("fotoStatus");
     nombreU = localStorage.getItem("nombreUsuario");
     uNombre = localStorage.getItem("usuarioNombre");
-
-    
 
     $("#eUsuarioNombreU").text(nombreU);
     if(fotoStatus == "0"){}else{
@@ -970,34 +887,15 @@ fotoStatus = localStorage.getItem("fotoStatus");
       $("#eFotoDeUsuarioU").css("display", "inherit");
       $("#eIconoUsuarioU").css("display", "none");
     }
-
-    /*
-    $(".topnav-toggler").click(function(){
-      if(percentWidthU <= 80){
-        $("#dWrapper").css("width", "100%");
-      }else{
-        $("#dWrapper").css("width", "80%");
-      }
-      elemU = document.getElementById("dWrapper")
-      wrapperWidthU = percentwidth(elemU);
-      percentWidthU = Math.round(wrapperWidthU);
-    })
-    */
-
   }
 
   if(currentUrl == "/HDCS/forms/asignacionEquipo/index.php"){
-    let elemU = document.getElementById("dWrapper"); // .offsetWidth; //$("#wrapper").attr("width");
+    let elemU = document.getElementById("dWrapper");
     let wrapperWidthU = percentwidth(elemU);
     let percentWidthU = Math.round(wrapperWidthU);
-    //alert(percentWidthU)
-    //MOSTRAR ---------------------------------------------------------------------------------------
-//DataTable que carga la tabla de inicio del index
-fotoStatus = localStorage.getItem("fotoStatus");
+    fotoStatus = localStorage.getItem("fotoStatus");
     nombreU = localStorage.getItem("nombreUsuario");
     uNombre = localStorage.getItem("usuarioNombre");
-
-    
 
     $("#eUsuarioNombreU").text(nombreU);
     if(fotoStatus == "0"){}else{
@@ -1006,20 +904,6 @@ fotoStatus = localStorage.getItem("fotoStatus");
       $("#eFotoDeUsuarioU").css("display", "inherit");
       $("#eIconoUsuarioU").css("display", "none");
     }
-
-    /*
-    $("#dbarToggler").click(function(){
-      if(percentWidthU <= 80){
-        $("#dWrapper").css("width", "100%");
-      }else{
-        $("#dWrapper").css("width", "80%");
-      }
-      elemU = document.getElementById("dWrapper")
-      wrapperWidthU = percentwidth(elemU);
-      percentWidthU = Math.round(wrapperWidthU);
-    })
-    */
-
   }
 
   if(currentUrl == "/HDCS/inicio/dashboard.php"){
@@ -1033,11 +917,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
       data: {opcion:4},
       async: false,
       success: function (data) {
-        //console.log("data de equipos");
-        //console.dir(JSON.parse(data));
         let equipoArray = JSON.parse(data);
-        //console.log(equipoArray.length);
-
         if (equipoArray.length == 0 || equipoArray.length == null) {
           $("#equipmentCount").text(0);
         }else{
@@ -1046,9 +926,8 @@ fotoStatus = localStorage.getItem("fotoStatus");
         
       }
     });
-
-    // Gráficas 
-    var donutData        = {
+    
+    var donutData = {
       labels: [],
       datasets: [
         {
@@ -1072,11 +951,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
       url: "../bd/get_maintineance_data.php",
       async: false,
       success: function (data) {
-        //console.log("mantenimiento data extra");
-        //console.dir(JSON.parse(data));
         mantenimientosArrayX = JSON.parse(data);
-        //console.log(mantenimientosArrayX.length);
-
         for (let index = 0; index < mantenimientosArrayX.length; index++) {
           const element = mantenimientosArrayX[index];
           oDeptoId = element.idDepartamento;
@@ -1091,12 +966,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
             deptIdsCount.push({depto: oDeptoId, suma:sum, estado:estadoId});
           }
 
-        
-
-          if (index == (mantenimientosArrayX.length-1)) {
-            //console.log("los valores por depto");
-            //console.dir(deptIdsCount);
-          }
+          if (index == (mantenimientosArrayX.length-1)) {}
         }
         
       }
@@ -1108,10 +978,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
       url: "../bd/get_control_mantenimiento.php",
       async: false,
       success: function (data) {
-        //console.log("mantenimiento data");
-        //console.dir(JSON.parse(data));
         mantenimientosArray = JSON.parse(data);
-        //console.log(mantenimientosArray.length);
 
         $("#mantenimientosTable").empty();
 
@@ -1125,9 +992,6 @@ fotoStatus = localStorage.getItem("fotoStatus");
           let oDate = element.fechaControlMantenimiento;
           
           oClass = "success";
-          
-
-          //alert(oStatus) diagnosPercent  repairPercent finishPercent
 
           if(oStatus == "Diagnosticado"){
             oClass = "danger";
@@ -1155,8 +1019,6 @@ fotoStatus = localStorage.getItem("fotoStatus");
             $("#diagnosPercent").text(porcentajeD+"%");
             $("#repairPercent").text(porcentajeP+"%");
             $("#finishPercent").text(porcentajeF+"%");
-
-            
           }
 
           
@@ -1178,16 +1040,15 @@ fotoStatus = localStorage.getItem("fotoStatus");
           $(this).css("cursor", "pointer");
         });
 
-
-
-        $(".maintinance").click(function(){
+        $(".maintinance").click(function(mevt){
+          mevt.preventDefault();
+          mevt.stopPropagation();
           let orderIndex = $(".maintinance").index(this);
           $('.carousel').carousel('pause');
           $('#modalEquipoDetalle').modal('show');
 
-          
-          //alert(orderIndex)
           let orderNumber = $(".order-number").eq(orderIndex).val();
+          //alert(orderNumber)
           localStorage.setItem("idDeMantenimiento", orderNumber);
 
           let orderDescription = $(".order-description").eq(orderIndex).text();
@@ -1207,12 +1068,58 @@ fotoStatus = localStorage.getItem("fotoStatus");
           $("#manDetalles").append("<li class='list-group-item'>Fecha Solicitud : "+orderSDate+"</li>");
           $("#manDetalles").append("<li class='list-group-item'>Fecha Mantenimiento : "+orderODate+"</li>");
           
-
-
-          
-          
           if (ordersContainer.length > 0) {
             
+            /*
+            setTimeout(() => {
+              $(".boton-edicion").click(function(){
+                let editIndex = $(".boton-edicion").index(this);
+                
+                if (editIndex == 0) {
+                  alert("voy a editar")
+                }
+
+                if (editIndex == 1) {
+
+                  urlString = currentUrl.indexOf(urlFilter);
+                  if (urlString == -1) {
+                    outCallUrl = "../../bd/update_estado_mantenimiento.php";
+                  }else{
+                    outCallUrl = "../bd/update_estado_mantenimiento.php";
+                  }
+                  alert(orderNumber)
+                  
+                  $.ajax({
+                    type: "post",
+                    crossOrigin: true,
+                    url: outCallUrl,
+                    data: {idControlMantenimiento:orderNumber},
+                    async: false,
+                    success: function (data) {
+                      console.log(data);
+                      elStatusClass.className = '';
+                      elStatusIcon.className = '';
+                      $("#status_title").text("");
+
+                      $("#status_class").addClass("info-box-icon elevation-1 bg-success");
+                      $("#status_icon").addClass("fas fa-thumbs-up");
+                      $("#status_title").text("Finalizado");
+
+                      $(document).Toasts('create', {
+                        class: 'bg-success', 
+                        title: "Finalizado!",
+                        subtitle: 'Cerrar',
+                        autohide: true,
+                        delay: 6000,
+                        body: 'Esta orden ha sido finalizada.'
+                      })
+                    }
+                   });
+                   
+                }
+              });
+            }, 1000);
+*/
            for (let indexT = 0; indexT < ordersContainer.length; indexT++) {
             const elementT = ordersContainer[indexT];
             let thumbUrl = elementT.value;
@@ -1236,25 +1143,56 @@ fotoStatus = localStorage.getItem("fotoStatus");
 
             if (indexT == (ordersContainer.length-1)) {
 
-              //alert($(this).find("a.boton-edicion").length)
+              elStatusClass = document.getElementById("status_class");
+              elStatusIcon = document.getElementById("status_icon");
+              elStatusClass.className = '';
+              elStatusIcon.className = '';
+              $("#status_title").text("");
 
-              setTimeout(() => {
-                $(".boton-edicion").click(function(){
-                  //alert($("#manDescripcion").text());
-                });
-              }, 1000);
+              let dClass = "bg-warning";
+              let dIcon = "fas fa-cog";
+              let finalizarContainer = document.getElementsByClassName("finalizar-mantenimiento");
+              let finalizarCount = finalizarContainer.length;
+              if(orderStatus == "Diagnosticado"){
+                if (finalizarCount == 0) {
+                  //$("#order_body").append("<a href='#' class='card-link finalizar-mantenimiento boton-edicion'>Finalizar</a>");
+                }
+                
+                dClass = "info-box-icon elevation-1 bg-danger";
+                dIcon = "fas fa-hourglass-start";
+              }
+              if(orderStatus == "En reparación"){
+                if (finalizarCount == 0) {
+                  //$("#order_body").append("<a href='#' class='card-link finalizar-mantenimiento boton-edicion'>Finalizar</a>");
+                }
+                
+                dClass = "info-box-icon elevation-1 bg-warning";
+                dIcon = "fas fa-cog"
+              }
+              if(orderStatus == "Finalizado"){
+                if (finalizarCount > 0) {
+                  //$(".boton-edicion").eq(1).remove();
+                }
+                //$(".boton-edicion").eq(1).remove();
+                dClass = "info-box-icon elevation-1 bg-success";
+                dIcon = "fas fa-thumbs-up";
+              }
+
+              $("#status_class").addClass(dClass);
+              $("#status_icon").addClass(dIcon);
+              $("#status_title").text(orderStatus);
+
+              
 
               $(".thumb-nail").click(function(){
                 $(".carousel-item").eq(thumbIndex).removeClass(className);
-
-                
                 
                 indexThumb = $(".thumb-nail").index(this);
                 $(".carousel-item").eq(indexThumb).addClass(className);
           
                 thumbElements = document.getElementsByClassName("carousel-item");
                 thumbElement = thumbElements[indexThumb];
-                //alert(thumbElement.classList.contains(className));
+
                 if (indexThumb==(ordersContainer.length-1)) {
                   thumbIndex = 0;
                 }else{
@@ -1262,8 +1200,6 @@ fotoStatus = localStorage.getItem("fotoStatus");
                 }
               })
             }
-            
-
           }
         }else{
           fotoIndex = 0;
@@ -1274,14 +1210,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
             +"<input type='hidden' value='0' class='thumb-index'>"
             +"</div>");
         }
-          
-          // thumbnailsContainer
-          //alert();
         });
-
-
-        
-
       }
     });
 
@@ -1294,10 +1223,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
       data: {opcion:4},
       async: false,
       success: function (data) {
-        //console.log("data de departamento");
-        //console.dir(JSON.parse(data));
         deptCountArray = JSON.parse(data);
-        //console.log(deptCountArray.length);
 
         $("#deptosContenedor").empty();
 
@@ -1305,7 +1231,6 @@ fotoStatus = localStorage.getItem("fotoStatus");
           const element = deptCountArray[indexPie];
           let deptoNombre = element.departamento;
           let deptoId = element.idDepartamento;
-          //alert(deptoId+", "+deptIdsCount[indexPie].depto);
           donutData.labels.push(deptoNombre);
           
           $.ajax({
@@ -1315,11 +1240,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
             data: {deptoId:deptoId},
             async: false,
             success: function (data) {
-              
-              //console.log("data de departamento mantenimiento");
-              //console.dir(JSON.parse(data));
               let deptMCountArray = JSON.parse(data);
-              //console.log(deptMCountArray.length);
               let contadorD = deptMCountArray[0].d_count;
               let contadorP = deptMCountArray[0].p_count;
               let contadorF = deptMCountArray[0].f_count;
@@ -1407,26 +1328,18 @@ fotoStatus = localStorage.getItem("fotoStatus");
             colorIndex = indexPie;
           }
           if (indexPie == (deptCountArray.length-1)) {
-            //-------------
-        //- PIE CHART -
-        //-------------
-        // Get context with jQuery - using jQuery's .get() method.
-        //var pieChartCanvas = $('#pieChartE').get(0).getContext('2d');
-
-        var donutChartCanvas = $('#donutChartE').get(0).getContext('2d')
-
-        var pieData        = donutData;
-        var pieOptions     = {
-          maintainAspectRatio : true,
-          responsive : true,
-        }
-        //Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
-        var donutChart = new Chart(donutChartCanvas, {
-          type: 'doughnut',
-          data: donutData,
-          options: donutOptions      
-        })
+            var donutChartCanvas = $('#donutChartE').get(0).getContext('2d')
+            var pieData        = donutData;
+            var pieOptions     = {
+              maintainAspectRatio : true,
+              responsive : true,
+            }
+        
+            var donutChart = new Chart(donutChartCanvas, {
+              type: 'doughnut',
+              data: donutData,
+              options: donutOptions      
+            })
           }
         }
 
@@ -1448,13 +1361,8 @@ fotoStatus = localStorage.getItem("fotoStatus");
       data: {opcion:4, s_idUsuario:idUsuarioAsign},
       async: false,
       success: function (data) {
-        //console.log("data de asignación");
-        ////console.dir(data);
-        
-        //console.dir(JSON.parse(data));
         let asignCountArray = JSON.parse(data);
-        //console.log(asignCountArray.length);
-
+        
         if (asignCountArray.length == 0 || asignCountArray.length == null) {
           $("#asignCount").text(0);
         }else{
@@ -1471,8 +1379,6 @@ fotoStatus = localStorage.getItem("fotoStatus");
       async: false,
       success: function (data) {
         let mantenimiento = document.getElementsByClassName("order-number");
-        //console.log("data imágenes");
-        //console.dir(JSON.parse(data));
         let imagesArray = JSON.parse(data);
         for (let indexI = 0; indexI < imagesArray.length; indexI++) {
           const element = imagesArray[indexI];
@@ -1485,10 +1391,7 @@ fotoStatus = localStorage.getItem("fotoStatus");
               $(".maintinance").eq(indexM).append("<input type='hidden' value="+orderPhotoUrl+" class='order-"+orderM+"'>");
             }else{}
           }
-          //salert(element.fotoUrl);
-          if (indexI == (imagesArray.length-1)) {
-            
-          }
+          if (indexI == (imagesArray.length-1)) {}
         }
       }
     });
@@ -1613,28 +1516,17 @@ fotoStatus = localStorage.getItem("fotoStatus");
       }
     });
 
-    
-
-    
-
-
-    
-
     $(".user-maintinance").mouseover(function(){
       $(this).css("cursor", "pointer");
     });
 
-    
-
     $(".thumb-nail").click(function(){
       $(".carousel-item").eq(thumbIndex).removeClass(className);
-                //alert(thumbIndex)
                 indexThumb = $(".thumb-nail").index(this);
                 $(".carousel-item").eq(indexThumb).addClass(className);
           
                 thumbElements = document.getElementsByClassName("carousel-item");
                 thumbElement = thumbElements[indexThumb];
-                //alert(thumbElement.classList.contains(className));
                 if (indexThumb==(ordersContainer.length-1)) {
                   thumbIndex = 0;
                 }else{
@@ -1646,13 +1538,10 @@ fotoStatus = localStorage.getItem("fotoStatus");
     nombreU = localStorage.getItem("nombreUsuario");
     uNombre = localStorage.getItem("usuarioNombre");
 
-    //alert(fotoStatus)
-    
     $(".usuario-nombre").eq(0).text(nombreU);
     
     if(fotoStatus == "0"){}else{
       fotoUrl = localStorage.getItem("urlFoto");
-      //alert(fotoUrl)
       urlString = currentUrl.indexOf(urlFilter);
       if (urlString == -1) {
         fotoUrl = "../"+fotoUrl;
@@ -1677,25 +1566,20 @@ fotoStatus = localStorage.getItem("fotoStatus");
         esCambioUsuario = true;
       });
       
-
       $('#img').change(function(){
-
         var input = this;
         var url = $(this).val();
         var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-
         
-
         if (input.files && input.files[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
         {
 
-          //alert(Math.round(input.files[0].size/1024));
           sizeFile = Math.round(input.files[0].size);
           pesoDeImagen = formatBytes(sizeFile,2);
           isMb = pesoDeImagen.indexOf("MB");
 
           if (isMb != -1) {
-            let mbPrefix = pesoDeImagen.substring(0,1);//+1
+            let mbPrefix = pesoDeImagen.substring(0,1);
             let megaBytes = parseInt(mbPrefix);
             if (megaBytes>2) {
               $(document).Toasts('create', {
@@ -1710,7 +1594,6 @@ fotoStatus = localStorage.getItem("fotoStatus");
               var reader = new FileReader();
           
               reader.onload = function (e) {
-                //$('#uploadUserPhotoImg').attr('src', e.target.result);
                 let urlPhoto = e.target.result;
                 fotoUrl = urlPhoto.toString().trim();
 
@@ -1724,14 +1607,11 @@ fotoStatus = localStorage.getItem("fotoStatus");
 
                 esCambioFoto = true;
               
-                //$('#usuarioAfl_Foto').css('background-image', "url("+e.target.result+")");
                 let idDeUsuarioX = localStorage.getItem("idDeUsuario");
                 let idUsuario = parseInt(idDeUsuarioX);
-                //alert(idUsuario)
+                
                 formData.append("userId", idUsuario);
                 formData.append('file', input.files[0]);
-                // codeB64
-            
             
               }
             reader.readAsDataURL(input.files[0]);
@@ -1740,7 +1620,6 @@ fotoStatus = localStorage.getItem("fotoStatus");
             var reader = new FileReader();
           
             reader.onload = function (e) {
-              //$('#uploadUserPhotoImg').attr('src', e.target.result);
               let urlPhoto = e.target.result;
               fotoUrl = urlPhoto.toString().trim();
 
@@ -1753,16 +1632,13 @@ fotoStatus = localStorage.getItem("fotoStatus");
               $('#iconoUsuario').css("display", "none");
 
               esCambioFoto = true;
-            
-              //$('#usuarioAfl_Foto').css('background-image', "url("+e.target.result+")");
+              
               let idDeUsuarioX = localStorage.getItem("idDeUsuario");
               let idUsuario = parseInt(idDeUsuarioX);
-              //alert(idUsuario)
+              
               formData.append("userId", idUsuario);
               formData.append('file', input.files[0]);
-              // codeB64
-          
-          
+              
             }
             reader.readAsDataURL(input.files[0]);
           }
@@ -1770,13 +1646,8 @@ fotoStatus = localStorage.getItem("fotoStatus");
         }
         else
         {
-        
           esCambioFoto = false;
-              //$('#usuarioAfl_Foto').attr('src', "img/clients/academy-user-icon_n.png");
-  
-          //$('#usuarioAfl_Foto').css('background-image', "url('img/clients/academy-user-icon_n.png')");
         }
-        /**/
       });
 
       $('#imgEquipo').change(function(){
@@ -1785,18 +1656,15 @@ fotoStatus = localStorage.getItem("fotoStatus");
         var url = $(this).val();
         var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
 
-        
-
         if (input.files && input.files[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
         {
           var reader = new FileReader();
-
           let sizeFileE = Math.round(input.files[0].size);
           let pesoDeImagenE = formatBytes(sizeFileE,2);
           let isMbE = pesoDeImagenE.indexOf("MB");
 
           if (isMbE != -1) {
-            let mbPrefixE = pesoDeImagenE.substring(0,1);//+1
+            let mbPrefixE = pesoDeImagenE.substring(0,1);
             let megaBytesE = parseInt(mbPrefixE);
             if (megaBytesE>2) {
               $(document).Toasts('create', {
@@ -1809,12 +1677,9 @@ fotoStatus = localStorage.getItem("fotoStatus");
               })
             }else{
               reader.onload = function (e) {
-                //$('#uploadUserPhotoImg').attr('src', e.target.result);
                 let urlEPhoto = e.target.result;
                 eFotoUrl = urlEPhoto.toString().trim();
   
-                
-                //alert(fotoIndex);
                 if (fotoIndex == 0) {
   
                     $(".carousel-item").eq(0).removeClass("active");
@@ -1840,8 +1705,8 @@ fotoStatus = localStorage.getItem("fotoStatus");
     
                 esECambioFoto = true;
                 
-              let idDeMantenimiento = localStorage.getItem("idDeMantenimiento");
-              let idMantenimiento = parseInt(idDeMantenimiento);
+              idDeMantenimiento = localStorage.getItem("idDeMantenimiento");
+              idMantenimiento = parseInt(idDeMantenimiento);
               
               eFormData.append("mantenimientoId", idMantenimiento);
               eFormData.append('file', input.files[0]);
@@ -1864,12 +1729,9 @@ fotoStatus = localStorage.getItem("fotoStatus");
             
           }else{
             reader.onload = function (e) {
-              //$('#uploadUserPhotoImg').attr('src', e.target.result);
               let urlEPhoto = e.target.result;
               eFotoUrl = urlEPhoto.toString().trim();
 
-              
-              //alert(fotoIndex);
               if (fotoIndex == 0) {
 
                   $(".carousel-item").eq(0).removeClass("active");
@@ -1895,8 +1757,8 @@ fotoStatus = localStorage.getItem("fotoStatus");
   
               esECambioFoto = true;
               
-            let idDeMantenimiento = localStorage.getItem("idDeMantenimiento");
-            let idMantenimiento = parseInt(idDeMantenimiento);
+            idDeMantenimiento = localStorage.getItem("idDeMantenimiento");
+            idMantenimiento = parseInt(idDeMantenimiento);
             
             eFormData.append("mantenimientoId", idMantenimiento);
             eFormData.append('file', input.files[0]);
@@ -1928,14 +1790,10 @@ fotoStatus = localStorage.getItem("fotoStatus");
 
     $(".usuario-nombre").eq(0).text(nombreU);
 
-    
-
     $(".boton-excel").click(function(excv){
       excv.preventDefault();
       excv.stopPropagation();
-
     });
-    
     
     let escala = 2;
     $(".boton-imprimir").click(function(event){
@@ -1964,7 +1822,6 @@ fotoStatus = localStorage.getItem("fotoStatus");
 
       let elem = element[printIndex];
       let fechaActual = new Date();
-      //doc.text("Título Documento", 20, 20);
 
       var opt = {
         margin:       1,
@@ -1983,14 +1840,8 @@ fotoStatus = localStorage.getItem("fotoStatus");
           document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
           }
       
-        
       });
     });
-
-    
-
-  //}
-  
 
   function isDateBeforeToday(date) {
     return new Date(date.toDateString()) < new Date(new Date().toDateString());
@@ -2015,14 +1866,6 @@ let fechaSolicitud;
     }
   })
 
-  
-
-
-
-
-
-
-
   $("#updateUserPhotoIcon").click(function(){
     $("#img").click();
   });
@@ -2031,10 +1874,7 @@ let fechaSolicitud;
     $("#imgEquipo").click();
   });
 
-  
-
   $(".user-info").click(function(){
-    //alert(fotoStatus)
     if(fotoStatus == "0"){}else{
       fotoUrl = localStorage.getItem("urlFoto");
 
@@ -2052,28 +1892,23 @@ let fechaSolicitud;
 
     let nameUser = $("#usuarioNombre").text();
     let uName = localStorage.getItem("usuarioNombre");
-    //$("#inputEditUserName").attr("placeholder", nameUser);
     $("#inputEditUName").attr("placeholder", uName);
     
   });
 
   
   $(".save-changes-button").click(function(){
-    
     $("#page_loader").fadeIn();
 
     urlString = currentUrl.indexOf(urlFilter);
   if (urlString == -1) {
     outCallUrl = "../../bd/upload_user_photo.php";
-    //outUrl = "../../index.php";
   }else{
     outCallUrl = "../bd/upload_user_photo.php";
-    //outUrl = "../index.php";
   }
 
 
     if(esCambioFoto == true){
-      //alert("voy");
       $.ajax({
         type: "post",
         crossOrigin: true,
@@ -2085,9 +1920,7 @@ let fechaSolicitud;
         }
 
         
-      }).then(function(some){
-        //alert("vengo")
-      }) ;
+      }).then(function(some){});
 
 
       setTimeout(() => {
@@ -2095,13 +1928,13 @@ let fechaSolicitud;
         let esteIdUsuario = parseInt(esteIdDeUsuarioX);
 
         urlString = currentUrl.indexOf(urlFilter);
-  if (urlString == -1) {
-    outCallUrl = "../../bd/get_user_photo.php";
-    outUrl = "../../bd/update_user_name.php";
-  }else{
-    outCallUrl = "../bd/get_user_photo.php";
-    outUrl = "../bd/update_user_name.php";
-  }
+        if (urlString == -1) {
+          outCallUrl = "../../bd/get_user_photo.php";
+          outUrl = "../../bd/update_user_name.php";
+        }else{
+          outCallUrl = "../bd/get_user_photo.php";
+          outUrl = "../bd/update_user_name.php";
+        }
 
         $.ajax({
           url:outCallUrl,
@@ -2109,15 +1942,12 @@ let fechaSolicitud;
           async: false,
           data: {idUsuario:esteIdUsuario}, 
             success:function(dataPhoto){
-              //console.log("de la foto");
               if(dataPhoto.toString().trim() == "0"){
                 localStorage.setItem("fotoStatus", 0);
               }else{
                 localStorage.setItem("fotoStatus", 1);
                 localStorage.setItem( "urlFoto", dataPhoto.toString().trim());
-//alert(esCambioUsuario)
                   if (esCambioUsuario == true) {
-                    // userId uName
                     $.ajax({
                       url:outUrl,
                       type:"POST",
@@ -2127,7 +1957,7 @@ let fechaSolicitud;
                           $("#page_loader").fadeOut("slow");
                           $('#editUserModal').modal('hide');
                           $(".modal-backdrop").eq(0).removeClass("show");
-                    $(".modal-backdrop").eq(0).css("display", "none");
+                          $(".modal-backdrop").eq(0).css("display", "none");
 
                           $(document).Toasts('create', {
                             class: 'bg-success', 
@@ -2151,16 +1981,12 @@ let fechaSolicitud;
                       delay: 6000,
                       body: 'Los cambios se han realizado Exitosamente!'
                     })
-
                     
                     $('#editUserModal').modal('hide');
                     $(".modal-backdrop").eq(0).removeClass("show");
                     $(".modal-backdrop").eq(0).css("display", "none");
-
                   }
-
               }
-              
             }      
           });
         
@@ -2171,14 +1997,13 @@ let fechaSolicitud;
       let esteIdDeUsuarioX = localStorage.getItem("idDeUsuario");
         let esteIdUsuario = parseInt(esteIdDeUsuarioX);
         urlString = currentUrl.indexOf(urlFilter);
-  if (urlString == -1) {
-    outUrl = "../../bd/update_user_name.php";
-  }else{
-    outUrl = "../bd/update_user_name.php";
-  }
+        if (urlString == -1) {
+          outUrl = "../../bd/update_user_name.php";
+        }else{
+          outUrl = "../bd/update_user_name.php";
+        }
 
       if (esCambioUsuario) {
-        // userId uName
         $.ajax({
           url:outUrl,
           type:"POST",
@@ -2218,11 +2043,8 @@ let fechaSolicitud;
 
       }
     }
-
     if(esCambioNombre == true){}else{}
-
     if(esCambioUsuario == true){}else{}
-
   });
   
   $(".top-report").click(function(){
@@ -2230,7 +2052,6 @@ let fechaSolicitud;
     let typeM = $(".top-report-text").eq(typeIndex).text();
 
     $(".modal-dialog").eq(1).css("max-width", "1000px");
-
     arrayFilter = [];
 
     for (let index = 0; index < mantenimientosArray.length; index++) {
@@ -2242,8 +2063,6 @@ let fechaSolicitud;
       }
 
       if (index == (mantenimientosArray.length - 1)) {
-        //console.dir(arrayFilter);
-
         $("#quickReportsTable").empty();
 
 
@@ -2304,8 +2123,7 @@ $(".logout-button").click(function(){
       success: function (data) {
         localStorage.setItem("esSesion", false);
         localStorage.setItem('isSession', false);
-        // update a la base de datos par poner inactivo el hash
-        //alert(thisHash)
+        
         $.ajax({
           url:deactivateUrl,
           type:"POST",
@@ -2324,7 +2142,6 @@ $(".logout-button").click(function(){
               
             }      
           });
-        //localStorage.setItem("thisHash", null);
         window.open(outUrl, "_self");
       }
     });
@@ -2343,9 +2160,6 @@ $(".logout-button").click(function(){
       $(".wrapper").eq(0).css("width", "80%");
     }
   })
-
-
-  //alert(currentUrl)
 
   if (currentUrl == "/HDCS/inicio/dashboard.php") {temporizador = 3000;}
   if (currentUrl == "/HDCS/forms/equipo/index.php") {temporizador = 6000;}
@@ -2371,34 +2185,17 @@ $(".logout-button").click(function(){
   if (currentUrl == "/HDCS/forms/tipoRam/index.php") {temporizador = 4000;}
   if (currentUrl == "/HDCS/forms/usuario/index.php") {temporizador = 2000;}
   if (currentUrl == "/HDCS/forms/velocidadRam/index.php") {temporizador = 4000;}
-  /**/
 
-  //alert(urlFilter)
-            urlString = currentUrl.indexOf(urlFilter);
+  urlString = currentUrl.indexOf(urlFilter);
 
-            
-
-    setTimeout(() => {
+  setTimeout(() => {
     var tablaContainer = document.getElementsByClassName('tabla-data');
-  //alert(tablaContainer.length)
   for (let indexTabla = 0; indexTabla < tablaContainer.length; indexTabla++) {
     const element = tablaContainer[indexTabla];
     titulo = $(".file-title").eq(indexTabla).val();
     titulo_doc = $(".document-title").eq(indexTabla).val();
     let myTableId = element.id;
-  //alert(myTableId)
-  /*
-  $('#'+myTableId).tableExport({
-    filename: 'table_%DD%-%MM%-%YY%',
-    format: "xlsx",
-    onbefore: function() {
-      alert('The export of tables begins!');
-    },
-    onafter: function() {
-      alert('Export complete :)');
-    },
-  });
-*/
+
   TableExport(document.getElementById(myTableId), {
     
     headers: true,
@@ -2416,9 +2213,6 @@ $(".logout-button").click(function(){
   });
 
   if (indexTabla == (tablaContainer.length-1)) {
-
-    
-
     let botoneras = document.getElementsByClassName("tableexport-caption");
     if (window.matchMedia("(max-width: 700px)").matches) {
       for (let indexBoton = 0; indexBoton < botoneras.length; indexBoton++) {
@@ -2436,14 +2230,9 @@ $(".logout-button").click(function(){
         if (indexBoton == (botoneras.length-1)) {
           let botonesXlsx = document.getElementsByClassName("xlsx");
 
-          //alert(urlFilter)
             urlString = currentUrl.indexOf(urlFilter);
 
-            if (urlString == -1) {
-              //alert(document.getElementsByClassName('dataTables_scrollBody').length);
-              //$('div.dataTables_scrollBody').height(300);
-            }else{
-            }
+            if (urlString == -1) {}else{}
 
           for (let indexXlsx = 0; indexXlsx < botonesXlsx.length; indexXlsx++) {
             const elementXlsx = botonesXlsx[indexXlsx];
@@ -2471,7 +2260,6 @@ $(".logout-button").click(function(){
           +"<button type='button' tableexport-id='baa618"
           +indexBoton+"-pdf' class='btn btn-danger pdf boton-accion boton-pdf' style='width:110px;margin-right:6px'><span id='pdfIconContainer'>Pdf <i class='fas fa-file-pdf'></i></span></button>"
           );
-        // 
         if (indexBoton == (botoneras.length-1)) {
           let botonesXlsx = document.getElementsByClassName("xlsx");
           for (let indexXlsx = 0; indexXlsx < botonesXlsx.length; indexXlsx++) {
@@ -2493,20 +2281,16 @@ $(".logout-button").click(function(){
   }
 
   $(".create-orders-button").click(function(evc){
-    //alert("voy");
     evc.preventDefault();
     evc.stopPropagation();
     window.open("/HDCS/forms/solicitudMantenimiento/index.php", "_self");
   });
 
   $(".boton-pdf").click(function(evpdf){
-    //alert("voy");
     evpdf.preventDefault();
     evpdf.stopPropagation();
     let pdftIndex = $(".boton-pdf").index(this);
     $("#page_loader").fadeIn();
-
-
     if (window.matchMedia("(max-width: 700px)").matches) {
       escala = 1;
     }else{
@@ -2517,7 +2301,6 @@ $(".logout-button").click(function(){
     var elementTitle = document.getElementsByClassName('file-title');
     
     let miContenedor = document.getElementsByClassName("tableexport-caption");
-    //alert(miContenedor.length)
     $('div.dataTables_scrollBody').height("auto");
 
     var botonesAccion = document.getElementsByClassName("boton-accion");
@@ -2530,10 +2313,7 @@ $(".logout-button").click(function(){
       const elementBA = botonesAccion[indexBA];
       elementBA.style.display = "none";
     }
-    //captionS[pdftIndex].style.display = "none";
-    //$(".tableexport-caption").eq(pdftIndex).find("boton-accion").css("display", "none");
-
-
+    
     if(currentUrl == "/HDCS/inicio/dashboard.php") {
       document.getElementById('repSegEst').style.height = "auto";
       }
@@ -2541,7 +2321,6 @@ $(".logout-button").click(function(){
 
     for (let indexA = 0; indexA < botonesAccion.length; indexA++) {
       const element = botonesAccion[indexA];
-      //element.style.display = "none";
     }
 
     let elem = element[pdftIndex];
@@ -2549,7 +2328,6 @@ $(".logout-button").click(function(){
     titulo_doc = $(".documento-title").eq(pdftIndex).text();
     $(".documento-title").eq(pdftIndex).text(titulo_doc+" "+fechaActual);
     $(".documento-title").eq(pdftIndex).css("display", "inherit");
-    //alert(titulo_doc)
 
     var opt = {
       margin:       1,
@@ -2562,15 +2340,8 @@ $(".logout-button").click(function(){
 
     
     html2pdf().set(opt).from(elem).toPdf().save(titulo+fechaActual+'.pdf').then(function(pdf) {
-      //captionS[pdftIndex].style.display = "inherit";
-      //captionS[pdftIndex].style.width = widthT+"px";
-      //alert(titulo_doc)
-      //doc.text("Hello Title", 50, 30);
       
       $(".documento-title").eq(pdftIndex).css("display", "none");
-      
-      
-
       for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {
         const elementBA = botonesAccion[indexBA];
         elementBA.style.display = "inherit";
@@ -2578,15 +2349,12 @@ $(".logout-button").click(function(){
       
       for (let indexB = 0; indexB < botonesAccion.length; indexB++) {
         const element = botonesAccion[indexB];
-        //element.style.display = "inherit";
-
       }
 
       $('div.dataTables_scrollBody').height(300);
       if(currentUrl == "/HDCS/inicio/dashboard.php") {
         document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
         }
-
         $("#page_loader").fadeOut("slow");
     });
   });
@@ -2595,7 +2363,6 @@ $(".logout-button").click(function(){
     let ordersIndex = $(".all-orders-button").index(this);
     let contenedor = document.getElementsByClassName("dataTables_scrollBody").eq(0);
       let scrollHeight = contenedor.clientHeight;
-    //alert(currentUrl) 
 
     if(currentUrl == "/HDCS/inicio/dashboard.php"){
       if(ordersIndex == 0){
@@ -2622,19 +2389,10 @@ $(".logout-button").click(function(){
         }
       }
     }else{
-      
-
-      //alert(scrollHeight);
       $('.dataTables_scrollBody').css('height', 300);  
     }
-
-    
-    
   });
   $("#page_loader").fadeOut("slow");
   }, temporizador);
-
-
-
 
 }); // document ready
