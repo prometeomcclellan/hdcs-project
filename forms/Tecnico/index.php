@@ -353,6 +353,14 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/HDCS/forms/bitacoraMantenimiento/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-book-open"></i>
+                  <p>
+                    Bitácora de mantenimiento
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/HDCS/forms/audiLog/index.php" class="nav-link">
                   <i class="nav-icon fa fa-book"></i>
                   <p>

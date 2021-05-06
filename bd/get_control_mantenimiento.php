@@ -23,7 +23,8 @@
         $observacion = $dat["observacion"];
         $estadoControlMantenimiento = $dat["estadoControlMantenimiento"];
 	      $nombreEmpleado = $dat["empleado"];
-        //$idDepartamento = $dat["idDepartamento"];
+        $tituloControlmantenimiento = $dat["tituloControlmantenimiento"];
+        //$idDepartamento = $dat["idDepartamento"]; tituloControlmantenimiento
 	    //$estado = intval($estado);
 
 		$response = array(
@@ -37,6 +38,7 @@
             'fechaSolicitudMantenimiento' => $fechaSolicitudMantenimiento,
             'observacion' => $observacion,
             'estadoControlMantenimiento' => $estadoControlMantenimiento,
+            'tituloControlmantenimiento' => $tituloControlmantenimiento,
             'nombreEmpleado' => $nombreEmpleado
             //'idDepartamento' => $idDepartamento
 		);

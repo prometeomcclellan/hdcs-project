@@ -2,6 +2,19 @@ $("#page_loader").fadeIn();
 
 $(document).ready(function() {
 
+  function accessCount (){
+    var loaded = parseInt(localStorage.getItem('loaded'), 10),
+        loaded_numb = loaded?loaded+1:1;
+    localStorage.setItem('loaded', loaded_numb);
+    console.log(loaded_numb);
+  }
+  console.log("Acá el conteo");
+  accessCount ();
+
+  window.addEventListener("unload", function(){
+    //parent.alert("me voy")
+  })
+
   let mantenimientosArray = [];
   let mantenimientosArrayX = [];
   let mantenimientosXUsuarioArray = [];
@@ -80,11 +93,11 @@ $(document).ready(function() {
   let elStatusClass;
   let elStatusIcon;
 
+  
+
   if (currentUrl.indexOf(loginUrl) == 1) {
     let esSesion = localStorage.getItem("isSession");
   }else{
-
-    
 
     let esInicio = localStorage.getItem("esInicio");
     thisHash = localStorage.getItem("thisHash");
@@ -278,10 +291,11 @@ $('#formLogin').submit(function(e){
   
   e.preventDefault();
   let checkSession = localStorage.getItem("thisHash");
+  // ajax para revisar si hash existe y esta activo y es el mismo id
   
   if (checkSession == null || checkSession == "null") {
   
-  var _usuario = $.trim($("#usuario").val());    
+  var _usuario = $.trim($("#usuario").val());
   var _password =$.trim($("#password").val());
   let sAbierta = document.getElementById("abierta").checked;
   let cargoU = localStorage.getItem('cargoIni');
@@ -292,6 +306,8 @@ $('#formLogin').submit(function(e){
       title:'Debe ingresar un usuario y/o password',
     });
     return false; 
+
+    
 
   }else{
     let thisData = [];
@@ -342,6 +358,8 @@ $('#formLogin').submit(function(e){
     
             let hora = accesoHour+":"+accesoMinutes+":"+accesoSeconds;
             let fechaAcceso = accesoAnio+"-"+accesoMes+"-"+accesoDia+" "+hora;
+
+            
 
             $.ajax({
               url:"bd/crear_acceso.php",
@@ -990,6 +1008,7 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
           let oStatus = element.estadoControlMantenimiento;
           let oSDate = element.fechaSolicitudMantenimiento;
           let oDate = element.fechaControlMantenimiento;
+          let oTitulo = element.tituloControlmantenimiento;
           
           oClass = "success";
 
@@ -1025,7 +1044,7 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
           $("#mantenimientosTable").append(
             "<tr class='maintinance'>"
               +"<td>"+oNumber+"</td>"+"<input type='hidden' value="+element.idControlMantenimiento+" class='order-number'>"
-              +"<td>"+oEquipment+"<span class='order-description' style='display:none;'>"+oEquipment+"</span></td>"
+              +"<td>"+oEquipment+"<span class='order-description' style='display:none;'>"+oEquipment+"</span>"+"<span class='order-titulo' style='display:none;'>"+oTitulo+"</span></td>"
               +"<td><span class='badge badge-"+oClass+"' style='width:120px;'>"+oStatus+"</span><span class='order-status' style='display:none;'>"+oStatus+"</span></td>"
               +"<td>"
                 +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oSDate+"</div>"+"<input type='hidden' value="+oSDate+" class='order-sdate'>"
@@ -1052,6 +1071,7 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
           localStorage.setItem("idDeMantenimiento", orderNumber);
 
           let orderDescription = $(".order-description").eq(orderIndex).text();
+          let orderTitulo = $(".order-titulo").eq(orderIndex).text();
           let orderStatus = $(".order-status").eq(orderIndex).text();
           let orderSDate = $(".order-sdate").eq(orderIndex).val();
           let orderODate = $(".order-odate").eq(orderIndex).val();
@@ -1062,64 +1082,15 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
           $("#thumbnailsContainer").empty();
           $("#manDetalles").empty();
           
-          $("#manTitulo").text(orderDescription);
+          $("#manTitulo").text(orderTitulo);
           $("#manDescripcion").text(orderDescription);
-          $("#manDetalles").append("<li class='list-group-item'>Estado : "+orderStatus+"</li>");
+          //$("#manDetalles").append("<li class='list-group-item'>Estado : "+orderStatus+"</li>");
           $("#manDetalles").append("<li class='list-group-item'>Fecha Solicitud : "+orderSDate+"</li>");
           $("#manDetalles").append("<li class='list-group-item'>Fecha Mantenimiento : "+orderODate+"</li>");
           
           if (ordersContainer.length > 0) {
             
-            /*
-            setTimeout(() => {
-              $(".boton-edicion").click(function(){
-                let editIndex = $(".boton-edicion").index(this);
-                
-                if (editIndex == 0) {
-                  alert("voy a editar")
-                }
-
-                if (editIndex == 1) {
-
-                  urlString = currentUrl.indexOf(urlFilter);
-                  if (urlString == -1) {
-                    outCallUrl = "../../bd/update_estado_mantenimiento.php";
-                  }else{
-                    outCallUrl = "../bd/update_estado_mantenimiento.php";
-                  }
-                  alert(orderNumber)
-                  
-                  $.ajax({
-                    type: "post",
-                    crossOrigin: true,
-                    url: outCallUrl,
-                    data: {idControlMantenimiento:orderNumber},
-                    async: false,
-                    success: function (data) {
-                      console.log(data);
-                      elStatusClass.className = '';
-                      elStatusIcon.className = '';
-                      $("#status_title").text("");
-
-                      $("#status_class").addClass("info-box-icon elevation-1 bg-success");
-                      $("#status_icon").addClass("fas fa-thumbs-up");
-                      $("#status_title").text("Finalizado");
-
-                      $(document).Toasts('create', {
-                        class: 'bg-success', 
-                        title: "Finalizado!",
-                        subtitle: 'Cerrar',
-                        autohide: true,
-                        delay: 6000,
-                        body: 'Esta orden ha sido finalizada.'
-                      })
-                    }
-                   });
-                   
-                }
-              });
-            }, 1000);
-*/
+            
            for (let indexT = 0; indexT < ordersContainer.length; indexT++) {
             const elementT = ordersContainer[indexT];
             let thumbUrl = elementT.value;

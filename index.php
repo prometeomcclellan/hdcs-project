@@ -1,12 +1,3 @@
-<script>
-    let miUsuarioId = localStorage.getItem('esSesion');
-      if(miUsuarioId == 'false' || miUsuarioId == null){
-        //window.open('/HDCS/index.php', '_self');
-      }else{
-        window.open('inicio/dashboard.php', '_self');
-      }
-</script>
-
 <!doctype html>
 <html>
     <head>
@@ -90,7 +81,6 @@ if ( $detect->isMobile() ) {
               }
           ?>
 
-          
               <div class="card-header" style="color:white;background-color:#1a3c8a;">
               <div class="row">
               <div class="col-md-8">
@@ -128,9 +118,9 @@ if ( $detect->isMobile() ) {
                   </div>
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
+                <div class="card-footer" style="height: 62px;">
                   
-                  <a href="#" class="btn btn-default no-cursor" style="color:transparent;cursor:arrow;">Cancel</a>
+                  <!-- a href="#" class="btn btn-default no-cursor" style="color:transparent;cursor:arrow;">Cancel</a -->
                   <button id="submitButton" type="submit" name="submit" class="btn btn-info float-right" style="background-color:#1a3c8a;">Iniciar sesión</button>
                 </div>
                 <!-- /.card-footer -->
