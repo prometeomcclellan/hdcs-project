@@ -205,6 +205,14 @@ if(session_id() == ''){
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/HDCS/forms/empresaGarantia/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-file-signature"></i>
+                  <p>
+                    Empresa garantía
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/HDCS/forms/detEquipoComputadora/index.php" class="nav-link">
                   <i class="nav-icon fas fa-tv"></i>
                   <p>
@@ -363,14 +371,6 @@ if(session_id() == ''){
                   <i class="nav-icon fas fa-cogs"></i>
                   <p>
                     Tipo mantenimiento
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/HDCS/forms/bitacoraMantenimiento/index.php" class="nav-link">
-                  <i class="nav-icon fas fa-book-open"></i>
-                  <p>
-                    Bitácora de mantenimiento
                   </p>
                 </a>
               </li>

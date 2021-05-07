@@ -196,6 +196,14 @@ if ( $detect->isMobile() ) {
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/HDCS/forms/empresaGarantia/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-file-signature"></i>
+                  <p>
+                    Empresa garantía
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/HDCS/forms/detEquipoComputadora/index.php" class="nav-link">
                   <i class="nav-icon fas fa-tv"></i>
                   <p>
@@ -358,14 +366,6 @@ if ( $detect->isMobile() ) {
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/HDCS/forms/bitacoraMantenimiento/index.php" class="nav-link">
-                  <i class="nav-icon fas fa-book-open"></i>
-                  <p>
-                    Bitácora de mantenimiento
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="/HDCS/forms/audiLog/index.php" class="nav-link">
                   <i class="nav-icon fa fa-book"></i>
                   <p>
@@ -441,12 +441,16 @@ if ( $detect->isMobile() ) {
     <div class="container">
         <div class="row">
             <div class="col-lg-12">            
-                <button id="btnNuevo" type="button" class="btn btn-success" data-toggle="modal"><i class="material-icons" id="nuevo">add_box</i>  | Nuevo</button> 
+                <button id="btnNuevo" type="button" class="btn btn-warning" data-toggle="modal"><i class="material-icons" id="nuevo">add_box</i>  | Nuevo</button> 
             </div>    
         </div>    
     </div>    
     <br>  
-
+    <style>
+#tablaEmpresa > thead {
+  background : #1a3c8a;
+}
+</style>
     <div class="container caja">
         <div class="row">
             <div class="col-lg-12 print-container">

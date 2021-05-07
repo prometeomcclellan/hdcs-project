@@ -196,6 +196,14 @@ if ( $detect->isMobile() ) {
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/HDCS/forms/empresaGarantia/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-file-signature"></i>
+                  <p>
+                    Empresa garantía
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/HDCS/forms/detEquipoComputadora/index.php" class="nav-link">
                   <i class="nav-icon fas fa-tv"></i>
                   <p>
