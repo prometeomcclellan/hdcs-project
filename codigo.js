@@ -92,6 +92,7 @@ $(document).ready(function() {
   let idMantenimiento;
   let elStatusClass;
   let elStatusIcon;
+  let cargoIni;
 
   
 
@@ -211,7 +212,7 @@ $(document).ready(function() {
       document.body.style.display = "none";
       location.href = '../index.php';
     }else{
-    let cargoIni = localStorage.getItem('cargoIni');
+    cargoIni = localStorage.getItem('cargoIni');
     if (cargoIni == null) {}
     let brandLink = document.getElementsByClassName("brand-link");
     let rolTodosContainer = document.getElementsByClassName("rol-todos");
@@ -293,7 +294,7 @@ $('#formLogin').submit(function(e){
   let checkSession = localStorage.getItem("thisHash");
   // ajax para revisar si hash existe y esta activo y es el mismo id
   
-  if (checkSession == null || checkSession == "null") {
+  
   
   var _usuario = $.trim($("#usuario").val());
   var _password =$.trim($("#password").val());
@@ -358,31 +359,6 @@ $('#formLogin').submit(function(e){
     
             let hora = accesoHour+":"+accesoMinutes+":"+accesoSeconds;
             let fechaAcceso = accesoAnio+"-"+accesoMes+"-"+accesoDia+" "+hora;
-
-            
-
-            $.ajax({
-              url:"bd/crear_acceso.php",
-              type:"POST",
-              async: false,
-              data: {idUsuario:idDeUsuario, accessUrl: "login", usuario:_usuario, password:_password,
-              fechaAcceso:fechaAcceso}, 
-                success:function(dataAccess){
-                  console.log("acceso creado");
-                  let accesos = JSON.parse(dataAccess);
-                  let esAcceso = accesos[0].status;
-                  console.log(esAcceso);
-                 
-                  if (esAcceso == 200) {
-                    let thisHash = accesos[0].hash;
-                    localStorage.setItem("thisHash", thisHash);
-                  }
-
-                  if (esAcceso == 500) {
-                    localStorage.setItem("thisHash", null);
-                  }
-                }      
-              });
             
             if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
             != "admin") {
@@ -430,19 +406,99 @@ $('#formLogin').submit(function(e){
                 }      
               });
 
-              window.location.href = loginRedirectUrl;
-                 
+              if (checkSession == null || checkSession == "null") {
+                $.ajax({
+                      url:"bd/crear_acceso.php",
+                      type:"POST",
+                      async: false,
+                      data: {idUsuario:idDeUsuario, accessUrl: "login", usuario:_usuario, password:_password,
+                      fechaAcceso:fechaAcceso}, 
+                      success:function(dataAccess){
+                        console.log("acceso creado");
+                        let accesos = JSON.parse(dataAccess);
+                        let esAcceso = accesos[0].status;
+                        console.log(esAcceso);
+                    
+                        if (esAcceso == 200) {
+                          let thisHash = accesos[0].hash;
+                          localStorage.setItem("thisHash", thisHash);
+                          window.location.href = loginRedirectUrl;
+                        }
+                    
+                        if (esAcceso == 500) {
+                          localStorage.setItem("thisHash", null);
+                        }
+                      }      
+                    });
+              }else{
+
+                $.ajax({
+                  url:"bd/get_hash.php",
+                  type:"POST",
+                  async: false,
+                  data: {idUsuario:idDeUsuario, hash:checkSession}, 
+                    success:function(dataHash){
+                      let hashData = JSON.parse(dataHash);
+                      let esHash = hashData[0].status;
+
+                      console.log(esHash);
+
+                      if (esHash == 200) {
+                        window.location.href = loginRedirectUrl;
+                      }
+                  
+                      if (esHash == 500) {
+                        Swal.fire({
+                          type:'warning',
+                          title:'Ya existe una sesión de usuario abierta',
+                        });
+                      }
+
+                      //alert(cargoIni)
+/*
+                      if (cargoIni == "admin") {
+                        window.location.href = loginRedirectUrl;
+                      }else{
+                        if (esHash == 200) {
+                          console.dir(hashData);
+                          for (let indexH = 0; indexH < hashData.length; indexH++) {
+                            const element = hashData[indexH];
+                            if (indexH == (hashData.length-1)) {
+                              let estadoActivo = element.accesoEstado;
+                              let activeStatus = parseInt(estadoActivo);
+                              if (activeStatus == 1) {
+                                let backHash = element.accessToken;
+                                localStorage.setItem("thisHash", backHash);
+                                window.location.href = loginRedirectUrl;
+                              }else{
+                                Swal.fire({
+                                  type:'warning',
+                                  title:'Ya existe una sesión de usuario abierta',
+                                });
+                              }
+                            }
+                          }
+                        }
+                    
+                        if (esHash == 500) {
+                          Swal.fire({
+                            type:'warning',
+                            title:'Ya existe una sesión de usuario abierta',
+                          });
+                        }
+                      }
+
+                      
+                      
+                      */
+  
+                    }      
+                  });
+              }
           }
         } 
       });
     }
-
-  }else{
-    Swal.fire({
-      type:'warning',
-      title:'Ya existe una sesión de usuario abierta',
-    });
-  }
   });
 
 var formData = new FormData();
