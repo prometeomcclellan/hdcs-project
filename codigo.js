@@ -127,7 +127,84 @@ $(document).ready(function() {
       
       
       if (editIndex == 0) {
-        alert("voy a editar")
+        urlString = currentUrl.indexOf(urlFilter);
+        if (urlString == -1) {
+          outCallUrl = "../../bd/update_maint_data.php";
+        }else{
+          outCallUrl = "../bd/update_maint_data.php";
+        }
+
+        let titleContainer = $(".man-titulo").eq(0).val();
+        let descripcionContainer = $(".man-descripcion").eq(0).val();
+        if(titleContainer != ""){
+          //alert(titleContainer+", "+descripcionContainer)
+          // ajax update_maint_data.php enviando titulo y descripcion
+          $.ajax({
+            type: "post",
+            crossOrigin: true,
+            url: outCallUrl,
+            data: {titulo:titleContainer, descripcion:descripcionContainer, idControlMantenimiento:dOrderNumber},
+            async: false,
+            success: function (uMaintData) {
+              let uData = JSON.parse(uMaintData);
+              console.dir(uData)
+              let updateStatus = uData[0].status;
+              if (updateStatus == 200) {
+                $(document).Toasts('create', {
+                  class: 'bg-success', 
+                  title: "Cambios guardados!",
+                  subtitle: 'Cerrar',
+                  autohide: true,
+                  delay: 6000,
+                  body: 'Se actualizó la información exitosamente.'
+                })
+              }
+            }
+          });
+
+        }else{
+          if(descripcionContainer != ""){
+            urlString = currentUrl.indexOf(urlFilter);
+            if (urlString == -1) {
+              outCallUrl = "../../bd/update_maint_description.php";
+            }else{
+              outCallUrl = "../bd/update_maint_description.php";
+            }
+
+            $.ajax({
+              type: "post",
+              crossOrigin: true,
+              url: outCallUrl,
+              data: {descripcion:descripcionContainer, idControlMantenimiento:dOrderNumber},
+              async: false,
+              success: function (uDescData) {
+                let udData = JSON.parse(uDescData);
+                console.dir(udData)
+                let updatedStatus = udData[0].status;
+                if (updatedStatus == 200) {
+                  $(document).Toasts('create', {
+                    class: 'bg-success', 
+                    title: "Cambios guardados!",
+                    subtitle: 'Cerrar',
+                    autohide: true,
+                    delay: 6000,
+                    body: 'Se actualizó la información exitosamente.'
+                  })
+                }
+              }
+            });
+
+          }else{
+            $(document).Toasts('create', {
+              class: 'bg-warning', 
+              title: "Falta infrmación!",
+              subtitle: 'Cerrar',
+              autohide: true,
+              delay: 6000,
+              body: 'Los campos deben estar llenos.'
+            })
+          }
+        }
       }
 
       if (editIndex == 1) {
@@ -453,45 +530,6 @@ $('#formLogin').submit(function(e){
                           title:'Ya existe una sesión de usuario abierta',
                         });
                       }
-
-                      //alert(cargoIni)
-/*
-                      if (cargoIni == "admin") {
-                        window.location.href = loginRedirectUrl;
-                      }else{
-                        if (esHash == 200) {
-                          console.dir(hashData);
-                          for (let indexH = 0; indexH < hashData.length; indexH++) {
-                            const element = hashData[indexH];
-                            if (indexH == (hashData.length-1)) {
-                              let estadoActivo = element.accesoEstado;
-                              let activeStatus = parseInt(estadoActivo);
-                              if (activeStatus == 1) {
-                                let backHash = element.accessToken;
-                                localStorage.setItem("thisHash", backHash);
-                                window.location.href = loginRedirectUrl;
-                              }else{
-                                Swal.fire({
-                                  type:'warning',
-                                  title:'Ya existe una sesión de usuario abierta',
-                                });
-                              }
-                            }
-                          }
-                        }
-                    
-                        if (esHash == 500) {
-                          Swal.fire({
-                            type:'warning',
-                            title:'Ya existe una sesión de usuario abierta',
-                          });
-                        }
-                      }
-
-                      
-                      
-                      */
-  
                     }      
                   });
               }
@@ -2419,6 +2457,9 @@ $(".logout-button").click(function(){
       $('.dataTables_scrollBody').css('height', 300);  
     }
   });
+
+  
+
   $("#page_loader").fadeOut("slow");
   }, temporizador);
 

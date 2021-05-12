@@ -1219,9 +1219,9 @@ if(session_id() == ''){
 
       <div class="card-body">
         <h5 class="card-title" id="manTitulo">Card title</h5>
-        <input type="text" placeholder="Título" class="form-control">
+        <input type="text" placeholder="Título" class="form-control man-titulo">
         <p class="card-text" id="manDescripcion">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <input type="text" placeholder="Descripción" class="form-control">
+        <input type="text" placeholder="Descripción" class="form-control man-descripcion">
       </div>
       <ul class="list-group list-group-flush" id="manDetalles">
       </ul>
