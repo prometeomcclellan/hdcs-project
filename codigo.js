@@ -94,6 +94,10 @@ $(document).ready(function() {
   let elStatusIcon;
   let cargoIni;
 
+  var onlongtouch; 
+  var timer;
+  var touchduration = 500;
+
   
 
   if (currentUrl.indexOf(loginUrl) == 1) {
@@ -111,6 +115,78 @@ $(document).ready(function() {
       outCallUrl = "../bd/verificar_sesion.php";
       outUrl = "../index.php";
     }
+
+    // onLongTouch='myFunc();'
+    if (window.matchMedia("(max-width: 700px)").matches) {
+      // handle long press
+    }else{}
+
+    $(".fa-trash").click(function (){
+      let activo = $("#carouselContainer").find(".active");
+      let contenedor = activo.find(".thumb-url");
+      let contenedorId = activo.find(".id-de-foto");
+      let identificador = parseInt(contenedorId.text());
+      let source = contenedor.text();
+      
+      Swal.fire({
+        icon: 'warning',
+        title: 'Borrar esta imagen?',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        confirmButtonText: `Eliminar`,
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        
+        
+      })
+      $(".swal2-confirm").click(function(){
+        // ajax delete_maintenance_image.php enviando source y identificador
+        let imageName = source.substring(source.search("equipos/")+8);
+        //alert(source+", "+imageName+", "+(identificador));
+
+        urlString = currentUrl.indexOf(urlFilter);
+        if (urlString == -1) {
+          outCallUrl = "../../bd/delete_maintenance_image.php";
+        }else{
+          outCallUrl = "../bd/delete_maintenance_image.php";
+        }
+
+        $.ajax({
+          type: "post",
+          crossOrigin: true,
+          url: outCallUrl,
+          data: {source:source, imageName:imageName, identificador:identificador},
+          async: false,
+          success: function (deleteData) {
+            let delData = JSON.parse(deleteData);
+            console.dir(delData)
+            let deleteStatus = delData[0].status;
+              if (deleteStatus == 200) {
+                $(document).Toasts('create', {
+                  class: 'bg-success', 
+                  title: "Cambios guardados!",
+                  subtitle: 'Cerrar',
+                  autohide: true,
+                  delay: 6000,
+                  body: 'La imagen fue eliminada.'
+                })
+              }
+              if (deleteStatus == 500) {
+                $(document).Toasts('create', {
+                  class: 'bg-warning', 
+                  title: "Error!",
+                  subtitle: 'Cerrar',
+                  autohide: true,
+                  delay: 6000,
+                  body: 'La imagen no fue eliminada.'
+                })
+              }
+          }
+        });
+
+      })
+      
+    });
 
     $(".boton-edicion").click(function(edev){
       edev.preventDefault();
@@ -1171,6 +1247,7 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
           let orderODate = $(".order-odate").eq(orderIndex).val();
 
           let ordersContainer = document.getElementsByClassName("order-"+orderNumber);
+          let ordersIdContainer = document.getElementsByClassName("id-foto-"+orderNumber);
 
           $("#carouselContainer").empty();
           $("#thumbnailsContainer").empty();
@@ -1187,21 +1264,29 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
             
            for (let indexT = 0; indexT < ordersContainer.length; indexT++) {
             const elementT = ordersContainer[indexT];
+            const idElement = ordersIdContainer[indexT];
             let thumbUrl = elementT.value;
+            let thumbId = idElement.innerHTML;
+            //alert(thumbUrl+", "+thumbId)
             fotoIndex = ordersContainer.length+1;
 
-            $("#thumbnailsContainer").append("<li><a href='#slide"+(indexT+1)+"'><img src="+thumbUrl+" class='thumb-nail'></a></li>");
+            $("#thumbnailsContainer").append(
+              "<li><a href='#slide"+(indexT+1)+"'><img src="+thumbUrl+" class='thumb-nail'><span class='id-de-foto' style='display:none;'>"+thumbId+"</span></a></li>");
 
             if (indexT == 0) {
               $("#carouselContainer").append(
               "<div class='carousel-item active'>"
               +"<img class='d-block w-100' style='background-image:url("+thumbUrl+");background-size:cover;background-position:center;width:60px; height:240px;' >"
+              +"<span class='thumb-url' style='display:none;'>"+thumbUrl+"</span>"
+              +"<span class='id-de-foto' style='display:none;'>"+thumbId+"</span>"
               +"<input type='hidden' value="+indexT+" class='thumb-index'>"
               +"</div>");
             }else{
               $("#carouselContainer").append(
               "<div class='carousel-item'>"
               +"<img class='d-block w-100' style='background-image:url("+thumbUrl+");background-size:cover;background-position:center;width:60px; height:240px;' >"
+              +"<span class='thumb-url' style='display:none;'>"+thumbUrl+"</span>"
+              +"<span class='id-de-foto' style='display:none;'>"+thumbId+"</span>"
               +"<input type='hidden' value="+indexT+" class='thumb-index'>"
               +"</div>");
             }
@@ -1449,11 +1534,15 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
           const element = imagesArray[indexI];
           let orderI = element.fotoMantenimientoId;
           let orderPhotoUrl = element.fotoUrl;
+          let orderPhotoId = element.fotoId;
           for (let indexM = 0; indexM < mantenimiento.length; indexM++) {
             const elementM = mantenimiento[indexM];
             let orderM = elementM.value;
             if(orderI==orderM){
-              $(".maintinance").eq(indexM).append("<input type='hidden' value="+orderPhotoUrl+" class='order-"+orderM+"'>");
+              $(".maintinance").eq(indexM).append(
+                "<input type='hidden' value="+orderPhotoUrl+" class='order-"+orderM+"'>"
+                +"<span class='id-foto-"+orderM+"' style='display:none;'>"+orderPhotoId+"</span>"
+                );
             }else{}
           }
           if (indexI == (imagesArray.length-1)) {}

@@ -1185,7 +1185,18 @@ if(session_id() == ''){
       <!-- img class="card-img-top" alt="Card image cap" src="dist/img/HDCS-imagotipo.png" -->
 
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <?php
+    require_once "../Mobile_Detect.php";
+    $detect = new Mobile_Detect;
+
+    if ( $detect->isMobile() ) {}else{
+      echo "<i class='fa fa-trash' aria-hidden='true' 
+      style='color: red;position: absolute;top: 1vh;z-index: 999;right: 1vh; font-size:1.3rem;'></i>";
+    }
+    ?>
+           
   <div class="carousel-inner" id="carouselContainer">
+  
     <!-- div class="carousel-item active">
       <img class="d-block w-100" style="background-image:url('dist/img/equipos/product-2.jpg');background-size:cover;background-position:center;width:60px; height:240px;" >
       <input type="hidden" value="0" class="thumb-index">
@@ -1218,6 +1229,15 @@ if(session_id() == ''){
 </div>
 
       <div class="card-body">
+      <?php
+    require_once "../Mobile_Detect.php";
+    $detect = new Mobile_Detect;
+    echo "<i class='fa fa-trash' aria-hidden='true' 
+    style='color: red;position: absolute;top: 1vh;z-index: 999;right: 1vh; font-size:1.3rem;'></i>";
+    if ( $detect->isMobile() ) {}else{
+      
+    }
+    ?>
         <h5 class="card-title" id="manTitulo">Card title</h5>
         <input type="text" placeholder="Título" class="form-control man-titulo">
         <p class="card-text" id="manDescripcion">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
