@@ -837,7 +837,7 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
     $("#fotoDeUsuarioR").css("display", "inherit");
     $("#iconoUsuarioR").css("display", "none");
   }
-s
+
   $.ajax({
     type: "get",
     crossOrigin: true,

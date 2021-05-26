@@ -5,7 +5,7 @@ var diccionario = [];
 opcion = 4;
 
 //Consulta a la tabla equipo   
-  $.ajax({
+/*  $.ajax({
     url: "crud.php",
     type: "POST",
     datatype:"json",
@@ -17,7 +17,7 @@ opcion = 4;
       diccionario = JSON.parse(data); //JSON.parse = cambiar el formato de dato a JSON
     }
   });
-
+*/
 //MOSTRAR ---------------------------------------------------------------------------------------
 //DataTable que carga la tabla de inicio del index
   tablaSolMant = $('#tablaSolMant').DataTable({
@@ -29,7 +29,7 @@ opcion = 4;
       "ajax":{            
           "url": "crud.php", 
           "method": 'POST', //usamos el metodo POST
-          "data":{opcion:opcion}, //enviamos opcion 4 para que haga un SELECT
+          "data":{opcion:4}, //enviamos opcion 4 para que haga un SELECT
           "dataSrc":""
       },
       "columns":[
