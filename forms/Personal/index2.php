@@ -1,3 +1,11 @@
+<!-- Esta parte de codigo de php, evita el poder abrir la pagina despues de hacer cerrado sesión -->
+<?php 
+session_start();
+//$usuario = intval($_SESSION["s_idUsuario"]);
+?>
+
+
+<!--header -->
 <?php include "../header.php"; ?>
 
 <title>Registro solicitud matenimiento</title>
@@ -420,41 +428,331 @@ if ( $detect->isMobile() ) {
   echo "<div id='dWrapper' class='wrapper' style='width: 80%;float:right;'>";
 }
           ?>
-
-<style>
-#tablaSolMant > thead {
-  background : #1a3c8a;
-}
-</style>
-    <div class="container caja">
+    <div class="container">
+        <header>
+            <h1 class="mt-4"><b>Bienvenido <?phpsession_start(); echo $_SESSION["s_usuario"]?> al sistema de </b></h1>
+            <h1 class="mt-0"><b>registro de solicitud mantenimiento </b></h1>
+       <!--     
+            <h2>Usuario: <?php echo $_SESSION["s_idUsuario"]?></h2>
+            <h2>Usuario: <?php echo $_SESSION["s_usuario"]?></h2>
+            <h2>Estado: <?php echo $_SESSION["s_estadoUsuario"]?></h2>
+            <h2>Cod empleado: <?php echo $_SESSION["s_codEmpleado"]?></h2>
+        -->
+            <ol class="breadcrumb mb-4">
+              <!--<li class="breadcrumb-item active">Registro solicitud mantenimiento</li>-->
+            </ol>
+        </header> 
+    </div>    
+      
+    <div class="container">
         <div class="row">
-            <div class="col-lg-12 print-container">
-            <input type="hidden" class="file-title" value="control-personal-fecha-">
-            <h1 type="hidden" class="documento-title" style="display:none;">Contro de Personal Fecha</h1>
-                <div class="table-responsive">        
-                <table id="tablaSolMant" class="table table-striped table-bordered table-condensed tabla-data" style="width:100%" >
-                        <thead class="text-center">
-                            <tr>
-                                <th>ID</th>
-                                <th>Fecha solicitud</th>     
-                                <th>Código equipo</th>     
-                                <th>Descripción equipo</th>                
-                                <th>Tipo equipo</th>
-                                <th>Modelo</th>
-                                <th>Service Tag</th>              
-                                <th>Descripción falla</th>
-                             <!--   <th>Estado solicitud</th>  -->
-                                <th>Usuario</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>                           
-                        </tbody>        
-                    </table>            
+            <div class="col-lg-12">            
+                <button id="btnNuevo" type="button" class="btn btn-warning" data-toggle="modalCREAR"><i class="material-icons" id="">add_box</i>  | Registrar solicitud</button> 
+            </div>    
+        </div>    
+    </div>    
+    <br>  
+      
+
+<footer>
+    <div class="container foot">
+        <footer class="py-4 bg-light mt-auto ">
+            <div class="container-fluid ">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; CURLP-UNAH 2021</div>                  
+                        <div>
+                            <a href="https://curlp.unah.edu.hn/" target="unah">UNAH-CURLP</a>
+                            &middot;
+                            <a href="https://www.unah.edu.hn/" target="unah">UNAH-HN</a>
+                        </div>
                 </div>
             </div>
-        </div>  
-    </div> 
+        </footer>
+    </div>   
+</footer>
+    
+<!--Modal para CREAR X-->
+<div class="modal fade" id="modalCREARX" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="modalCuadro">
+            <div class="modal-header"  style="background-color: #1a3c8a;color:white;">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" style="color:white;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formSolManC">    
+                <div class="modal-body">
+
+
+                    <h5><b><i>Datos del equipo</i></b></h5> <hr>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Código equipo:</label>
+                                <input type="text" class="form-control" id="codEquipo" disabled="true" required autofocus>
+                            </div>
+                        </div> 
+                        <div class="col-lg-6">
+                            <button id="btnBuscar" type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalEquipo"><i class="material-icons">search</i>  | Buscar</button>   
+                        </div>    
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Descripción equipo:</label>
+                                <input type="textarea" class="form-control" id="descripcionEquipo" disabled="true" >
+                            </div>
+                        </div> 
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Tipo equipo:</label>
+                                <input type="text" class="form-control" id="tipoEquipo" disabled="true" >
+                            </div>
+                        </div>    
+                    </div>  
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Modelo equipo:</label>
+                                <input type="text" class="form-control" id="modeloEquipo" disabled="true" >
+                            </div>
+                        </div> 
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">ServiceTag equipo:</label>
+                                <input type="text" class="form-control" id="serviceTagEquipo" disabled="true" >
+                            </div>
+                        </div>    
+                    </div> 
+
+
+                    <hr id="linea2">
+                    <h5 id="h5"><b><i>Datos de solicitud</i></b></h5> <hr>
+                    <div class="form-group">
+                        <label for="nombre" class="col-form-label">Fecha solicitud:</label>
+                        <input type="date" class="form-control" id="fechaInput" required autofocus>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nombre" class="col-form-label">Descripción falla:</label>
+                        <textarea type="text" class="form-control " id="Pre_Diag" required autofocus></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+                </div>
+            </form>    
+        </div>
+    </div>
+</div>
+
+
+<!--Modal para CREAR-->
+<div class="modal fade" id="modalCREAR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="modalCuadro">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" style="color:white;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formSolManC">    
+                <div class="modal-body">
+
+
+                    <h5><b><i>Datos del equipo</i></b></h5> <hr>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Código equipo:</label>
+                                <input type="text" class="form-control" id="codEquipo" disabled="true" required autofocus>
+                            </div>
+                        </div> 
+                        <div class="col-lg-6">
+                            <button id="btnBuscar" type="button" class="btn btn-success" data-toggle="modal"><i class="material-icons">search</i>  | Buscar</button>   
+                        </div>    
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Descripción equipo:</label>
+                                <input type="textarea" class="form-control" id="descripcionEquipo" disabled="true" >
+                            </div>
+                        </div> 
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Tipo equipo:</label>
+                                <input type="text" class="form-control" id="tipoEquipo" disabled="true" >
+                            </div>
+                        </div>    
+                    </div>  
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">Modelo equipo:</label>
+                                <input type="text" class="form-control" id="modeloEquipo" disabled="true" >
+                            </div>
+                        </div> 
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="nombre" class="col-form-label">ServiceTag equipo:</label>
+                                <input type="text" class="form-control" id="serviceTagEquipo" disabled="true" >
+                            </div>
+                        </div>    
+                    </div> 
+
+
+                    <hr id="linea2">
+                    <h5 id="h5"><b><i>Datos de solicitud</i></b></h5> <hr>
+                    <div class="form-group">
+                        <label for="nombre" class="col-form-label">Fecha solicitud:</label>
+                        <input type="date" class="form-control" id="fechaSM" required autofocus>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nombre" class="col-form-label">Descripción falla:</label>
+                        <textarea type="text" class="form-control " id="Pre_Diag" required autofocus></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+                </div>
+            </form>    
+        </div>
+    </div>
+</div> 
+
+
+
+
+
+
+<!-- Modal BUSCAR Solicitud mantenimiento    NUEVO-->
+<div class="modal fade" id="modalEquipo"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="anchoModalBuscarSolMant">
+            <div class="modal-header">
+                <h5 class="modal-titles" id="exampleModalLabel"></h5>
+                <button id="btnClose" type="button" class="close" style="color:white;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+                <form id="formEquipo">    
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">        
+                                    <table id="tablaEquipo" class="table table-striped table-bordered table-condensed" style="width:100%" >
+                                        <thead class="text-center">
+                                            <tr>
+                                                <th>Código equipo</th>
+                                                <th>Tipo equipo</th>     
+                                                <th>Modelo</th>                
+                                                <th>Serie</th>
+                                                <th>Service tag</th>
+                                                <th>Descripción</th>
+                                                <th>Seleccionar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>                           
+                                        </tbody>        
+                                    </table>               
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>  
+        </div>
+    </div>
+</div> 
+
+<?php
+    require_once "../../Mobile_Detect.php";
+    $detect = new Mobile_Detect;
+  if ( $detect->isMobile() ) {
+    echo "<div class='spinner-border' id='page_loader' style='position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 25vw;z-index: 1060;display:inherit;top: 40%;'></div>";
+  }else{
+    echo "<div class='spinner-border' id='page_loader' style='position: fixed;width: 190px;height: 190px;font-size: 2rem;color: #e7c738;left: 45vw;z-index: 1060;display:inherit;top: 30%;'></div>";
+  }
+?>
+
+<!-- Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editUserModalLabel">Editar Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-3">
+                <a href="#" class="d-block">
+                    <i  id="uploadUserPhotoIcon" class="fas fa-user" style="background-color: white;font-size: 5rem;padding: 10px;border-radius: 50%;width: 60px;height: 60px;color: #3c3a3a;text-align: center;padding-top: 10px;padding-left: 30px;"></i>
+                </a>
+
+                <style>
+                  .thumb {
+                    display: block;
+                    overflow: hidden;
+                    width: 106px;
+                    height: 106px;
+                    margin: 5px;
+                    border: 3px solid #fed11f;
+                    background-position: center center;
+                    background-size: cover;
+                  }
+                </style>
+
+                <img id="uploadUserPhotoImg" alt="" class="brand-image thumb"
+                style="opacity: 1; display:none;">
+                <input type="file" id="img" name="img" accept="image/*" style="display:none;">
+            </div>
+            <div class="col-md-9">
+              <ul style="list-style:none;">
+                <!-- li style="margin-top:1%;">
+                    <div class="info">
+                        <input id="inputEditUserName" class="form-control" type="text" name="name-update" placeholder="nombre y apellido">
+                        
+                    </div>
+                </li -->
+                <li style="margin-top:1%;">
+                    <div class="info">
+                        <input id="inputEditUName" class="form-control" type="text" name="uname-update" placeholder="nombre de usuario">
+                        <!-- a id="usuarioNombreUPdate" href="#" class="d-block">Omar McClellan</a -->
+                    </div>
+                </li>
+              </ul>
+                
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <a href="#" class="d-block">
+                <i  id="updateUserPhotoIcon" class="fas fa-camera" style="font-size: 1.5rem;padding: 6px;border-radius: 50%;color: #007bff;text-align: center;float: right;"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary save-changes-button" style="background-color: #1a3c8a;">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
 
@@ -495,6 +793,3 @@ if ( $detect->isMobile() ) {
 <script src="../../inicio/dist/js/tableexport.js"></script>
 <script src="../../inicio/dist/js/xlsx.core.min.js"></script>
 <script src="../../codigo.js"></script>
-
-    <!--footer -->
-    <?php include "../footer.php"; ?>

@@ -4,32 +4,19 @@ var fila; //captura la fila, para editar o eliminar
 var diccionario = [];
 opcion = 4;
 
-//Consulta a la tabla equipo   
-/*  $.ajax({
-    url: "crud.php",
-    type: "POST",
-    datatype:"json",
-    data: {opcion:5},
-    success: function(data) {
-      //console.log("nuestra data length");
-
-      //console.log(JSON.parse(data));
-      diccionario = JSON.parse(data); //JSON.parse = cambiar el formato de dato a JSON
-    }
-  });
-*/
-//MOSTRAR ---------------------------------------------------------------------------------------
-//DataTable que carga la tabla de inicio del index
-  tablaSolMant = $('#tablaSolMant').DataTable({
-    //"sScrollY": (200),
+tablaSolMant = $('#tablaSolMant').DataTable({  
     "language": {
       "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
     },
-      
+    "initComplete": function(settings, json) {
+        
+      $(".page-link").eq(1).css("background-color", "#1a3c8a");
+      $(".page-link").eq(1).css("border-color", "#1a3c8a");
+  },
       "ajax":{            
           "url": "crud.php", 
           "method": 'POST', //usamos el metodo POST
-          "data":{opcion:4}, //enviamos opcion 4 para que haga un SELECT
+          "data":{opcion:opcion}, //enviamos opcion 4 para que haga un SELECT
           "dataSrc":""
       },
       "columns":[
@@ -41,8 +28,7 @@ opcion = 4;
           {"data": "modelo"},
           {"data": "serviceTag"},
           {"data": "preDiagnostico"},
-          {"data": "userName"},
-          {"data": "estadoControlMantenimiento",
+        /*  {"data": "estadoControlMantenimiento",
               render: function(data,type,row){
                         if(data == "Finalizado"){
                           return "<span class='IAE badge badge-success badge-pill m-r-5 m-b-5'>"+data+"</span>";
@@ -51,57 +37,12 @@ opcion = 4;
                         }else if(data == "En reparación"){
                           return "<span class='IAE badge badge-danger badge-pill m-r-5 m-b-5'>"+data+"</span>";
                         }
-              }
-          },
+              }},*/
+          {"data": "userName"},
+          {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-warning btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
       ],
       
-      //para usar los botones   
-      responsive: "true",
-    /*  dom: 'lBfrtip',       
-      "buttons":[ 
-
-
-        //PDF
-        {
-          extend:    'pdfHtml5',
-          text:      '<i class="fas fa-file-pdf"></i> ',
-          titleAttr: 'Exportar a PDF',
-          className: 'btn btn-danger',
-          excelStyles: {
-            "template": 'blue_medium'
-          },
-
-          //Estilos al momento de imprimir
-          pageStyle: {
-              sheetPr: {
-                  pageSetUpPr: {
-                      fitToPage: 1            // Ajustar la impresion a la pagina
-                  } 
-              },
-              printOptions: {
-                  horizontalCentered: true,
-                  verticalCentered: true,
-              },
-              pageSetup: {
-                  orientation: "landscape",   // Orientacion
-                  paperSize: "9",             // Tamaño del papel (1 = Legal, 9 = A4)
-                  fitToWidth: "1",            // Ajustar al ancho de la página
-                  fitToHeight: "0",           // Ajustar al alto de la página
-              },
-              pageMargins: {
-                  left: "0.2",
-                  right: "0.2",
-                  top: "0.4",
-                  bottom: "0.4",
-                  header: "0",
-                  footer: "0",
-              },
-              repeatHeading: true,    // Repeat the heading row at the top of each page
-              repeatCol: 'A:A',       // Repeat column A (for pages wider than a single printed page)
-          },
-        },
-      ],
-      */
+     
   });  
 
 

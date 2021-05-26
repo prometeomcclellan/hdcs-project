@@ -30,13 +30,21 @@
 
                 $data = 0; 
             break;    
-        case 4:    
+        case 4:
+            $consulta = "CALL sp_mostrarSolicitudM(?)";
+            $resultado = $conexion->prepare($consulta);
+            $resultado->bindValue(1, $usuario);
+            $resultado->execute();        
+            $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+            break;
+            /*    
             $consulta = "CALL sp_mostrarSolicitudMRegistro(?)";
             $resultado = $conexion->prepare($consulta);
             $resultado->bindValue(1, $usuario);
             $resultado->execute();        
             $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
             break;
+            */
         case 5:
             $consulta = "CALL sp_mostrarEquipoSolicitud(?)";
             $resultado = $conexion->prepare($consulta);
