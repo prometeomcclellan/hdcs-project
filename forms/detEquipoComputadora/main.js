@@ -100,6 +100,15 @@ opcion = 4;
     "initComplete": function(settings, json) {
         $(".page-link").eq(1).css("background-color", "#1a3c8a");
         $(".page-link").eq(1).css("border-color", "#1a3c8a");
+
+        let editarContainer = document.getElementsByClassName("btnEditar");
+        //alert(editarContainer.length)
+        for (let index = 0; index < editarContainer.length; index++) {
+          const element = editarContainer[index];
+          $(".btnEditar").eq(index).addClass("last-col");
+          $(".btnBorrar").eq(index).addClass("last-col");
+        }
+        
     },
       "ajax":{            
           "url": "crud.php", 
@@ -326,10 +335,10 @@ opcion = 4;
   //ELIMINAR  ---------------------------------------------------------------------------------------
   $(document).on("click", ".btnBorrar", function(){
     fila = $(this);           
-    _serie = parseInt($(this).closest('tr').find('td:eq(0)').text()) ;  
+    _codigo = parseInt($(this).closest('tr').find('td:eq(0)').text()) ;  
     opcion = 3; //eliminar   
 
-    $("#panel_eliminar").html("Código de Serie: " + _serie);
+    $("#panel_eliminar").html("Código de equipo: " + _codigo);
     $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
     $("#btnGuardar").css("background-color", "#1a3c8a"); 

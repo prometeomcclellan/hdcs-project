@@ -48,6 +48,14 @@ opcion = 4;
 
         $(".page-link").eq(1).css("background-color", "#1a3c8a");
         $(".page-link").eq(1).css("border-color", "#1a3c8a");
+        
+        let editarContainer = document.getElementsByClassName("btnEditar");
+        //alert(editarContainer.length)
+        for (let index = 0; index < editarContainer.length; index++) {
+          const element = editarContainer[index];
+          $(".btnEditar").eq(index).addClass("last-col");
+          $(".btnBorrar").eq(index).addClass("last-col");
+        }
     }, 
       "ajax":{            
           "url": "crud.php", 
@@ -83,134 +91,6 @@ opcion = 4;
           },
           {"data": "empleado"},
           {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-warning btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
-      ],
-
-
-      //para usar los botones   
-      responsive: "true",
-      dom: 'lBfrtip',       
-      "buttons":[ 
-
-        //EXCEL
-        /*{
-          extend:    'excelHtml5',
-          text:      '<i class="fas fa-file-excel"></i> ',
-          titleAttr: 'Exportar a Excel',
-          className: 'btn btn-warning',
-          excelStyles: {
-            "template": 'blue_medium'
-          },
-
-          //Estilos al momento de imprimir
-          pageStyle: {
-              sheetPr: {
-                  pageSetUpPr: {
-                      fitToPage: 1            // Ajustar la impresion a la pagina
-                  } 
-              },
-              printOptions: {
-                  horizontalCentered: true,
-                  verticalCentered: true,
-              },
-              pageSetup: {
-                  orientation: "landscape",   // Orientacion
-                  paperSize: "9",             // Tamaño del papel (1 = Legal, 9 = A4)
-                  fitToWidth: "1",            // Ajustar al ancho de la página
-                  fitToHeight: "0",           // Ajustar al alto de la página
-              },
-              pageMargins: {
-                  left: "0.2",
-                  right: "0.2",
-                  top: "0.4",
-                  bottom: "0.4",
-                  header: "0",
-                  footer: "0",
-              },
-              repeatHeading: true,    // Repeat the heading row at the top of each page
-              repeatCol: 'A:A',       // Repeat column A (for pages wider than a single printed page)
-          },
-        },
-
-
-        //PDF
-        {
-          extend:    'pdfHtml5',
-          text:      '<i class="fas fa-file-pdf"></i> ',
-          titleAttr: 'Exportar a PDF',
-          className: 'btn btn-danger',
-          excelStyles: {
-            "template": 'blue_medium'
-          },
-
-          //Estilos al momento de imprimir
-          pageStyle: {
-              sheetPr: {
-                  pageSetUpPr: {
-                      fitToPage: 1            // Ajustar la impresion a la pagina
-                  } 
-              },
-              printOptions: {
-                  horizontalCentered: true,
-                  verticalCentered: true,
-              },
-              pageSetup: {
-                  orientation: "landscape",   // Orientacion
-                  paperSize: "9",             // Tamaño del papel (1 = Legal, 9 = A4)
-                  fitToWidth: "1",            // Ajustar al ancho de la página
-                  fitToHeight: "0",           // Ajustar al alto de la página
-              },
-              pageMargins: {
-                  left: "0.2",
-                  right: "0.2",
-                  top: "0.4",
-                  bottom: "0.4",
-                  header: "0",
-                  footer: "0",
-              },
-              repeatHeading: true,    // Repeat the heading row at the top of each page
-              repeatCol: 'A:A',       // Repeat column A (for pages wider than a single printed page)
-          },
-        },
-
-        //IMPRIMIR
-        {
-          extend:    'print',
-          text:      '<i class="fa fa-print"></i> ',
-          titleAttr: 'Imprimir',
-          className: 'btn btn-info',
-          excelStyles: {
-            "template": 'blue_medium'
-          },
-
-          //Estilos al momento de imprimir
-          pageStyle: {
-              sheetPr: {
-                  pageSetUpPr: {
-                      fitToPage: 1            // Ajustar la impresion a la pagina
-                  } 
-              },
-              printOptions: {
-                  horizontalCentered: true,
-                  verticalCentered: true,
-              },
-              pageSetup: {
-                  orientation: "landscape",   // Orientacion
-                  paperSize: "9",             // Tamaño del papel (1 = Legal, 9 = A4)
-                  fitToWidth: "1",            // Ajustar al ancho de la página
-                  fitToHeight: "0",           // Ajustar al alto de la página
-              },
-              pageMargins: {
-                  left: "0.2",
-                  right: "0.2",
-                  top: "0.4",
-                  bottom: "0.4",
-                  header: "0",
-                  footer: "0",
-              },
-              repeatHeading: true,    // Repeat the heading row at the top of each page
-              repeatCol: 'A:A',       // Repeat column A (for pages wider than a single printed page)
-          },
-        }, */
       ],
   });  
 
@@ -314,7 +194,7 @@ opcion = 4;
   $("#btnBuscarU").click(function(){
     $('#modalUPDATE').css("opacity", ".1");
     $("#formEquipo").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
     $(".modal-titles").text("Buscar equipo");          
     $("#modalEquipo").modal("show");     //cuando hacen click sobre buscar, se abrira la modal de equipo 
@@ -375,9 +255,9 @@ opcion = 4;
   $("#btnNuevo").click(function(){
     opcion = 1; //alta
     $("#formAsignacionEquipo").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#28a745"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Nuevo asignación equipo");          
     $("#modalCREAR").modal("show");
 
@@ -456,9 +336,9 @@ opcion = 4;
     $("#fechaBajaU").val(_fechaBaja);
     $("#observacionU").val(_observacion);
 
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardarU").css("background-color", "#003399"); 
+    $("#btnGuardarU").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Modificar asignación equipo");
     $("#modalCuadroU").css("margin-top", "0");
     $("#modalUPDATE").modal("show"); 
@@ -547,9 +427,9 @@ opcion = 4;
     opcion = 3; //eliminar   
 
     $("#panel_eliminar").html("Asignación con ID: " + _idAsignacionEquipo);
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Eliminar control garantía");            
     $("#modalEliminar").modal("show");  
   });

@@ -11,6 +11,15 @@ $(document).ready(function() {
         
       $(".page-link").eq(1).css("background-color", "#1a3c8a");
       $(".page-link").eq(1).css("border-color", "#1a3c8a");
+
+      let editarContainer = document.getElementsByClassName("btnEditar");
+        //alert(editarContainer.length)
+        for (let index = 0; index < editarContainer.length; index++) {
+          const element = editarContainer[index];
+          $(".btnEditar").eq(index).addClass("last-col");
+          $(".btnBorrar").eq(index).addClass("last-col");
+        }
+        
   },
       "ajax":{            
           "url": "crud.php", 

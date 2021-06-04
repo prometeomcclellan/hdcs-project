@@ -10,8 +10,7 @@ session_start();
 
 <title>Detalle equipo</title>
 <meta name="keywords" content="Dashboard" />
-		<meta name="description" content="CURLP Admin Official Site">
-		<meta name="author" content="Omar McClellan, Mapphash Group">
+
 
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
@@ -468,7 +467,7 @@ if ( $detect->isMobile() ) {
                             <th>Velocidad ram</th>
                             <th>Tipo disco</th>
                             <th>Capacidad disco</th>
-                            <th>Acciones</th>
+                            <th class="last-col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>                           
@@ -909,6 +908,8 @@ if ( $detect->isMobile() ) {
 <script lang="javascript" src="../../inicio/dist/js/xlsx.full.min.js"></script>
 <script src="../../inicio/dist/js/tableexport.js"></script>
 <script src="../../inicio/dist/js/xlsx.core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/polyfills.umd.js"></script>
 <script src="../../codigo.js"></script>
 <!--footer -->
 <?php include "../footer.php"; ?>

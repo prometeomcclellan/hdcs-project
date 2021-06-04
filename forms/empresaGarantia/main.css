@@ -36,3 +36,8 @@ body{
 .capitalize {
   text-transform: capitalize;
 }
+
+
+.modal-content {
+    margin-top: 200px;
+}

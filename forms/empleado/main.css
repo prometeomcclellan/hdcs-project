@@ -67,3 +67,15 @@ body{
 .capitalize {
   text-transform: capitalize;
 }
+
+
+.modal-content.new {
+    margin-top: 140px;
+}
+.modal-content.update {
+    margin-top: 140px;
+}
+
+.modal-content {
+    margin-top: 200px;
+}

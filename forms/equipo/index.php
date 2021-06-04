@@ -463,7 +463,7 @@ if ( $detect->isMobile() ) {
                             <th>Serie</th>
                             <th>Service tag</th>
                             <th>Descripción</th>
-                            <th>Acciones</th>
+                            <th class="last-col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>                           
@@ -498,7 +498,7 @@ if ( $detect->isMobile() ) {
 <!--Modal para CREAR-->
 <div class="modal fade" id="modalCREAR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content  new">
             <div class="modal-header" style="background-color: #1a3c8a;">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
                 <button type="button" class="close" style="color:white;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
@@ -621,7 +621,7 @@ if ( $detect->isMobile() ) {
 <!--Modal para UPDATE-->
 <div class="modal fade" id="modalUPDATE" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content   update">
             <div class="modal-header" style="background-color: #1a3c8a;">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
                 <button type="button" class="close" style="color:white;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
@@ -729,7 +729,7 @@ if ( $detect->isMobile() ) {
 <!-- Modal DELETE-->
 <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog"  role="document">
-        <div class="modal-content">
+        <div class="modal-content   eliminar">
             <div class="modal-header" style="background-color: #1a3c8a; color:white;">
                 <h5 class="modal-title"  id="exampleModalLabel"></h5>
                 <button type="button" class="close"   style="color:white;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
@@ -991,6 +991,8 @@ if ( $detect->isMobile() ) {
 <script lang="javascript" src="../../inicio/dist/js/xlsx.full.min.js"></script>
 <script src="../../inicio/dist/js/tableexport.js"></script>
 <script src="../../inicio/dist/js/xlsx.core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/polyfills.umd.js"></script>
 <script src="../../codigo.js"></script>
 </div>
 

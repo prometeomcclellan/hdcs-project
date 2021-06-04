@@ -4,8 +4,6 @@
 
 <title>Asignación equipo</title>
 <meta name="keywords" content="Dashboard" />
-		<meta name="description" content="CURLP Admin Official Site">
-		<meta name="author" content="Omar McClellan, Mapphash Group">
 
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
@@ -469,7 +467,7 @@ if ( $detect->isMobile() ) {
                             <th>Observación</th>
                             <th>Estado</th>
                             <th>Usuario asignado</th>
-                            <th>Acciones</th>
+                            <th class="last-col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>                           
@@ -557,7 +555,7 @@ if ( $detect->isMobile() ) {
 
 
                     <hr id="linea2">
-                    <h5 id="h5" style="padding: 18px;color: white;width: 100%;position: absolute;left: 0;top: -31px;" class="gradiente-horizontal"><b><i>Datos de asignación</i></b></h5> <hr>
+                    <h5 id="h5"><b><i>Datos de asignación</i></b></h5> <hr>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
@@ -610,7 +608,6 @@ if ( $detect->isMobile() ) {
         </div>
     </div>
 </div> 
-
 
 
 
@@ -693,36 +690,40 @@ if ( $detect->isMobile() ) {
                         <textarea type="text" class="form-control" id="observacionU" required ></textarea>
                     </div>
 
-                    <div class="form-group">
-                        <label for="nombre" class="col-form-label">Estado:</label>
-                        <select class="form-control" name="estadoU" id="estadoU" >
-                            <option value=1>ACTIVO</option>  
-                            <option value=0>INACTIVO</option>     
-                        </select>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="nombre" class="col-form-label">Usuario:</label>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="nombre" class="col-form-label">Estado:</label>
+                              <select class="form-control" name="estadoU" id="estadoU" >
+                                  <option value=1>ACTIVO</option>  
+                                  <option value=0>INACTIVO</option>     
+                              </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="nombre" class="col-form-label">Usuario:</label>
+                              <select class="form-control" name="select_UsuarioU" id="select_UsuarioU" required>
+                                  <option value="">Seleccione..</option>
+                                      <?php
+                                          require_once '../../bd/conexion.php';
+                                          $objeto = new Conexion();
+                                          $conexion = $objeto->Conectar();
 
-                        <select class="form-control" name="select_UsuarioU" id="select_UsuarioU" required>
-                            <option value="">Seleccione..</option>
-                                <?php
-                                    require_once '../../bd/conexion.php';
-                                    $objeto = new Conexion();
-                                    $conexion = $objeto->Conectar();
-
-                                    $consulta = "CALL sp_mostrarUsuario()";
-                                    $resultado = $conexion->prepare($consulta);
-                                    $resultado->execute();  
-                                    $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
-                    
-                                    foreach($data as $dat) {     
-                                        echo "<option value=".$dat["idUsuario"]." class='form-control'>".$dat['empleado']."</option>";
-                                    }
-                                ?>        
-                        </select>
-                    </div>
-
+                                          $consulta = "CALL sp_mostrarUsuario()";
+                                          $resultado = $conexion->prepare($consulta);
+                                          $resultado->execute();  
+                                          $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
+                          
+                                          foreach($data as $dat) {     
+                                              echo "<option value=".$dat["idUsuario"]." class='form-control'>".$dat['empleado']."</option>";
+                                          }
+                                      ?>        
+                              </select>
+                            </div>
+                        </div>
+                    </div> 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
@@ -855,6 +856,9 @@ if ( $detect->isMobile() ) {
 <script lang="javascript" src="../../inicio/dist/js/xlsx.full.min.js"></script>
 <script src="../../inicio/dist/js/tableexport.js"></script>
 <script src="../../inicio/dist/js/xlsx.core.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/polyfills.umd.js"></script>
 <script src="../../codigo.js"></script>
 
 

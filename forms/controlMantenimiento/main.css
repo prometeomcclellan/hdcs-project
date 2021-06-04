@@ -32,10 +32,16 @@ body{
 
 button#btnBuscar {
     margin-top: 32px;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #1f2d3d;
 }
 
 button#btnBuscarU {
     margin-top: 32px;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #1f2d3d;
 }
 
 #anchoModalBuscarSolMant {
@@ -44,7 +50,7 @@ button#btnBuscarU {
 }
 
 #modalCuadro {
-    margin-top: -90px;
+    margin-top: 40px;
 }
 
 hr {
@@ -78,4 +84,30 @@ div#tablaControlMant_filter {
 div#tablaControlMant_paginate {
     margin-top: -30px;
     margin-bottom: 10px;
+}
+
+
+
+.modal-content.new {
+    margin-top: 140px;
+}
+.modal-content.update {
+    margin-top: 140px;
+}
+
+.modal-content {
+    margin-top: 200px;
+}
+
+table.dataTable thead {
+    color: white;
+    background: #1a3c8a;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    border-color: #007bff;
+
+    background: #1a3c8a;
 }

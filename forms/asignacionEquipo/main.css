@@ -47,13 +47,13 @@ button#btnBuscarU {
 }
 
 #anchoModalBuscarSolMant {
-  width: 160%;
-  margin-left: -150px;
-  margin-top: -90px;
+    width: 160%;
+    margin-left: -150px;
+    margin-top: 60px;
 }
 
 #modalCuadro {
-    margin-top: -90px;
+    margin-top: 50px;
 }
 
 #modalCuadroU {
@@ -101,7 +101,26 @@ div#tablaAsignacionEquipo_filter {
 
 /* Paginacion */
 div#tablaAsignacionEquipo_paginate {
-    margin-top: -30px;
+    margin-top: 8px;
     margin-bottom: 10px;
 }
 
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    border-color: #007bff;
+    background: #1a3c8a;
+}
+
+
+.modal-content {
+    margin-top: 200px;
+}
+
+
+button#btnSeleccionar {
+    background: #ffc107;
+    color: black;
+    border-color: #ffc107;
+}

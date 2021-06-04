@@ -25,6 +25,13 @@ $(document).ready(function() {
   let notificacionesIdsArray = [];
   let arrayFilter = [];
   let arrayFiltered = [];
+
+  let excludeUrlsArray = [
+    "solicitudMantenimiento"
+  ];
+  let isExclude = false;
+  let filterExclude;
+
   let tableHeight = 300;
   let deptosHeight = 0;
 
@@ -97,6 +104,8 @@ $(document).ready(function() {
   var onlongtouch; 
   var timer;
   var touchduration = 500;
+
+  let esTabla = false;
 
   
 
@@ -429,10 +438,14 @@ $(document).ready(function() {
     let ahoraSeconds = ahora.getSeconds();
     let ahoraDia;
     let ahoraMes;
-    if (ahoraMonth < 10) {
-      ahoraMes = "0"+ahoraMonth;
+    let mesHoy;
+
+    mesHoy = ahoraMonth+1;
+
+    if (mesHoy < 10) {
+      ahoraMes = "0"+mesHoy;
     }else{
-      ahoraMes = ahoraMonth;
+      ahoraMes = mesHoy;
     }
 
     if (ahoraDay < 10) {ahoraDia = "0"+ahoraDay;}else{ahoraDia = ahoraDay;}
@@ -2315,8 +2328,9 @@ $(".logout-button").click(function(){
     }
   })
 
+  /*
   if (currentUrl == "/HDCS/inicio/dashboard.php") {temporizador = 3000;}
-  if (currentUrl == "/HDCS/forms/equipo/index.php") {temporizador = 6000;}
+  if (currentUrl == "/HDCS/forms/equipo/index.php") {temporizador = 9000;}
   if (currentUrl == "/HDCS/forms/asignacionEquipo/index.php") {temporizador = 9000;}
   if (currentUrl == "/HDCS/forms/capacidad/index.php") {temporizador = 2000;}
   if (currentUrl == "/HDCS/forms/cargo/index.php") {temporizador = 2000;}
@@ -2339,217 +2353,308 @@ $(".logout-button").click(function(){
   if (currentUrl == "/HDCS/forms/tipoRam/index.php") {temporizador = 4000;}
   if (currentUrl == "/HDCS/forms/usuario/index.php") {temporizador = 2000;}
   if (currentUrl == "/HDCS/forms/velocidadRam/index.php") {temporizador = 4000;}
+  */
+
+  temporizador = 3000;
 
   urlString = currentUrl.indexOf(urlFilter);
 
-  setTimeout(() => {
-    var tablaContainer = document.getElementsByClassName('tabla-data');
-  for (let indexTabla = 0; indexTabla < tablaContainer.length; indexTabla++) {
-    const element = tablaContainer[indexTabla];
-    titulo = $(".file-title").eq(indexTabla).val();
-    titulo_doc = $(".document-title").eq(indexTabla).val();
-    let myTableId = element.id;
 
-  TableExport(document.getElementById(myTableId), {
+
+  var tablasIntervalo = setInterval(() => {
+
+    let tableContainer = document.getElementsByClassName("tabla-data");
+    let tablesCount = tableContainer.length;
+
+    if (tablesCount > 0) {
+
+      console.log(tablesCount);
+      clearInterval(tablasIntervalo);
+
+      setTimeout(() => {
+        var tablaContainer = document.getElementsByClassName('tabla-data');
+      for (let indexTabla = 0; indexTabla < tablaContainer.length; indexTabla++) {
+        const element = tablaContainer[indexTabla];
+        titulo = $(".file-title").eq(indexTabla).val();
+        titulo_doc = $(".document-title").eq(indexTabla).val();
+        let myTableId = element.id;
     
-    headers: true,
-    footers: true,
-    formats: ["xlsx"],
-    filename: titulo+fechaActual,
-    bootstrap: false,
-    exportButtons: true,
-    position: "top",
-    ignoreRows: null,
-    ignoreCols: null,
-    trimWhitespace: true,
-    RTL: false,
-    sheetname: "Reporte "+fechaActual
-  });
+        let colCount = document.getElementById(myTableId).rows[0].cells.length;
+        //alert(colCount)
+    
+        urlString = currentUrl.indexOf(urlFilter);
 
-  if (indexTabla == (tablaContainer.length-1)) {
-    let botoneras = document.getElementsByClassName("tableexport-caption");
-    if (window.matchMedia("(max-width: 700px)").matches) {
-      for (let indexBoton = 0; indexBoton < botoneras.length; indexBoton++) {
-        $(".tableexport-caption").eq(indexBoton).prepend(
-          "<div class='row'><div class='col-md-6' style='margin-bottom:6px;'>"
-          +"<button type='button' tableexport-id='bbb618"
-          +indexBoton+"-todas' class='btn btn-info crear boton-accion boton-crear create-orders-button' style='width:110px;'>Nueva <i class='fas fa-plus'></i></span></button>"
-          +"<button type='button' tableexport-id='bba618"
-          +indexBoton+"-todas' class='btn btn-secondary todas boton-accion boton-todas all-orders-button' style='width:110px;'>Todas <i class='fas fa-eye'></i></span></button>"
-          +"<button type='button' tableexport-id='baa618"
-          +indexBoton+"-pdf' class='btn btn-danger pdf boton-accion boton-pdf' style='width:110px;'><span id='pdfIconContainer'>Pdf <i class='fas fa-file-pdf'></i></span></button>"
-          +"</div></div>"
-        );
+        // excludeUrlsArray isExclude
+        for (let indexExclude = 0; indexExclude < excludeUrlsArray.length; indexExclude++) {
+          const elementExclude = excludeUrlsArray[indexExclude];
+          filterExclude = currentUrl.indexOf(elementExclude);
 
-        if (indexBoton == (botoneras.length-1)) {
-          let botonesXlsx = document.getElementsByClassName("xlsx");
-
-            urlString = currentUrl.indexOf(urlFilter);
-
-            if (urlString == -1) {}else{}
-
-          for (let indexXlsx = 0; indexXlsx < botonesXlsx.length; indexXlsx++) {
-            const elementXlsx = botonesXlsx[indexXlsx];
-            $(".xlsx").eq(indexXlsx).removeClass("button-default");
-            $(".xlsx").eq(indexXlsx).addClass("btn");
-            $(".xlsx").eq(indexXlsx).addClass("btn-success");
-            $(".xlsx").eq(indexXlsx).addClass("boton-accion");
-            $(".xlsx").eq(indexXlsx).addClass("boton-excel");
-            $(".xlsx").eq(indexXlsx).css("margin-right", "6px");
-            $(".xlsx").eq(indexXlsx).css("width", "110px");
-            $(".xlsx").eq(indexXlsx).text("");
-            $(".xlsx").eq(indexXlsx).append(" <span>Excel <i class='fas fa-file-excel'></i></span>");
-            
-            
-          }
-      }
-    }
-    }else{
-      for (let indexBoton = 0; indexBoton < botoneras.length; indexBoton++) {
-        $(".tableexport-caption").eq(indexBoton).prepend(
-          "<button type='button' tableexport-id='bbb618"
-          +indexBoton+"-todas' class='btn btn-info crear boton-accion boton-crear create-orders-button' style='width:110px;margin-right:6px'>Nueva <i class='fas fa-plus'></i></span></button>"
-          +"<button type='button' tableexport-id='bba618"
-          +indexBoton+"-todas' class='btn btn-secondary todas boton-accion boton-todas all-orders-button' style='width:110px;margin-right:6px'>Todas <i class='fas fa-eye'></i></span></button>"
-          +"<button type='button' tableexport-id='baa618"
-          +indexBoton+"-pdf' class='btn btn-danger pdf boton-accion boton-pdf' style='width:110px;margin-right:6px'><span id='pdfIconContainer'>Pdf <i class='fas fa-file-pdf'></i></span></button>"
-          );
-        if (indexBoton == (botoneras.length-1)) {
-          let botonesXlsx = document.getElementsByClassName("xlsx");
-          for (let indexXlsx = 0; indexXlsx < botonesXlsx.length; indexXlsx++) {
-            const elementXlsx = botonesXlsx[indexXlsx];
-            $(".xlsx").eq(indexXlsx).removeClass("button-default");
-            $(".xlsx").eq(indexXlsx).addClass("btn");
-            $(".xlsx").eq(indexXlsx).addClass("btn-success");
-            $(".xlsx").eq(indexXlsx).addClass("boton-accion");
-            $(".xlsx").eq(indexXlsx).css("margin-right", "6px");
-            $(".xlsx").eq(indexXlsx).css("width", "110px");
-            $(".xlsx").eq(indexXlsx).text("");
-            $(".xlsx").eq(indexXlsx).append(" <span>Excel <i class='fas fa-file-excel'></i></span>");
-            
-          }
+          
         }
-      }
-    }
-   }
-  }
 
-  $(".create-orders-button").click(function(evc){
-    evc.preventDefault();
-    evc.stopPropagation();
-    window.open("/HDCS/forms/solicitudMantenimiento/index.php", "_self");
-  });
 
-  $(".boton-pdf").click(function(evpdf){
-    evpdf.preventDefault();
-    evpdf.stopPropagation();
-    let pdftIndex = $(".boton-pdf").index(this);
-    $("#page_loader").fadeIn();
-    if (window.matchMedia("(max-width: 700px)").matches) {
-      escala = 1;
-    }else{
-      escala = 2;
-    }
+            if (urlString == -1) {
+              colCount = colCount;
+            }else{
+              colCount = null;
+            }
     
-    var element = document.getElementsByClassName('print-container');
-    var elementTitle = document.getElementsByClassName('file-title');
-    
-    let miContenedor = document.getElementsByClassName("tableexport-caption");
-    $('div.dataTables_scrollBody').height("auto");
-
-    var botonesAccion = document.getElementsByClassName("boton-accion");
-    var captionS = document.getElementsByClassName("tableexport-caption");
-    var tblthis = document.getElementsByTagName("table")[pdftIndex];
-    var widthT = tblthis.offsetWidth;
-    let doc = new jsPDF();
-
-    for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {
-      const elementBA = botonesAccion[indexBA];
-      elementBA.style.display = "none";
-    }
-    
-    if(currentUrl == "/HDCS/inicio/dashboard.php") {
-      document.getElementById('repSegEst').style.height = "auto";
-      }
-    
-
-    for (let indexA = 0; indexA < botonesAccion.length; indexA++) {
-      const element = botonesAccion[indexA];
-    }
-
-    let elem = element[pdftIndex];
-    titulo = $(".file-title").eq(pdftIndex).val();
-    titulo_doc = $(".documento-title").eq(pdftIndex).text();
-    $(".documento-title").eq(pdftIndex).text(titulo_doc+" "+fechaActual);
-    $(".documento-title").eq(pdftIndex).css("display", "inherit");
-
-    var opt = {
-      margin:       1,
-      pagebreak: {avoid: 'tr'},
-      filename:     'myfile.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 1},
-      jsPDF:        { unit: 'in', format: 'legal', orientation: 'landscape' }
-    };
-
-    
-    html2pdf().set(opt).from(elem).toPdf().save(titulo+fechaActual+'.pdf').then(function(pdf) {
       
-      $(".documento-title").eq(pdftIndex).css("display", "none");
-      for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {
-        const elementBA = botonesAccion[indexBA];
-        elementBA.style.display = "inherit";
+    
+      TableExport(document.getElementById(myTableId), {
+        
+        headers: true,
+        footers: true,
+        formats: ["xlsx"],
+        filename: titulo+fechaActual,
+        bootstrap: false,
+        exportButtons: true,
+        position: "top",
+        ignoreRows: null,
+        ignoreCols: [colCount-1],
+        trimWhitespace: true,
+        RTL: false,
+        htmlContent: true,
+        buttonContent: 'Xlsx',
+        sheetname: "Reporte "+fechaActual
+      });
+    
+      if (indexTabla == (tablaContainer.length-1)) {
+        let botoneras = document.getElementsByClassName("tableexport-caption");
+        
+        if (window.matchMedia("(max-width: 700px)").matches) {
+          for (let indexBoton = 0; indexBoton < botoneras.length; indexBoton++) {
+            
+            
+            $(".tableexport-caption").eq(indexBoton).prepend(
+              "<div class='row'><div class='col-md-6' style='margin-bottom:6px;'>"
+              +"<button type='button' tableexport-id='bbb618"
+              +indexBoton+"-todas' class='btn btn-info crear boton-accion boton-crear create-orders-button' style='width:110px;'>Nueva <i class='fas fa-plus'></i></span></button>"
+              +"<button type='button' tableexport-id='bba618"
+              +indexBoton+"-todas' class='btn btn-secondary todas boton-accion boton-todas all-orders-button' style='width:110px;'>Todas <i class='fas fa-eye'></i></span></button>"
+              +"<button type='button' tableexport-id='baa618"
+              +indexBoton+"-pdf' class='btn btn-danger pdf boton-accion boton-pdf' style='width:110px;'><span id='pdfIconContainer'>Pdf <i class='fas fa-file-pdf'></i></span></button>"
+              +"</div></div>"
+            );
+    
+            if (indexBoton == (botoneras.length-1)) {
+              let botonesXlsx = document.getElementsByClassName("xlsx");
+    
+                urlString = currentUrl.indexOf(urlFilter);
+    
+                if (urlString == -1) {}else{}
+    
+              for (let indexXlsx = 0; indexXlsx < botonesXlsx.length; indexXlsx++) {
+                const elementXlsx = botonesXlsx[indexXlsx];
+                $(".xlsx").eq(indexXlsx).removeClass("button-default");
+                $(".xlsx").eq(indexXlsx).addClass("btn");
+                $(".xlsx").eq(indexXlsx).addClass("btn-success");
+                $(".xlsx").eq(indexXlsx).addClass("boton-accion");
+                $(".xlsx").eq(indexXlsx).addClass("boton-excel");
+                $(".xlsx").eq(indexXlsx).css("margin-right", "6px");
+                $(".xlsx").eq(indexXlsx).css("width", "110px");
+                $(".xlsx").eq(indexXlsx).text("");
+                $(".xlsx").eq(indexXlsx).append(" <span class='boton-excel-label'>Excel <i class='fas fa-file-excel'></i></span>");
+
+                if (filterExclude == -1) {}else{
+                  $(".boton-crear").eq(indexXlsx).css("display", "none");
+                  
+                }
+
+              }
+          }
+        }
+        }else{
+          for (let indexBoton = 0; indexBoton < botoneras.length; indexBoton++) {
+            $(".tableexport-caption").eq(indexBoton).prepend(
+              "<button type='button' tableexport-id='bbb618"
+              +indexBoton+"-todas' class='btn btn-info crear boton-accion boton-crear create-orders-button' style='width:110px;margin-right:6px'>Nueva <i class='fas fa-plus'></i></span></button>"
+              +"<button type='button' tableexport-id='bba618"
+              +indexBoton+"-todas' class='btn btn-secondary todas boton-accion boton-todas all-orders-button' style='width:110px;margin-right:6px'>Todas <i class='fas fa-eye'></i></span></button>"
+              +"<button type='button' tableexport-id='baa618"
+              +indexBoton+"-pdf' class='btn btn-danger pdf boton-accion boton-pdf' style='width:110px;margin-right:6px'><span id='pdfIconContainer'>Pdf <i class='fas fa-file-pdf'></i></span></button>"
+              );
+            if (indexBoton == (botoneras.length-1)) {
+              let botonesXlsx = document.getElementsByClassName("xlsx");
+              for (let indexXlsx = 0; indexXlsx < botonesXlsx.length; indexXlsx++) {
+                const elementXlsx = botonesXlsx[indexXlsx];
+                $(".xlsx").eq(indexXlsx).removeClass("button-default");
+                $(".xlsx").eq(indexXlsx).addClass("btn");
+                $(".xlsx").eq(indexXlsx).addClass("btn-success");
+                $(".xlsx").eq(indexXlsx).addClass("boton-accion");
+                $(".xlsx").eq(indexXlsx).css("margin-right", "6px");
+                $(".xlsx").eq(indexXlsx).css("width", "110px");
+                $(".xlsx").eq(indexXlsx).text("");
+                $(".xlsx").eq(indexXlsx).append(" <span class='boton-excel-label'>Excel <i class='fas fa-file-excel'></i></span>");
+                
+                if (filterExclude == -1) {}else{
+                  $(".boton-crear").eq(indexXlsx).css("display", "none");
+                  
+                }
+
+              }
+            }
+          }
+        }
+       }
       }
+    
+      $(".create-orders-button").click(function(evc){
+        evc.preventDefault();
+        evc.stopPropagation();
+        window.open("/HDCS/forms/solicitudMantenimiento/index.php", "_self");
+      });
+
+      $(".boton-excel-label").click(function(evloco){
+        let indexXl = $(".boton-excel-label").index(this);
+        evloco.preventDefault();
+        evloco.stopPropagation();
+        $(".xlsx").eq(indexXl).click();
+      });
+
       
-      for (let indexB = 0; indexB < botonesAccion.length; indexB++) {
-        const element = botonesAccion[indexB];
-      }
+    
+      $(".boton-pdf").click(function(evpdf){
+        evpdf.preventDefault();
+        evpdf.stopPropagation();
+        let pdftIndex = $(".boton-pdf").index(this);
 
-      $('div.dataTables_scrollBody').height(300);
-      if(currentUrl == "/HDCS/inicio/dashboard.php") {
-        document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
-        }
-        $("#page_loader").fadeOut("slow");
-    });
-  });
+        var tablaPdf = document.getElementsByClassName('tabla-data');
+        const elementPdf = tablaPdf[pdftIndex];
+        let myTablePdfId = elementPdf.id;
 
-  $(".all-orders-button").click(function(){
-    let ordersIndex = $(".all-orders-button").index(this);
-    let contenedor = document.getElementsByClassName("dataTables_scrollBody").eq(0);
-      let scrollHeight = contenedor.clientHeight;
-
-    if(currentUrl == "/HDCS/inicio/dashboard.php"){
-      if(ordersIndex == 0){
-        if (tableHeight == 300) {
-          $("#table-wrapper").css("max-height", "auto");
-          $("#table-wrapper").css("height", "auto");
-          tableHeight = 0;
+        $("#page_loader").fadeIn();
+        if (window.matchMedia("(max-width: 700px)").matches) {
+          escala = 1;
         }else{
-          $("#table-wrapper").css("max-height", "300px");
-          $("#table-wrapper").css("height", "300px");
-          tableHeight = 300;
+          escala = 2;
         }
-      }
-      if(ordersIndex == 1){
-        deptosHeight = document.getElementById('repSegEst').clientHeight;
-        if (deptosHeight == mantPorDepHeight) {
-          $("#repSegEst").css("max-height", "auto");
-          $("#repSegEst").css("height", "auto");
-          deptosHeight = 0;
+        
+        var element = document.getElementsByClassName('print-container');
+        var elementTitle = document.getElementsByClassName('file-title');
+        
+        let miContenedor = document.getElementsByClassName("tableexport-caption");
+        $('div.dataTables_scrollBody').height("auto");
+    
+        var botonesAccion = document.getElementsByClassName("boton-accion");
+        var lastContiner =  document.getElementsByClassName("last-col");
+        let colPdfCount = document.getElementById(myTablePdfId).rows[0].cells.length;
+        var tbl = document.getElementById(myTablePdfId);
+        
+
+        var captionS = document.getElementsByClassName("tableexport-caption");
+        var tblthis = document.getElementsByTagName("table")[pdftIndex];
+        var widthT = tblthis.offsetWidth;
+        let doc = new jsPDF();
+    
+        for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {
+          const elementBA = botonesAccion[indexBA];
+          elementBA.style.display = "none";
+        }
+
+        
+        for (let indexLC = 0; indexLC < lastContiner.length; indexLC++) {
+          const elementLC = lastContiner[indexLC];
+          elementLC.style.visibility = "collapse";
+          elementLC.style.width = "0px";
+        }
+        
+        if(currentUrl == "/HDCS/inicio/dashboard.php") {
+          document.getElementById('repSegEst').style.height = "auto";
+          }
+        
+    
+        for (let indexA = 0; indexA < botonesAccion.length; indexA++) {
+          const element = botonesAccion[indexA];
+        }
+    
+        let elem = element[pdftIndex];
+        titulo = $(".file-title").eq(pdftIndex).val();
+        titulo_doc = $(".documento-title").eq(pdftIndex).text();
+        $(".documento-title").eq(pdftIndex).text(titulo_doc+" "+fechaActual);
+        $(".documento-title").eq(pdftIndex).css("display", "inherit");
+    
+        var opt = {
+          margin:       1,
+          pagebreak: {avoid: 'tr'},
+          filename:     'myfile.pdf',
+          image:        { type: 'jpeg', quality: 0.98 },
+          html2canvas:  { scale: 1},
+          jsPDF:        { unit: 'in', format: 'legal', orientation: 'landscape' }
+        };
+    
+        
+        html2pdf().set(opt).from(elem).toPdf().save(titulo+fechaActual+'.pdf').then(function(pdf) {
+          
+          $(".documento-title").eq(pdftIndex).css("display", "none");
+          for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {
+            const elementBA = botonesAccion[indexBA];
+            elementBA.style.display = "inherit";
+          }
+
+          for (let indexLC = 0; indexLC < lastContiner.length; indexLC++) {
+          const elementLC = lastContiner[indexLC];
+          elementLC.style.visibility = "inherit";
+          elementLC.style.width = "initial";
+        }
+          
+          for (let indexB = 0; indexB < botonesAccion.length; indexB++) {
+            const element = botonesAccion[indexB];
+          }
+    
+          $('div.dataTables_scrollBody').height(300);
+          if(currentUrl == "/HDCS/inicio/dashboard.php") {
+            document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
+            }
+            $("#page_loader").fadeOut("slow");
+        });
+      });
+    
+      $(".all-orders-button").click(function(){
+        let ordersIndex = $(".all-orders-button").index(this);
+        let contenedor = document.getElementsByClassName("dataTables_scrollBody").eq(0);
+          let scrollHeight = contenedor.clientHeight;
+    
+        if(currentUrl == "/HDCS/inicio/dashboard.php"){
+          if(ordersIndex == 0){
+            if (tableHeight == 300) {
+              $("#table-wrapper").css("max-height", "auto");
+              $("#table-wrapper").css("height", "auto");
+              tableHeight = 0;
+            }else{
+              $("#table-wrapper").css("max-height", "300px");
+              $("#table-wrapper").css("height", "300px");
+              tableHeight = 300;
+            }
+          }
+          if(ordersIndex == 1){
+            deptosHeight = document.getElementById('repSegEst').clientHeight;
+            if (deptosHeight == mantPorDepHeight) {
+              $("#repSegEst").css("max-height", "auto");
+              $("#repSegEst").css("height", "auto");
+              deptosHeight = 0;
+            }else{
+              $("#repSegEst").css("max-height", mantPorDepHeight+"px");
+              $("#repSegEst").css("height", mantPorDepHeight+"px");
+              deptosHeight = mantPorDepHeight;
+            }
+          }
         }else{
-          $("#repSegEst").css("max-height", mantPorDepHeight+"px");
-          $("#repSegEst").css("height", mantPorDepHeight+"px");
-          deptosHeight = mantPorDepHeight;
+          $('.dataTables_scrollBody').css('height', 300);  
         }
-      }
+      });
+    
+      
+    
+      $("#page_loader").fadeOut("slow");
+      }, temporizador);
+
     }else{
-      $('.dataTables_scrollBody').css('height', 300);  
+      console.log(esTabla);
     }
-  });
+    
+  }, 1000);
 
   
-
-  $("#page_loader").fadeOut("slow");
-  }, temporizador);
 
 }); // document ready

@@ -32,3 +32,7 @@ body{
 .modal-dialog {
   margin-top: 200px;
 }
+
+.modal-content {
+    margin-top: 200px;
+}

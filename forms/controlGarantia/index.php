@@ -469,7 +469,7 @@ if ( $detect->isMobile() ) {
                             <th>Teléfono empresa</th>
                             <th>Correo electrónico empresa</th>
                             <th>Usuario registro garantía</th>
-                            <th>Acciones</th>
+                            <th class="last-col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>                           
@@ -706,35 +706,40 @@ if ( $detect->isMobile() ) {
                         </div>
                     </div> 
 
-                    <div class="form-group">
-                        <label for="nombre" class="col-form-label">Estado:</label>
-                        <select class="form-control" name="estadoU" id="estadoU" >
-                            <option value=1>ACTIVO</option>  
-                            <option value=0>INACTIVO</option>     
-                        </select>
-                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="nombre" class="col-form-label">Estado garantía:</label>
+                              <select class="form-control" name="estadoU" id="estadoU" >
+                                  <option value=1>ACTIVO</option>  
+                                  <option value=0>INACTIVO</option>     
+                              </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="nombre" class="col-form-label">Empresa:</label>
 
-                    <div class="form-group">
-                        <label for="nombre" class="col-form-label">Empresa:</label>
+                              <select class="form-control" name="select_EmpresaU" id="select_EmpresaU" required>
+                                  <option value="">Seleccione..</option>
+                                      <?php
+                                          require_once '../../bd/conexion.php';
+                                          $objeto = new Conexion();
+                                          $conexion = $objeto->Conectar();
 
-                        <select class="form-control" name="select_EmpresaU" id="select_EmpresaU" required>
-                            <option value="">Seleccione..</option>
-                                <?php
-                                    require_once '../../bd/conexion.php';
-                                    $objeto = new Conexion();
-                                    $conexion = $objeto->Conectar();
-
-                                    $consulta = "CALL sp_mostrarEmpresaGarantia()";
-                                    $resultado = $conexion->prepare($consulta);
-                                    $resultado->execute();  
-                                    $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
-                        
-                                    foreach($data as $dat) {     
-                                        echo "<option value=".$dat["idEmpresa"]." class='form-control'>".$dat['nombreEmpresa']."</option>";
-                                    }
-                                ?>        
-                        </select>
-                    </div>
+                                          $consulta = "CALL sp_mostrarEmpresaGarantia()";
+                                          $resultado = $conexion->prepare($consulta);
+                                          $resultado->execute();  
+                                          $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
+                              
+                                          foreach($data as $dat) {     
+                                              echo "<option value=".$dat["idEmpresa"]." class='form-control'>".$dat['nombreEmpresa']."</option>";
+                                          }
+                                      ?>        
+                              </select>
+                            </div>
+                        </div>
+                    </div> 
 
 
                     <div class="row">
@@ -994,6 +999,8 @@ if ( $detect->isMobile() ) {
 <script lang="javascript" src="../../inicio/dist/js/xlsx.full.min.js"></script>
 <script src="../../inicio/dist/js/tableexport.js"></script>
 <script src="../../inicio/dist/js/xlsx.core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/polyfills.umd.js"></script>
 <script src="../../codigo.js"></script>
 
 

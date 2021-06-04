@@ -790,8 +790,7 @@ if ( $detect->isMobile() ) {
   }
 ?>
 
-<!--footer -->
-<?php include "../footer.php"; ?>
+
 
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
@@ -830,3 +829,8 @@ if ( $detect->isMobile() ) {
 <script src="../../inicio/dist/js/tableexport.js"></script>
 <script src="../../inicio/dist/js/xlsx.core.min.js"></script>
 <script src="../../codigo.js"></script>
+
+
+
+<!--footer -->
+<?php include "../footer.php"; ?>

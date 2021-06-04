@@ -32,3 +32,14 @@ body{
 .modal-dialog {
   margin-top: 150px;
 }
+
+.modal-content.new {
+    margin-top: 140px;
+}
+.modal-content.update {
+    margin-top: 140px;
+}
+
+.modal-content {
+    margin-top: 200px;
+}

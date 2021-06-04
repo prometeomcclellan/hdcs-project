@@ -67,6 +67,8 @@ let diccionarioModelos = [];
           const element = editarContainer[index];
           $(".btnEditar").eq(index).removeClass("btn-primary");
           $(".btnEditar").eq(index).addClass("btn-warning");
+          $(".btnEditar").eq(index).addClass("last-col");
+          $(".btnBorrar").eq(index).addClass("last-col");
         }
 
         $('#tablaEquipo').css("height", "300px");
@@ -395,14 +397,14 @@ $("#select_marca").on("change", selectMarcas);
   $(document).on("click", ".btnBorrar", function(){
     fila = $(this);           
     _codEquipo = parseInt($(this).closest('tr').find('td:eq(0)').text()) ;
-    _serie = ($(this).closest('tr').find('td:eq(3)').text()) ;   
+    _serie = ($(this).closest('tr').find('td:eq(4)').text()) ;   
     opcion = 3; //eliminar   
 
     $("#panel_eliminar").html("Equipo con serie: " + _serie);
     //$(".modal-header").css("background-color", "#003399");
     $(".modal-header").css("color", "white");
     //$("#btnGuardar").css("background-color", "#003399"); 
-    $(".modal-title").text("Eliminar control mantenimiento");            
+    $(".modal-title").text("Eliminar equipo");            
     $("#modalEliminar").modal("show");  
   });
 

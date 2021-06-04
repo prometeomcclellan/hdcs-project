@@ -45,24 +45,30 @@ body{
 
 button#btnBuscar {
     margin-top: 32px;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #1f2d3d;
 }
 
 button#btnBuscarU {
     margin-top: 32px;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #1f2d3d;
 }
 
 #anchoModalBuscarSolMant {
-  width: 160%;
-  margin-left: -150px;
-  margin-top: -170px;
+    width: 160%;
+    margin-left: -150px;
+    margin-top: 140px;
 }
 
 #modalCuadro {
-    margin-top: -185px;
+    margin-top: 130px;
 }
 
 #modalCuadroU {
-    margin-top: -185px;
+    margin-top: 130px;
 }
 
 hr {
@@ -107,6 +113,15 @@ div#tablaSolMant_filter {
 
 /* Paginacion */
 div#tablaSolMant_paginate {
-    margin-top: -30px;
+    margin-top: 5px;
     margin-bottom: 10px;
+}
+
+.modal-content {
+    margin-top: 200px;
+}
+
+table.dataTable thead {
+    color: white;
+    background: #1a3c8a;
 }

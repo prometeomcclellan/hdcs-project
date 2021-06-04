@@ -10,8 +10,6 @@ session_start();
 <title>Auditoría</title>
 
 <meta name="keywords" content="Dashboard" />
-		<meta name="description" content="CURLP Admin Official Site">
-		<meta name="author" content="Omar McClellan, Mapphash Group">
 
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
@@ -450,6 +448,8 @@ if ( $detect->isMobile() ) {
     <div class="container caja">
         <div class="row">
             <div class="col-lg-12 print-container">
+            <input type="hidden" class="file-title" value="control-auditorías-fecha-">
+            <h1 type="hidden" class="documento-title" style="display:none;">Control Auditorías, Fecha</h1>
             <div class="table-responsive">        
                 <table id="tablaAuditoria" class="table table-striped table-bordered table-condensed tabla-data" style="width:100%" >
                     <thead class="text-center">
@@ -522,6 +522,8 @@ if ( $detect->isMobile() ) {
 <script lang="javascript" src="../../inicio/dist/js/xlsx.full.min.js"></script>
 <script src="../../inicio/dist/js/tableexport.js"></script>
 <script src="../../inicio/dist/js/xlsx.core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/polyfills.umd.js"></script>
 <script src="../../codigo.js"></script>
 <!--footer -->
 <?php include "../footer.php"; ?>

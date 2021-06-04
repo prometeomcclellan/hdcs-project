@@ -96,13 +96,9 @@
                                                             'departamentoP' => $departamentoP,
                                                             'nombre' => $nombre
                                                         );
-                                                        array_push($data, $response);
                                                        
                                                     }else{
-                                                        $response = array(
-                                                            'status' => 500
-                                                        );
-                                                        array_push($data, $response);
+                                                        
                                                     }
                                                 }
                                             }else{
@@ -119,7 +115,7 @@
                 }
             } 
             }
-             
+            array_push($data, $response); 
         }
     }
     echo json_encode($data, JSON_UNESCAPED_UNICODE);

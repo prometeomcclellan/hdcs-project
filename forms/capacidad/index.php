@@ -463,7 +463,7 @@ if ( $detect->isMobile() ) {
                         <tr>
                             <th>ID</th>
                             <th>Capacidad</th>                    
-                            <th>Acciones</th>
+                            <th class="last-col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>                           
@@ -585,6 +585,8 @@ if ( $detect->isMobile() ) {
 <script lang="javascript" src="../../inicio/dist/js/xlsx.full.min.js"></script>
 <script src="../../inicio/dist/js/tableexport.js"></script>
 <script src="../../inicio/dist/js/xlsx.core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/polyfills.umd.js"></script>
 <script src="../../codigo.js"></script>
 </div>
 

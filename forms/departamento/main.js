@@ -15,6 +15,15 @@ $(document).ready(function() {
           const element = editarContainer[index];
           $(".btnEditar").eq(index).removeClass("btn-primary");
           $(".btnEditar").eq(index).addClass("btn-warning");
+          
+          let editarContainer = document.getElementsByClassName("btnEditar");
+        //alert(editarContainer.length)
+        for (let index = 0; index < editarContainer.length; index++) {
+          const element = editarContainer[index];
+          $(".btnEditar").eq(index).addClass("last-col");
+          $(".btnBorrar").eq(index).addClass("last-col");
+        }
+        
         }
 
         $(".page-link").eq(1).css("background-color", "#1a3c8a");
@@ -30,7 +39,7 @@ $(document).ready(function() {
       "columns":[
           {"data": "idDepartamento"},
           {"data": "departamento"},
-          {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btnEditar'><i class='material-icons' id='editar'>edit</i></button><button class='btn btn-danger btnBorrar'><i class='material-icons'>delete</i></button></div></div>" }
+          {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-warning btnEditar last-col'><i class='material-icons' id='editar'>edit</i></button><button class='btn btn-danger btnBorrar last-col'><i class='material-icons'>delete</i></button></div></div>" }
       ]
   });     
 

@@ -11,6 +11,15 @@ $(document).ready(function() {
         
           $(".page-link").eq(1).css("background-color", "#1a3c8a");
           $(".page-link").eq(1).css("border-color", "#1a3c8a");
+
+          let editarContainer = document.getElementsByClassName("btnEditar");
+        //alert(editarContainer.length)
+        for (let index = 0; index < editarContainer.length; index++) {
+          const element = editarContainer[index];
+          $(".btnEditar").eq(index).addClass("last-col");
+          $(".btnBorrar").eq(index).addClass("last-col");
+        }
+        
       },
         
         "ajax":{            
@@ -66,7 +75,7 @@ $(document).ready(function() {
     $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
     $("#btnGuardar").css("background-color", "#1a3c8a"); 
-    $(".modal-title").text("Nueva Capacidad");          
+    $(".modal-title").text("Nueva capacidad de almacenamiento");          
     $("#modalCRUD").modal("show");       
   });    
     
@@ -81,10 +90,10 @@ $(document).ready(function() {
 
     opcion = 2; //editar
     
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "##1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
-    $(".modal-title").text("Modificar Capacidad");            
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
+    $(".modal-title").text("Modificar capacidad de almacenamiento");            
     $("#modalCRUD").modal("show");    
   });
 
@@ -98,10 +107,10 @@ $(document).ready(function() {
     opcion = 3; //eliminar   
 
     $("#panel_eliminar").html("Capacidad: " + capacidad);
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
-    $(".modal-title").text("Eliminar Capacidad");            
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
+    $(".modal-title").text("Eliminar capacidad de almacenamiento");            
     $("#modalEliminar").modal("show");  
   });
 
