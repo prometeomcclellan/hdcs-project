@@ -66,134 +66,7 @@ opcion = 4;
           {"data": "userName"},
           {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-warning btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
       ],
-      
-      //para usar los botones   
-    /*  responsive: "true",
-      dom: 'lBfrtip',       
-      "buttons":[ 
-
-        //EXCEL
-        {
-          extend:    'excelHtml5',
-          text:      '<i class="fas fa-file-excel"></i> ',
-          titleAttr: 'Exportar a Excel',
-          className: 'btn btn-success',
-          excelStyles: {
-            "template": 'blue_medium'
-          },
-
-          //Estilos al momento de imprimir
-          pageStyle: {
-              sheetPr: {
-                  pageSetUpPr: {
-                      fitToPage: 1            // Ajustar la impresion a la pagina
-                  } 
-              },
-              printOptions: {
-                  horizontalCentered: true,
-                  verticalCentered: true,
-              },
-              pageSetup: {
-                  orientation: "landscape",   // Orientacion
-                  paperSize: "9",             // Tamaño del papel (1 = Legal, 9 = A4)
-                  fitToWidth: "1",            // Ajustar al ancho de la página
-                  fitToHeight: "0",           // Ajustar al alto de la página
-              },
-              pageMargins: {
-                  left: "0.2",
-                  right: "0.2",
-                  top: "0.4",
-                  bottom: "0.4",
-                  header: "0",
-                  footer: "0",
-              },
-              repeatHeading: true,    // Repeat the heading row at the top of each page
-              repeatCol: 'A:A',       // Repeat column A (for pages wider than a single printed page)
-          },
-        },
-
-
-        //PDF
-        {
-          extend:    'pdfHtml5',
-          text:      '<i class="fas fa-file-pdf"></i> ',
-          titleAttr: 'Exportar a PDF',
-          className: 'btn btn-danger',
-          excelStyles: {
-            "template": 'blue_medium'
-          },
-
-          //Estilos al momento de imprimir
-          pageStyle: {
-              sheetPr: {
-                  pageSetUpPr: {
-                      fitToPage: 1            // Ajustar la impresion a la pagina
-                  } 
-              },
-              printOptions: {
-                  horizontalCentered: true,
-                  verticalCentered: true,
-              },
-              pageSetup: {
-                  orientation: "landscape",   // Orientacion
-                  paperSize: "9",             // Tamaño del papel (1 = Legal, 9 = A4)
-                  fitToWidth: "1",            // Ajustar al ancho de la página
-                  fitToHeight: "0",           // Ajustar al alto de la página
-              },
-              pageMargins: {
-                  left: "0.2",
-                  right: "0.2",
-                  top: "0.4",
-                  bottom: "0.4",
-                  header: "0",
-                  footer: "0",
-              },
-              repeatHeading: true,    // Repeat the heading row at the top of each page
-              repeatCol: 'A:A',       // Repeat column A (for pages wider than a single printed page)
-          },
-        },
-
-        //IMPRIMIR
-        {
-          extend:    'print',
-          text:      '<i class="fa fa-print"></i> ',
-          titleAttr: 'Imprimir',
-          className: 'btn btn-info',
-          excelStyles: {
-            "template": 'blue_medium'
-          },
-
-          //Estilos al momento de imprimir
-          pageStyle: {
-              sheetPr: {
-                  pageSetUpPr: {
-                      fitToPage: 1            // Ajustar la impresion a la pagina
-                  } 
-              },
-              printOptions: {
-                  horizontalCentered: true,
-                  verticalCentered: true,
-              },
-              pageSetup: {
-                  orientation: "landscape",   // Orientacion
-                  paperSize: "9",             // Tamaño del papel (1 = Legal, 9 = A4)
-                  fitToWidth: "1",            // Ajustar al ancho de la página
-                  fitToHeight: "0",           // Ajustar al alto de la página
-              },
-              pageMargins: {
-                  left: "0.2",
-                  right: "0.2",
-                  top: "0.4",
-                  bottom: "0.4",
-                  header: "0",
-                  footer: "0",
-              },
-              repeatHeading: true,    // Repeat the heading row at the top of each page
-              repeatCol: 'A:A',       // Repeat column A (for pages wider than a single printed page)
-          },
-        },
-      ],
-      */
+     
   });  
 
 
@@ -224,6 +97,7 @@ opcion = 4;
 
   //BUSCAR EQUIPO, cuando se crea un NUEVO control garantia  ---------------------------------------------------------------------------------------
   $("#btnBuscar").click(function(){
+    
     $('#modalCREAR').css("opacity", ".1");
     $("#formEquipo").trigger("reset");
     $(".modal-header").css("background-color", "#1a3c8a");
@@ -244,6 +118,7 @@ opcion = 4;
     event.preventDefault(); //evita el comportamiento de la modal, que al darle click sobre el boton abra una nueva ventana sin que uno elija.
     $("#modalEquipo").modal("hide");  
     $('#modalCREAR').css("opacity", "1"); 
+    $('#modalCREAR').css("overflow-y", "scroll");
 
     fila = $(this).closest("tr");                  //FILA
     _codEquipo = fila.find('td:eq(0)').text();   //ID
@@ -361,8 +236,37 @@ opcion = 4;
     _codEquipo = $.trim($('#codEquipo').val() || []);  
     _preDiag = $.trim($('#Pre_Diag').val()); 
     //_usuario = $_SESSION["s_idUsuario"]
+    let uId = localStorage.getItem("idDeUsuario");
+    //alert(uId)
 
-    //alert(_usuario);                       
+    let ahoraD = new Date();
+    let ahoraDAnio = ahoraD.getFullYear();
+    let ahoraDMonth = ahoraD.getMonth();
+    let ahoraDDay = ahoraD.getDate();
+    let ahoraDHour = ahoraD.getHours();
+    let ahoraDMinutes = ahoraD.getMinutes();
+    let ahoraDSeconds = ahoraD.getSeconds();
+    let ahoraDDia;
+    let ahoraDMes;
+    let mesHoyD;
+
+    mesHoyD = ahoraDMonth+1;
+
+    if (mesHoyD < 10) {
+      ahoraDMes = "0"+mesHoyD;
+    }else{
+      ahoraDMes = mesHoyD;
+    }
+
+    if (ahoraDDay < 10) {ahoraDDia = "0"+ahoraDDay;}else{ahoraDDia = ahoraDDay;}
+
+    let horaD = ahoraDHour+":"+ahoraDMinutes+":"+ahoraDSeconds;
+    let fechaActualD = ahoraDAnio+"-"+ahoraDMes+"-"+ahoraDDia+"_"+horaD;
+
+    
+
+    //alert(_usuario);  
+                         
       $.ajax({
         url: "crud.php",
         type: "POST",
@@ -376,8 +280,44 @@ opcion = 4;
               $('#modalCREAR').modal('hide');
               tablaSolMant.ajax.reload(null, false);
 
-//ENVIAR CORREO de una solicitud de Mantenimiento
               $.ajax({
+                url: "../../bd/get_nuevo_control_mantenimiento_usuario.php",
+                type: "POST",
+                async: false,
+                datatype:"json",
+                data: {idUsuario:uId},
+                success: function(dataNuevo) {
+                  console.log("nuevo control creado");
+                  console.dir(JSON.parse(dataNuevo));
+                  let dataNew = JSON.parse(dataNuevo);
+                  let controlId = dataNew[0].idSolicitudMantenimiento;
+                  let controlFecha = dataNew[0].fechaSolicitudMantenimiento;
+                  let controlFechaHora = controlFecha+" "+horaD;
+
+                  
+                  $.ajax({
+                    url: "../../bd/crear_notificacion.php",
+                    type: "POST",
+                    async: false,
+                    datatype:"json",
+                    data: {idControlMantenimiento:controlId, fechaNotificacion: controlFechaHora},
+                    success: function(dataCrearNoti) {
+                      console.log("nuevo notificación nueva");
+                      console.dir(dataCrearNoti);
+                    }
+                  });
+                  /**/
+
+                  //alert(data);
+                }
+              });
+
+              //alert("heyyy heyyyy es el rey")
+              
+
+//ENVIAR CORREO de una solicitud de Mantenimiento
+/*              
+$.ajax({
                 url: "email.php",
                 type: "POST",
                 datatype:"json",
@@ -386,10 +326,12 @@ opcion = 4;
                   //alert(data);
                 }
               });
+              */
 
             }
           }
-      });                                             
+      });  
+      
   }); 
     
   

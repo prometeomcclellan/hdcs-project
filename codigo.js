@@ -366,9 +366,11 @@ $(document).ready(function() {
         });
 
    
+    
     if(document.referrer == location.href){
-      location.href = 'error.php';
+      location.href = '../404.php';
     }else{}
+    /**/
     
     if (esInicio == false || esInicio == null || esInicio == "false") {
       document.body.style.display = "none";
@@ -527,15 +529,37 @@ $('#formLogin').submit(function(e){
             let fechaAcceso = accesoAnio+"-"+accesoMes+"-"+accesoDia+" "+hora;
             
             if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
-            != "admin") {
+            != "admin" && cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
+            != "tecnico" && cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
+            != "personal") {
+
+              Swal.fire({
+                icon: 'warning',
+                title: 'Error',
+                text: 'El cargo de usuario no es correcto!',
+                showCancelButton: false,
+                confirmButtonColor: '#d33',
+                confirmButtonText: `OK`,
+                cancelButtonText: "Cancelar"
+              }).then((result) => {
+                loginRedirectUrl = "../HDCS/index.php";
+              })
+
+              
+            }else{
+              
               if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
-            == "tecnico") {
-              loginRedirectUrl = "../HDCS/forms/tecnico/index.php";
-            }else{
-              loginRedirectUrl = "../HDCS/forms/personal/index.php";
-            }
-            }else{
-              loginRedirectUrl = "../HDCS/inicio/dashboard.php";
+              != "admin") {
+                if (cargoIni.toString().trim().toLocaleLowerCase().replace(/\s+/g, "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u") 
+                == "tecnico") {
+                  loginRedirectUrl = "../HDCS/forms/tecnico/index.php";
+                }else{
+                  loginRedirectUrl = "../HDCS/forms/personal/index.php";
+                }
+              }else{
+                loginRedirectUrl = "../HDCS/inicio/dashboard.php";
+              }
+
             }
             
 
@@ -1585,6 +1609,23 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
         for (let indexNotificacion = 0; indexNotificacion < notificacionesIdsArray.length; indexNotificacion++) {
           const element = notificacionesIdsArray[indexNotificacion];
 
+          let elEquipo = element.elEquipo;
+          let elNumeroSolicitud = element.idControlMantenimiento;
+          let elEstado = element.preDiagnostico;
+          let elFecha = element.fechaNotificacion;
+          let elUSuario = element.elUsuario;
+
+          $("#nuevasTable").append(
+            "<tr class='solicitud-nueva'>"
+                +"<td>"+elNumeroSolicitud+"</td>"
+                +"<td>"+elEquipo+"</td>"
+                +"<td>"+elEstado+"</td>"
+                +"<td>"+elFecha+"</td>"
+                +"<td>"+elUSuario+"</td>"
+            +"</tr>"
+          );
+          //alert(elEquipo)
+
           $(".menu-notificaciones").eq(0).append("");
 
           if(indexNotificacion == 0){
@@ -1616,7 +1657,7 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
             $(".notificacion").addClass(estadoNotificacion);
 
             $(".notificacion").click(function(){
-                $(".modal-dialog").eq(1).css("max-width", "1000px");
+                $(".modal-dialog").eq(2).css("max-width", "1000px");
                 arrayFilter = [];
 
                 for (let indexMant = 0; indexMant < mantenimientosArray.length; indexMant++) {
@@ -2328,32 +2369,7 @@ $(".logout-button").click(function(){
     }
   })
 
-  /*
-  if (currentUrl == "/HDCS/inicio/dashboard.php") {temporizador = 3000;}
-  if (currentUrl == "/HDCS/forms/equipo/index.php") {temporizador = 9000;}
-  if (currentUrl == "/HDCS/forms/asignacionEquipo/index.php") {temporizador = 9000;}
-  if (currentUrl == "/HDCS/forms/capacidad/index.php") {temporizador = 2000;}
-  if (currentUrl == "/HDCS/forms/cargo/index.php") {temporizador = 2000;}
-  if (currentUrl == "/HDCS/forms/controlGarantia/index.php") {temporizador = 3000;}
-  if (currentUrl == "/HDCS/forms/controlMantenimiento/index.php") {temporizador = 4000;}
-  if (currentUrl == "/HDCS/forms/departamento/index.php") {temporizador = 2000;}
-  if (currentUrl == "/HDCS/forms/detEquipoComputadora/index.php") {temporizador = 5000;}
-  if (currentUrl == "/HDCS/forms/empleado/index.php") {temporizador = 2000;}
-  if (currentUrl == "/HDCS/forms/empresaGarantia/index.php") {temporizador = 4000;}
-  if (currentUrl == "/HDCS/forms/equipo/index.php") {temporizador = 4000;}
-  if (currentUrl == "/HDCS/forms/estadoControlMantenimiento/index.php") {temporizador = 0;}
-  if (currentUrl == "/HDCS/forms/marca/index.php") {temporizador = 2000;}
-  if (currentUrl == "/HDCS/forms/modelo/index.php") {temporizador = 4000;}
-  if (currentUrl == "/HDCS/forms/personal/index.php") {temporizador = 4000;}
-  if (currentUrl == "/HDCS/forms/solicitudMantenimiento/index.php") {temporizador = 4000;}
-  if (currentUrl == "/HDCS/forms/tecnico/index.php") {temporizador = 4000;}
-  if (currentUrl == "/HDCS/forms/tipoDisco/index.php") {temporizador = 4000;}
-  if (currentUrl == "/HDCS/forms/tipoEquipo/index.php") {temporizador = 6000;}
-  if (currentUrl == "/HDCS/forms/tipoMantenimiento/index.php") {temporizador = 2000;}
-  if (currentUrl == "/HDCS/forms/tipoRam/index.php") {temporizador = 4000;}
-  if (currentUrl == "/HDCS/forms/usuario/index.php") {temporizador = 2000;}
-  if (currentUrl == "/HDCS/forms/velocidadRam/index.php") {temporizador = 4000;}
-  */
+  
 
   temporizador = 3000;
 

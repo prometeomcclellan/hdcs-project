@@ -21,6 +21,8 @@ session_start();
   <link rel="stylesheet" href="../../inicio/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Toastr -->
   <link rel="stylesheet" href="../../inicio/plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+  
   <!-- Theme style -->
   <link rel="stylesheet" href="../../inicio/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
@@ -643,6 +645,8 @@ if ( $detect->isMobile() ) {
 
 <!-- Toastr -->
 <script src="../../inicio/plugins/toastr/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 <!-- AdminLTE App -->
 <script src="../../inicio/dist/js/adminlte.js"></script>
 
