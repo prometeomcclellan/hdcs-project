@@ -17,6 +17,7 @@
             $idControlMantenimiento = $row["idControlMantenimiento"];
             $fechaNotificacion = $row["fechaNotificacion"];
             $estadoNotificacion = $row["estadoNotificacion"];
+            $idNotificacion = $row["idNotificacion"];
 
             $sqlSol = "SELECT * FROM solicitudmantenimiento WHERE idSolicitudMantenimiento =  '".$idControlMantenimiento."'";
             $resultSol = $conn->query($sqlSol);
@@ -67,6 +68,7 @@
 
                         $response = array(
                             'status' => 200,
+                            'idNotificacion' => $idNotificacion,
                             'idControlMantenimiento' => $idControlMantenimiento,
                             'fechaNotificacion' => $fechaNotificacion,
                             'estadoNotificacion' => $estadoNotificacion,

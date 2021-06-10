@@ -1609,6 +1609,7 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
         for (let indexNotificacion = 0; indexNotificacion < notificacionesIdsArray.length; indexNotificacion++) {
           const element = notificacionesIdsArray[indexNotificacion];
 
+          let elIdNotificacion = element.idNotificacion;
           let elEquipo = element.elEquipo;
           let elNumeroSolicitud = element.idControlMantenimiento;
           let elEstado = element.preDiagnostico;
@@ -1618,6 +1619,7 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
           $("#nuevasTable").append(
             "<tr class='solicitud-nueva'>"
                 +"<td>"+elNumeroSolicitud+"</td>"
+                +"<input type='hidden' class='noti-id' value="+elIdNotificacion+" >"
                 +"<td>"+elEquipo+"</td>"
                 +"<td>"+elEstado+"</td>"
                 +"<td>"+elFecha+"</td>"
@@ -1660,6 +1662,44 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
                 $(".modal-dialog").eq(2).css("max-width", "1000px");
                 arrayFilter = [];
 
+                urlString = currentUrl.indexOf(urlFilter);
+                if (urlString == -1) {
+                  outCallUrl = "../controlMantenimiento/index.php";
+                }else{
+                  outCallUrl = "../forms/controlMantenimiento/index.php";
+                }
+
+                $("#verNuevasBoton").click(function(){
+                  window.location.href = outCallUrl;
+                });
+                
+
+                /*
+                $(".solicitud-nueva").click(function(){
+                  let idNoti = $(this).find("input.noti-id").val();
+                  let idURead = localStorage.getItem("idDeUsuario");
+                  $(this).removeClass("unread");
+                  $(this).addClass("read");
+
+                  
+                  $.ajax({
+                    type: "post",
+                    crossOrigin: true,
+                    url: "../bd/update_notificacion_estado.php",
+                    data: {idNotificacion:idNoti, idUsuarioLee:idURead},
+                    async: false,
+                    success: function (data) {
+                      $(".notificaciones-conteo").eq(0).text(0);
+                      $(".notificaciones-conteo").css("display", "none");
+                      $(".conteo-notificaciones").eq(0).text(0);
+                    }
+                   });
+                   
+                });
+                */
+                //alert("voy")
+
+                /*
                 for (let indexMant = 0; indexMant < mantenimientosArray.length; indexMant++) {
                   const element = mantenimientosArray[indexMant];
                   let mEstado = element.estadoControlMantenimiento;
@@ -1718,6 +1758,7 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
                     }
                   }
                 }
+                */
             });
           }
         }

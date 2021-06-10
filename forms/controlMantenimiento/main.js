@@ -2,6 +2,8 @@ $(document).ready(function() {
 
   //alert(location.pathname)
 
+  let idURead; let idSolicitud;
+
 var id, opcion;
 var fila; //captura la fila, para editar o eliminar
 var diccionarioTipoMant = [];
@@ -318,11 +320,17 @@ console.log(diccionarioControlMant);
     event.preventDefault(); //evita el comportamiento de la modal, que al darle click sobre el boton abra una nueva ventana sin que uno elija.
     $("#modalSolMant").modal("hide");  
     $('#modalCREAR').css("opacity", "1"); 
+    $('#modalCREAR').css("overflow-y", "scroll");
 
+    // let idURead; let idSolicitud;
+    idURead = localStorage.getItem("idDeUsuario");
     fila = $(this).closest("tr");                  //FILA
     _idSolMant = parseInt(fila.find('td:eq(0)').text());   //ID
+    idSolicitud = parseInt(fila.find('td:eq(0)').text());
     _descripcionEquipo = fila.find('td:eq(2)').text();
     _falla = fila.find('td:eq(3)').text();
+
+    //alert(idURead)
 
     $("#select_IdSolMant").val(_idSolMant);
     //$("#codEquipo").val(_codEquipo);
@@ -417,6 +425,7 @@ console.log(diccionarioControlMant);
   $('#formControlMantC').submit(function(e){                         
     e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
 
+    //alert(idURead+", "+idSolicitud)
     _fechaControl = $.trim($('#fechaControl').val());               //------2
    // _selectEmpleado = $.trim($('#select_Empleado').val() || []);   //Se hara atrvez de la variable de sesion del usuario logeado
     _selectTipoMant = $.trim($('#select_TipoMant').val() || []);     //----3
@@ -427,6 +436,7 @@ console.log(diccionarioControlMant);
     _codEquipo = $.trim($('#codEquipo').val() || []); 
     selectControlMant = $.trim($('#select_ControlMant').text() || []);
 
+    
     //alert(_selectControlMant);
     //alert(_codEquipo);
     
@@ -442,21 +452,31 @@ console.log(diccionarioControlMant);
               alertify.success("Registro agregado satisfactoriamente.");
               tablaControlMant.ajax.reload(null, false);
               $('#modalCREAR').modal('hide');
-//ENVIAR CORREO de una solicitud de Mantenimiento
+              //ENVIAR CORREO de una solicitud de Mantenimiento
+              $.ajax({
+                type: "post",
+                crossOrigin: true,
+                url: "../../bd/update_notificacion_estado.php",
+                data: {idControlMantenimiento:idSolicitud, idUsuarioLee:idURead},
+                async: false,
+                success: function (dataNoti) {}
+              });
+
               $.ajax({
                 url: "email.php",
                 type: "POST",
                 datatype:"json",
                 data: {codEquipo:_codEquipo, observacion:_observacion, selectControlMant:_selectControlMant},
                 success: function(data) {
-                  alert(data);
+                  //alert(data);
                 }
               });
             }else{
               alertify.warning("Este solicitud mantenimiento, ya cuenta con un control mantenimiento.");
             }
           }
-      });                                             
+      }); 
+      /**/                                            
   }); 
     
 

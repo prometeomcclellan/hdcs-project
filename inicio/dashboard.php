@@ -68,8 +68,8 @@ if(session_id() == ''){
 
 .fa-print:hover {cursor:pointer;}
 
-.unread {background-color:#bebebe;}
-.read {background-color:white;}
+.unread {background-color:#bebebe !important; font-weight:bold;}
+.read {background-color:initial; font-weight:inherit;}
 .unread:hover {background-color:#bebebe;}
 .read:hover {background-color:white;}
     </style>
@@ -1038,9 +1038,10 @@ if(session_id() == ''){
 <div class="modal fade" id="nuevasModal" tabindex="-1" role="dialog" aria-labelledby="nuevasModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="background: #1a3c8a;color: white;">
         <h5 class="modal-title" id="nuevasModalLabel">Nuevas Solicitudes <span id="tipoMantenimiento"></span></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        style="color:white;">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -1077,10 +1078,14 @@ if(session_id() == ''){
 	              border-collapse: collapse;
 	              
               }
+
+              #nuevasTable > tr {
+                cursor: pointer;
+                }
               </style>
               <div class="card-body p-0">
                 <div id="table-wrapper" class="table-responsive">
-                  <table id="nuevasTabla" class="table table-striped table-hover m-0 tabla-data">
+                  <table id="nuevasTabla" class="table table-striped table-hover m-0">
                     <thead>
                     <tr>
                       <th>Número solicitud</th>
@@ -1097,14 +1102,14 @@ if(session_id() == ''){
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Ver Todas</a>
+                <a id="verNuevasBoton" href="javascript:void(0)" class="btn btn-sm btn-secondary float-right ver-nuevas">Asignar Mantenimientos</a>
               </div>
               <!-- /.card-footer -->
             </div>
             <!-- /.card -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
         <!-- button type="button" class="btn btn-primary" style="background-color: #1a3c8a;">Guardar Cambios</button -->
       </div>
     </div>

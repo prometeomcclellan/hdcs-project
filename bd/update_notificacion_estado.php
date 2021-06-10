@@ -7,8 +7,9 @@
 
     $conn = new mysqli($servername, $username, $password, $dbname);
     $idControlMantenimiento = (isset($_POST['idControlMantenimiento'])) ? $_POST['idControlMantenimiento'] : '';
+    $idUsuarioLee = (isset($_POST['idUsuarioLee'])) ? $_POST['idUsuarioLee'] : '';
 
-    $sql =  "UPDATE notificacion SET idEstadoNotificacion = 2, estadoNotificacion = 'read' WHERE idControlMantenimiento = '".$idControlMantenimiento."'";
+    $sql =  "UPDATE notificacion SET idEstadoNotificacion = 2, estadoNotificacion = 'read', idUsuarioLee = '".$idUsuarioLee."' WHERE idControlMantenimiento = '".$idControlMantenimiento."'";
     $result = $conn->query($sql);
 
     if($result){
