@@ -2550,6 +2550,21 @@ $(".logout-button").click(function(){
         evpdf.stopPropagation();
         let pdftIndex = $(".boton-pdf").index(this);
 
+        let tableWrapper = document.getElementsByClassName("print-container");
+        let thisTable = tableWrapper[pdftIndex];
+        let thisTableId = thisTable.id;
+        let tableHeight = document.getElementById(thisTableId).clientHeight;
+        
+        if (tableHeight == 300) {
+          thisTable.style.maxHeight = "auto";
+          thisTable.style.height = "auto";
+        }else{
+          
+        }
+        // 
+        //let tWrapperCount = tableWrapper.length;
+        //alert()
+
         
         //let filtradasContainer = document.getElementById("tablaMantFilt");
         let filtradasContainer = document.getElementsByClassName("tabla-filtrar");
@@ -2650,6 +2665,9 @@ $(".logout-button").click(function(){
                 }
           }else{
             html2pdf().set(opt).from(elem).toPdf().save(titulo+fechaActual+'.pdf').then(function(pdf) {
+
+              thisTable.style.maxHeight = "300px";
+              thisTable.style.height = "300px";
           
               $(".documento-title").eq(pdftIndex).css("display", "none");
               for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {

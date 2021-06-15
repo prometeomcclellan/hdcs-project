@@ -505,7 +505,7 @@ if ( $detect->isMobile() ) {
               </div>
               <!-- /.card-header -->
               <style>
-              #table-wrapper {
+              #table-wrapper, #table-wrapper-usuario {
  	              height: 300px;
 	              
 	              padding: 0px;
@@ -575,7 +575,7 @@ if ( $detect->isMobile() ) {
               </div>
               <!-- /.card-header -->
               <style>
-              #table-wrapper {
+              #table-wrapper, #table-wrapper-usuario {
  	              height: 300px;
 	              
 	              padding: 0px;
@@ -594,7 +594,7 @@ if ( $detect->isMobile() ) {
               }
               </style>
               <div class="card-body p-0">
-                <div id="table-wrapper" class="table-responsive print-container">
+                <div id="table-wrapper-usuario" class="table-responsive print-container">
             <input type="hidden" class="file-title" value="mantenimientos-por-usuario-fecha-">
             <h1 type="hidden" class="documento-title" style="display:none;">Mantenimientos Por Usuario, Fecha</h1>
                   <table id="tablaMantXUsuario" class="table table-striped table-hover m-0 tabla-data">
@@ -666,7 +666,7 @@ if ( $detect->isMobile() ) {
               </div>
               <!-- /.card-header -->
               <style>
-              #table-wrapper {
+              #table-wrapper, #table-wrapper-usuario {
  	              height: 300px;
 	              
 	              padding: 0px;
@@ -685,7 +685,7 @@ if ( $detect->isMobile() ) {
               }
               </style>
               <div class="card-body p-0">
-                <div id="table-wrapper" class="table-responsive print-container">
+                <div id="table-wrapper-pend" class="table-responsive print-container">
                 <input type="hidden" class="file-title" value="mantenimientos-pendientes-por-depto-fecha-">
                 <h1 type="hidden" class="documento-title" style="display:none;">Mantenimientos Pendientes Por Depto Fecha</h1>
                   <table id="tablaMantPend" class="table table-striped table-hover m-0 tabla-data">
@@ -894,7 +894,7 @@ if ( $detect->isMobile() ) {
               <!-- /.card-header -->
               <style>
 
-              #table-wrapper {
+              #table-wrapper, #table-wrapper-usuario {
  	              height: 300px;
 	              
 	              padding: 0px;
@@ -913,7 +913,7 @@ if ( $detect->isMobile() ) {
               }
               </style>
               <div class="card-body p-0">
-                <div id="table-wrapper" class="table-responsive">
+                <div id="table-wrapper-quick" class="table-responsive">
                   <table class="table table-striped table-hover m-0">
                     <thead>
                     <tr>
@@ -974,7 +974,7 @@ if ( $detect->isMobile() ) {
               <!-- /.card-header -->
               <style>
 
-              #table-wrapper {
+              #table-wrapper, #table-wrapper-usuario {
  	              height: 300px;
 	              
 	              padding: 0px;
@@ -993,7 +993,7 @@ if ( $detect->isMobile() ) {
               }
               </style>
               <div class="card-body p-0">
-                <div id="wrapperRep" id="table-wrapper" class="table-responsive">
+                <div id="wrapperRep" id="table-wrapper-rep" class="table-responsive">
                   <table class="table table-striped table-hover m-0">
                     <thead>
                     <tr>
