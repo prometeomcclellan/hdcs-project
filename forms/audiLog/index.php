@@ -100,7 +100,7 @@ if ( $detect->isMobile() ) {
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right menu-notificaciones">
           <span class="dropdown-item dropdown-header"> <span class="conteo-notificaciones"></span> Notificaciones</span>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item notificacion" data-toggle="modal" data-target="#quickReportModal">
+          <a href="#" class="dropdown-item notificacion" data-toggle="modal" data-target="#nuevasModal">
             <i class="fas fa-file mr-2"></i> <span class="conteo-diagnosticados"></span> nuevas órdenes
             <span class="float-right text-muted text-sm"> <span class="tiempo-diagnosticados">0 días</span></span>
           </a>
@@ -485,6 +485,88 @@ if ( $detect->isMobile() ) {
         </footer>
     </div>
 </footer>
+
+<!--Modal nuevas solicitudes-->
+<div class="modal fade" id="nuevasModal" tabindex="-1" role="dialog" aria-labelledby="nuevasModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background: #1a3c8a;color: white;">
+        <h5 class="modal-title" id="nuevasModalLabel">Nuevas Solicitudes <span id="tipoMantenimiento"></span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        style="color:white;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- TABLE: LATEST ORDERS -->
+        <div class="card">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Solicitudes Filtradas</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <style>
+
+              #table-wrapper {
+ 	              height: 300px;
+	              
+	              padding: 0px;
+	              margin: 0px auto 0px auto;
+	              overflow: auto;
+	              
+              }
+
+              table {
+	              width: 100%;
+                max-height: 300px;
+	              padding: 15px;
+	              text-align: left;
+	              border-collapse: collapse;
+	              
+              }
+
+              #nuevasTable > tr {
+                cursor: pointer;
+                }
+              </style>
+              <div class="card-body p-0">
+                <div id="table-wrapper" class="table-responsive">
+                  <table id="nuevasTabla" class="table table-striped table-hover m-0">
+                    <thead>
+                    <tr>
+                      <th>Número solicitud</th>
+                      <th>Equipo</th>
+                      <th>Estado</th>
+                      <th>Fecha solicitud</th>
+                      <th>Usuario creador</th>
+                    </tr>
+                    </thead>
+                    <tbody id="nuevasTable"></tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <a id="verNuevasBoton" href="javascript:void(0)" class="btn btn-sm btn-secondary float-right ver-nuevas">Asignar Mantenimientos</a>
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        <!-- button type="button" class="btn btn-primary" style="background-color: #1a3c8a;">Guardar Cambios</button -->
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->

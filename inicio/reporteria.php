@@ -527,7 +527,7 @@ if ( $detect->isMobile() ) {
                 <div id="table-wrapper" class="table-responsive print-container">
             <input type="hidden" class="file-title" value="mantenimientos-filtrados-fecha-">
             <h1 type="hidden" class="documento-title" style="display:none;">Mantenimientos Filtrados Por Depto, Fecha</h1>
-                  <table id="tablaMantFilt" class="table table-striped table-hover m-0 tabla-data">
+                  <table id="tablaMantFilt" class="table table-striped table-hover m-0 tabla-data tabla-filtrar">
                     <thead>
                     <tr>
                     <th>Número Orden</th>

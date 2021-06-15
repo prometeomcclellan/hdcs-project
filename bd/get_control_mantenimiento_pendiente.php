@@ -84,7 +84,7 @@
                                                             'departamentoP' => $departamentoP,
                                                             'nombre' => $nombre
                                                         );
-                                                       
+                                                        array_push($data, $response);
                                                     }else{
                                                         
                                                     }
@@ -103,7 +103,7 @@
                 }
             } 
             }
-            array_push($data, $response); 
+             
         }
         
     }

@@ -3,6 +3,7 @@
 	$objeto = new Conexion();
 	$conexion = $objeto->Conectar();
 	$data = array();
+    $response = array();
     require_once('conn.php');
 
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -39,6 +40,79 @@
             WHERE idDepartamento = '".$idDepartamento."'";
             $resultDepto = $conn->query($sqlDept);
 
+            while($rowDepto = $resultDepto->fetch_assoc()) {
+                $departamentoP = $rowDepto["departamento"];
+            }
+
+            $sqlSolicitud = "SELECT * FROM solicitudmantenimiento
+            WHERE idSolicitudMantenimiento = '".$idSolicitudMantenimiento."'";
+            $resultSolicitud = $conn->query($sqlSolicitud);
+
+            while($rowSoli = $resultSolicitud->fetch_assoc()) {
+                $fechaSolicitud = $rowSoli["fechaSolicitudMantenimiento"];
+                $equipoCodSol = $rowSoli["codEquipo"];
+            }
+
+            $sqlEquipoSol = "SELECT * FROM equipo WHERE codEquipo =  '".$equipoCodSol."'";
+                    $resultEquipoSol = $conn->query($sqlEquipoSol);
+                    while($rowEquipoSol = $resultEquipoSol->fetch_assoc()) {
+                        $elEquipoIdTipo = $rowEquipoSol["idTipoEquipo"];
+                        $elEquipoIdModelo = $rowEquipoSol["idModelo"];
+                        $elEquipoDescripcion = $rowEquipoSol["descripcionEquipo"];
+
+                        $sqlEquipoTipo = "SELECT * FROM tipoequipo WHERE idTipoEquipo =  '".$elEquipoIdTipo."'";
+                        $resultEquipoTipo = $conn->query($sqlEquipoTipo);
+                        $rowEquipoTipo = $resultEquipoTipo->fetch_assoc();
+                        $elEquipoTipo = $rowEquipoTipo["tipoEquipo"];
+
+                        $sqlEquipoIdModelo = "SELECT * FROM modelo WHERE idModelo =  '".$elEquipoIdModelo."'";
+                        $resultEquipoModelo = $conn->query($sqlEquipoIdModelo);
+                        $rowEquipoModelo = $resultEquipoModelo->fetch_assoc();
+                        $elEquipoModelo = $rowEquipoModelo["modelo"];
+                        $elEquipoIdMarca = $rowEquipoModelo["idMarca"];
+
+                        $sqlEquipoMarca = "SELECT * FROM marca WHERE idMarca =  '".$elEquipoIdMarca."'";
+                        $resultEquipoMarca = $conn->query($sqlEquipoMarca);
+                        $rowEquipoMarca = $resultEquipoMarca->fetch_assoc();
+                        $elEquipoMarca = $rowEquipoMarca["marca"];
+                        $elEquipo = $elEquipoTipo." ".$elEquipoMarca." ".$elEquipoModelo;
+
+                        $sqlEstado = "SELECT * FROM estadocontrolmantenimiento
+                        WHERE idEstadoControlMantenimiento = '".$idEstadoControlMantenimiento."'";
+                        $resultEstado = $conn->query($sqlEstado);
+
+                        while($rowStat = $resultEstado->fetch_assoc()) {
+                            $estadoControlMantenimiento = $rowStat["estadoControlMantenimiento"];
+                        }
+
+
+                        $response = array(
+                            'status' => 200,
+                            'fechaControlMantenimiento' => $fechaControlMantenimiento,
+                            'fechaSolicitudMantenimiento' => $fechaSolicitud,
+                            'idUsuario' => $idUsuario,
+                            'idTipoMantenimiento' => $idTipoMantenimiento,
+                            'idControlMantenimiento' => $idControlMantenimiento,
+                            'idSolicitudMantenimiento' => $idSolicitudMantenimiento,
+                            'observacion' => $observacion,
+                            'estadoControlMantenimiento' => $estadoControlMantenimiento,
+                            'idDepartamento' => $idDepartamento,
+                            'elEquipoIdTipo' => $elEquipoIdTipo,
+                            'elEquipoIdModelo' => $elEquipoIdModelo,
+                            'elEquipoDescripcion' => $elEquipoDescripcion,
+                            'elEquipo' => $elEquipo,
+                            'departamentoP' => $departamentoP
+                            
+                        );
+                
+                        array_push($data, $response);
+                    }  
+
+                
+            
+
+            
+/*
             while($rowDepto = $resultDepto->fetch_assoc()) {
                 $departamentoP = $rowDepto["departamento"];
             
@@ -96,7 +170,7 @@
                                                             'departamentoP' => $departamentoP,
                                                             'nombre' => $nombre
                                                         );
-                                                       
+                                                        array_push($data, $response);
                                                     }else{
                                                         
                                                     }
@@ -115,7 +189,8 @@
                 }
             } 
             }
-            array_push($data, $response); 
+             */
         }
+        
     }
     echo json_encode($data, JSON_UNESCAPED_UNICODE);

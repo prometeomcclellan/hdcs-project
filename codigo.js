@@ -106,6 +106,7 @@ $(document).ready(function() {
   var touchduration = 500;
 
   let esTabla = false;
+  let esFiltrada = false;
 
   
 
@@ -719,6 +720,7 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
           arrayFiltered = JSON.parse(data);
           console.log("data filtrada");
           console.dir(arrayFiltered);
+          $(".xlsx").eq(0).remove();
           let sortedPeriodArray = mantenimientosPendientesArray.sort();
           for (let indexFilt = 0; indexFilt < arrayFiltered.length; indexFilt++) {
             const elementFiltered = arrayFiltered[indexFilt];
@@ -726,7 +728,7 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
             if (estadoFiltrado == 200) {
               $(".alerta-no-data").eq(0).fadeOut("slow");
               let oNumberFilt = elementFiltered.idControlMantenimiento+"-"+elementFiltered.idSolicitudMantenimiento;
-              let oEquipmentFilt = elementFiltered.descripcionEquipo;
+              let oEquipmentFilt = elementFiltered.elEquipo;
               let oDeptoFilt = elementFiltered.departamentoP;
               let oStatusFilt = elementFiltered.estadoControlMantenimiento;
               let oSDateFilt = elementFiltered.fechaSolicitudMantenimiento;
@@ -767,7 +769,49 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
             }
   
             if (indexFilt == (arrayFiltered.length-1)) {
+              let colCountN = document.getElementById("tablaMantFilt").rows[0].cells.length;
+
+              TableExport(document.getElementById("tablaMantFilt"), {
+        
+                headers: true,
+                footers: true,
+                formats: ["xlsx"],
+                filename: titulo+fechaActual,
+                bootstrap: false,
+                exportButtons: true,
+                position: "top",
+                ignoreRows: null,
+                ignoreCols: [colCountN-1],
+                trimWhitespace: true,
+                RTL: false,
+                htmlContent: true,
+                buttonContent: 'Xlsx',
+                sheetname: "Reporte "+fechaActual
+              });
               $("#page_loader").fadeOut("slow");
+
+              let botonesXlsxN = document.getElementsByClassName("xlsx");
+    
+              
+                $(".xlsx").eq(0).removeClass("button-default");
+                $(".xlsx").eq(0).addClass("btn");
+                $(".xlsx").eq(0).addClass("btn-success");
+                $(".xlsx").eq(0).addClass("boton-accion");
+                $(".xlsx").eq(0).addClass("boton-excel");
+                $(".xlsx").eq(0).css("margin-right", "6px");
+                $(".xlsx").eq(0).css("width", "110px");
+                $(".xlsx").eq(0).text("");
+                $(".xlsx").eq(0).append(" <span class='boton-excel-label'>Excel <i class='fas fa-file-excel'></i></span>");
+
+                $(".boton-excel-label").click(function(evloco){
+                  let indexXl = $(".boton-excel-label").index(this);
+                  evloco.preventDefault();
+                  evloco.stopPropagation();
+                  $(".xlsx").eq(indexXl).click();
+                });
+
+              
+
             }
           }
           
@@ -812,7 +856,7 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
           if (estadoFiltrado == 200) {
             $(".alerta-no-data").eq(0).fadeOut("slow");
             let oNumberFilt = elementFiltered.idControlMantenimiento+"-"+elementFiltered.idSolicitudMantenimiento;
-            let oEquipmentFilt = elementFiltered.descripcionEquipo;
+            let oEquipmentFilt = elementFiltered.elEquipo;
             let oDeptoFilt = elementFiltered.departamentoP;
             let oStatusFilt = elementFiltered.estadoControlMantenimiento;
             let oSDateFilt = elementFiltered.fechaSolicitudMantenimiento;
@@ -1658,9 +1702,25 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
             $(".tiempo-diagnosticados").eq(0).text(tiempoNotificacion);
             $(".notificacion").addClass(estadoNotificacion);
 
+
+
             $(".notificacion").click(function(){
-                $(".modal-dialog").eq(2).css("max-width", "1000px");
+              let notiContainer = document.getElementsByClassName("modal-dialog");
+              let indexNoti = $(".notificacion").index(this);
+              //alert(indexNoti)
+
+              urlString = currentUrl.indexOf(urlFilter);
+                if (urlString == -1) {
+                  $("#nuevasModal").find("div.modal-dialog").css("top", "0px");
+                  $("#nuevasModal").find("div.modal-dialog").css("max-width", "1000px");
+                }else{
+                  $("#nuevasModal").find("div.modal-dialog").css("top", "0px");
+                  $("#nuevasModal").find("div.modal-dialog").css("max-width", "1000px");
+                }
+
+                
                 arrayFilter = [];
+                //alert("Clicked")
 
                 urlString = currentUrl.indexOf(urlFilter);
                 if (urlString == -1) {
@@ -1669,96 +1729,10 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
                   outCallUrl = "../forms/controlMantenimiento/index.php";
                 }
 
-                $("#verNuevasBoton").click(function(){
+                $(".ver-nuevas").click(function(){
                   window.location.href = outCallUrl;
                 });
-                
-
-                /*
-                $(".solicitud-nueva").click(function(){
-                  let idNoti = $(this).find("input.noti-id").val();
-                  let idURead = localStorage.getItem("idDeUsuario");
-                  $(this).removeClass("unread");
-                  $(this).addClass("read");
-
-                  
-                  $.ajax({
-                    type: "post",
-                    crossOrigin: true,
-                    url: "../bd/update_notificacion_estado.php",
-                    data: {idNotificacion:idNoti, idUsuarioLee:idURead},
-                    async: false,
-                    success: function (data) {
-                      $(".notificaciones-conteo").eq(0).text(0);
-                      $(".notificaciones-conteo").css("display", "none");
-                      $(".conteo-notificaciones").eq(0).text(0);
-                    }
-                   });
-                   
-                });
-                */
-                //alert("voy")
-
-                /*
-                for (let indexMant = 0; indexMant < mantenimientosArray.length; indexMant++) {
-                  const element = mantenimientosArray[indexMant];
-                  let mEstado = element.estadoControlMantenimiento;
-                  let mId = element.idControlMantenimiento;
-
-                  for (let indexNotifi = 0; indexNotifi < notificacionesIdsArray.length; indexNotifi++) {
-                    const elementNotifi = notificacionesIdsArray[indexNotifi];
-                    let estadoNotifi = elementNotifi.estadoNotificacion;
-                    let idNotifi = elementNotifi.idControlMantenimiento;
-
-                    if (mEstado.toString().trim() == "Diagnosticado" && (mId == idNotifi)) {
-                      arrayFilter.push(element);
-                    }
-                  }
-
-                  if (indexMant == (mantenimientosArray.length - 1)) {
-                    console.dir(arrayFilter);
-                    $("#quickReportsTable").empty();
-                    for (let indexFilt = 0; indexFilt < arrayFilter.length; indexFilt++) {
-                      const elementFilt = arrayFilter[indexFilt];
-                      let mEstadoFilt = elementFilt.estadoControlMantenimiento;
-                      let mNumberfilt = elementFilt.idControlMantenimiento+"-"+elementFilt.idSolicitudMantenimiento;
-                      let mEquipmentfilt = elementFilt.descripcionEquipo;
-                      let mSDateFilt = elementFilt.fechaSolicitudMantenimiento;
-                      let mDateFilt = elementFilt.fechaControlMantenimiento;
-                      let mClassFilt = "danger";
-
-                      $("#quickReportsTable").append(
-                        "<tr class='maintinance'>"
-                        +"<td>"+mNumberfilt+"</td>"
-                        +"<td>"+mEquipmentfilt+"</td>"
-                        +"<td><span class='badge badge-"+mClassFilt+"' style='width:120px;'>"+mEstadoFilt+"</span></td>"
-                        +"<td>"
-                          +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+mSDateFilt+"</div>"
-                        +"</td>"
-                        +"<td>"
-                          +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+mDateFilt+"</div>"
-                        +"</td>"
-                       +"</tr>");
-
-                       $(".notificacion").removeClass(estadoNotificacion);
-                       $(".notificacion").addClass("read");
-                       // ajax a notificacion para cambiar el estado de esa notificacion a read 2 pasando el idControlMantenimiento
-                       $.ajax({
-                        type: "post",
-                        crossOrigin: true,
-                        url: "../bd/update_notificacion_estado.php",
-                        data: {idControlMantenimiento:elementFilt.idControlMantenimiento},
-                        async: false,
-                        success: function (data) {
-                          $(".notificaciones-conteo").eq(0).text(0);
-                          $(".notificaciones-conteo").css("display", "none");
-                          $(".conteo-notificaciones").eq(0).text(0);
-                        }
-                       });
-                    }
-                  }
-                }
-                */
+               
             });
           }
         }
@@ -2576,6 +2550,16 @@ $(".logout-button").click(function(){
         evpdf.stopPropagation();
         let pdftIndex = $(".boton-pdf").index(this);
 
+        
+        //let filtradasContainer = document.getElementById("tablaMantFilt");
+        let filtradasContainer = document.getElementsByClassName("tabla-filtrar");
+
+        if (filtradasContainer.length == null || filtradasContainer.length == 0) {
+          esFiltrada = false;
+        }else{
+          esFiltrada = true;
+        }
+
         var tablaPdf = document.getElementsByClassName('tabla-data');
         const elementPdf = tablaPdf[pdftIndex];
         let myTablePdfId = elementPdf.id;
@@ -2640,6 +2624,58 @@ $(".logout-button").click(function(){
           jsPDF:        { unit: 'in', format: 'legal', orientation: 'landscape' }
         };
     
+        if (esFiltrada == true) {
+          
+          if ($("#mantenimientosFiltradosFecha").find("tr").length == 0) {
+            $("#page_loader").fadeOut("slow");
+            $(".documento-title").eq(pdftIndex).css("display", "none");
+              for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {
+                const elementBA = botonesAccion[indexBA];
+                elementBA.style.display = "inherit";
+              }
+    
+              for (let indexLC = 0; indexLC < lastContiner.length; indexLC++) {
+              const elementLC = lastContiner[indexLC];
+              elementLC.style.visibility = "inherit";
+              elementLC.style.width = "initial";
+            }
+              
+              for (let indexB = 0; indexB < botonesAccion.length; indexB++) {
+                const element = botonesAccion[indexB];
+              }
+        
+              $('div.dataTables_scrollBody').height(300);
+              if(currentUrl == "/HDCS/inicio/dashboard.php") {
+                document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
+                }
+          }else{
+            html2pdf().set(opt).from(elem).toPdf().save(titulo+fechaActual+'.pdf').then(function(pdf) {
+          
+              $(".documento-title").eq(pdftIndex).css("display", "none");
+              for (let indexBA = 0; indexBA < botonesAccion.length; indexBA++) {
+                const elementBA = botonesAccion[indexBA];
+                elementBA.style.display = "inherit";
+              }
+    
+              for (let indexLC = 0; indexLC < lastContiner.length; indexLC++) {
+              const elementLC = lastContiner[indexLC];
+              elementLC.style.visibility = "inherit";
+              elementLC.style.width = "initial";
+            }
+              
+              for (let indexB = 0; indexB < botonesAccion.length; indexB++) {
+                const element = botonesAccion[indexB];
+              }
+        
+              $('div.dataTables_scrollBody').height(300);
+              if(currentUrl == "/HDCS/inicio/dashboard.php") {
+                document.getElementById('repSegEst').style.height = mantPorDepHeight+"px";
+                }
+                $("#page_loader").fadeOut("slow");
+            });
+          }
+        }else{
+          
         
         html2pdf().set(opt).from(elem).toPdf().save(titulo+fechaActual+'.pdf').then(function(pdf) {
           
@@ -2665,6 +2701,7 @@ $(".logout-button").click(function(){
             }
             $("#page_loader").fadeOut("slow");
         });
+        }
       });
     
       $(".all-orders-button").click(function(){
