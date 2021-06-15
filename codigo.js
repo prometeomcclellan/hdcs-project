@@ -934,7 +934,7 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
 
         const elementPend = sortedPArray[indexPend];
         let oNumberP = elementPend.idControlMantenimiento+"-"+elementPend.idSolicitudMantenimiento;
-        let oEquipmentP = elementPend.descripcionEquipo;
+        let oEquipmentP = elementPend.elEquipo;
         let oDeptoP = elementPend.departamentoP;
         let oStatusP = elementPend.estadoControlMantenimiento;
         let oSDateP = elementPend.fechaSolicitudMantenimiento;
@@ -2558,15 +2558,8 @@ $(".logout-button").click(function(){
         if (tableHeight == 300) {
           thisTable.style.maxHeight = "auto";
           thisTable.style.height = "auto";
-        }else{
-          
-        }
-        // 
-        //let tWrapperCount = tableWrapper.length;
-        //alert()
+        }else{}
 
-        
-        //let filtradasContainer = document.getElementById("tablaMantFilt");
         let filtradasContainer = document.getElementsByClassName("tabla-filtrar");
 
         if (filtradasContainer.length == null || filtradasContainer.length == 0) {
