@@ -8,7 +8,9 @@ include_once 'conexion.php';
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    $idDepto = (isset($_POST['deptoIdPie'])) ? $_POST['deptoIdPie'] : '';
+    //$idDepto = (isset($_POST['deptoIdPie'])) ? $_POST['deptoIdPie'] : '';
+
+    $idDepto = 9;
     $idDepartamentoN = 0;
     $idEstadoControlMantenimiento = "";
     $row_cnt = 0;
@@ -30,8 +32,6 @@ include_once 'conexion.php';
             $idUsuario = $row["idUsuario"];
             $idEstadoControlMantenimiento = $row["idEstadoControlMantenimiento"];
 
-            
-
             $sqlEmpleado = "SELECT * FROM usuario WHERE idUsuario   = '".$idUsuario."'";
             $resultEmpleado = $conn->query($sqlEmpleado);
             
@@ -50,6 +50,13 @@ include_once 'conexion.php';
                         $idDepartamentoN = intval($idDepartamento);
                         if ((intval($idDepartamentoN)-intval($idDepto)) == 0) {
                             $row_cnt++;
+                            $response = array(
+                                'status' => 200,
+                                'idEstadoControlMantenimiento' => $idEstadoControlMantenimiento,
+                                'idDepartamento' => $idDepartamentoN,
+                                'row_cnt' => $row_cnt
+                            );
+                            array_push($data, $response);
                         }
                         
                     }
@@ -57,13 +64,7 @@ include_once 'conexion.php';
             }
         }
 
-        $response = array(
-            'status' => 200,
-            'idEstadoControlMantenimiento' => $idEstadoControlMantenimiento,
-            'idDepartamento' => $idDepartamentoN,
-            'row_cnt' => $row_cnt
-        );
-        array_push($data, $response);
+        
         
     }
 

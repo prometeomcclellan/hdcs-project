@@ -4,9 +4,6 @@
 	$conexion = $objeto->Conectar();
 	$data = array();
 
-	//print_r($conexion);   probamos si esta bien la conexión con la base de datos.
-
-
     $consulta = "CALL sp_mostrarControlMantenimiento()";        
     $resultado = $conexion->prepare($consulta);
     $resultado->execute();
@@ -24,30 +21,24 @@
         $estadoControlMantenimiento = $dat["estadoControlMantenimiento"];
 	      $nombreEmpleado = $dat["empleado"];
         $tituloControlmantenimiento = $dat["tituloControlmantenimiento"];
-        //$idDepartamento = $dat["idDepartamento"]; tituloControlmantenimiento
-	    //$estado = intval($estado);
-
-		$response = array(
-			'status' => 200,
-			'idControlMantenimiento' => $idControlMantenimiento,
-			'idSolicitudMantenimiento' => $idSolicitudMantenimiento,
-            'fechaControlMantenimiento' => $fechaControlMantenimiento,
-            'codEquipo' => $codEquipo,
-            'descripcionEquipo' => $descripcionEquipo,
-            'tipoMantenimiento' => $tipoMantenimiento,
-            'fechaSolicitudMantenimiento' => $fechaSolicitudMantenimiento,
-            'observacion' => $observacion,
-            'estadoControlMantenimiento' => $estadoControlMantenimiento,
-            'tituloControlmantenimiento' => $tituloControlmantenimiento,
-            'nombreEmpleado' => $nombreEmpleado
-            //'idDepartamento' => $idDepartamento
+        $response = array(
+          'status' => 200,
+          'idControlMantenimiento' => $idControlMantenimiento,
+          'idSolicitudMantenimiento' => $idSolicitudMantenimiento,
+          'fechaControlMantenimiento' => $fechaControlMantenimiento,
+          'codEquipo' => $codEquipo,
+          'descripcionEquipo' => $descripcionEquipo,
+          'tipoMantenimiento' => $tipoMantenimiento,
+          'fechaSolicitudMantenimiento' => $fechaSolicitudMantenimiento,
+          'observacion' => $observacion,
+          'estadoControlMantenimiento' => $estadoControlMantenimiento,
+          'tituloControlmantenimiento' => $tituloControlmantenimiento,
+          'nombreEmpleado' => $nombreEmpleado
 		);
 
 		array_push($data, $response);
     } 
 
-
-    //$dataX =null;
     if($resultado->rowCount() > 0){
     }else{
 		$response = array(
@@ -56,7 +47,6 @@
 
 		array_push($data, $response);
 	}
-/**/
-//print json_encode($data);
+
 echo json_encode($data, JSON_UNESCAPED_UNICODE);
 $conexion=null;

@@ -17,6 +17,7 @@ $(document).ready(function() {
 
   let mantenimientosArray = [];
   let mantenimientosArrayX = [];
+  let imagenesArray = [];
   let mantenimientosXUsuarioArray = [];
   let mantenimientosPendientesArray = [];
   let userCountArray = [];
@@ -1311,7 +1312,6 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
             $("#finishPercent").text(porcentajeF+"%");
           }
 
-          
           $("#mantenimientosTable").append(
             "<tr class='maintinance'>"
               +"<td>"+oNumber+"</td>"+"<input type='hidden' value="+element.idControlMantenimiento+" class='order-number'>"
@@ -1334,11 +1334,129 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
           mevt.preventDefault();
           mevt.stopPropagation();
           let orderIndex = $(".maintinance").index(this);
+          let orderDiagnose = $(this).find("span.badge").text();
+          let ordenNumero = $(this).find("input.order-number").val();
+          //alert("numero de orden "+ordenNumero)
+
+          elStatusClass = document.getElementById("status_class");
+              elStatusIcon = document.getElementById("status_icon");
+              elStatusClass.className = '';
+              elStatusIcon.className = '';
+              $("#status_title").text("");
+
+              let dClass = "bg-warning";
+              let dIcon = "fas fa-cog";
+              let finalizarContainer = document.getElementsByClassName("finalizar-mantenimiento");
+              let finalizarCount = finalizarContainer.length;
+              if(orderDiagnose == "Diagnosticado"){
+                if (finalizarCount == 0) {
+                  //$("#order_body").append("<a href='#' class='card-link finalizar-mantenimiento boton-edicion'>Finalizar</a>");
+                }
+                
+                dClass = "info-box-icon elevation-1 bg-danger";
+                dIcon = "fas fa-hourglass-start";
+              }
+              if(orderDiagnose == "En reparación"){
+                if (finalizarCount == 0) {
+                  //$("#order_body").append("<a href='#' class='card-link finalizar-mantenimiento boton-edicion'>Finalizar</a>");
+                }
+                
+                dClass = "info-box-icon elevation-1 bg-warning";
+                dIcon = "fas fa-cog"
+              }
+              if(orderDiagnose == "Finalizado"){
+                if (finalizarCount > 0) {
+                  //$(".boton-edicion").eq(1).remove();
+                }
+                //$(".boton-edicion").eq(1).remove();
+                dClass = "info-box-icon elevation-1 bg-success";
+                dIcon = "fas fa-thumbs-up";
+              }
+
+              $("#status_class").addClass(dClass);
+              $("#status_icon").addClass(dIcon);
+              $("#status_title").text(orderDiagnose);
+
+              $.ajax({
+                type: "post",
+                crossOrigin: true,
+                url: "../bd/get_mantenimiento_imagenes_por_idcontrol.php",
+                data: {ordenNumero:ordenNumero},
+                async: false,
+                success: function (data) {
+                  imagenesArray = JSON.parse(data);
+                  console.log("imágenes del control");
+                  console.dir(imagenesArray);
+
+                  $("#carouselContainer").empty();
+                  $("#thumbnailsContainer").empty();
+                  
+                  if (imagenesArray.length > 0) {
+                    for (let indexT = 0; indexT < imagenesArray.length; indexT++) {
+                      const elementT = imagenesArray[indexT];
+                      let thumbUrl = elementT.fotoUrl;
+                      let thumbId = elementT.fotoId;
+  
+                      $("#thumbnailsContainer").append(
+                        "<li><a href='#slide"+(indexT+1)+"'><img src="+thumbUrl+" class='thumb-nail'><span class='id-de-foto' style='display:none;'>"+thumbId+"</span></a></li>");
+  
+                      if (indexT == 0) {
+                        $("#carouselContainer").append(
+                        "<div class='carousel-item active'>"
+                        +"<img class='d-block w-100' style='background-image:url("+thumbUrl+");background-size:cover;background-position:center;width:60px; height:240px;' >"
+                        +"<span class='thumb-url' style='display:none;'>"+thumbUrl+"</span>"
+                        +"<span class='id-de-foto' style='display:none;'>"+thumbId+"</span>"
+                        +"<input type='hidden' value="+indexT+" class='thumb-index'>"
+                        +"</div>");
+                      }else{
+                        $("#carouselContainer").append(
+                        "<div class='carousel-item'>"
+                        +"<img class='d-block w-100' style='background-image:url("+thumbUrl+");background-size:cover;background-position:center;width:60px; height:240px;' >"
+                        +"<span class='thumb-url' style='display:none;'>"+thumbUrl+"</span>"
+                        +"<span class='id-de-foto' style='display:none;'>"+thumbId+"</span>"
+                        +"<input type='hidden' value="+indexT+" class='thumb-index'>"
+                        +"</div>");
+                      }
+  
+                      if (indexT == (imagenesArray.length-1)) {
+                        $(".thumb-nail").click(function(){
+                          $(".carousel-item").eq(thumbIndex).removeClass(className);
+                          indexThumb = $(".thumb-nail").index(this);
+                          $(".carousel-item").eq(indexThumb).addClass(className);
+                          thumbElements = document.getElementsByClassName("carousel-item");
+                          thumbElement = thumbElements[indexThumb];
+                          if (indexThumb==(imagenesArray.length-1)) {
+                            thumbIndex = 0;
+                          }else{
+                            thumbIndex = indexThumb;
+                          }
+                        })
+  
+                      }
+                      
+                    }
+            
+                  }else{
+                    fotoIndex = 0;
+                    $("#thumbnailsContainer").append("<li><a href='#slide1'><img src='dist/img/HDCS-imagotipo.png' class='thumb-nail'></a></li>");
+                    $("#carouselContainer").append(
+                      "<div class='carousel-item active'>"
+                      +"<img class='d-block w-100' style='background-image:url(dist/img/HDCS-imagotipo.png);background-size:cover;background-position:center;width:60px; height:240px;' >"
+                      +"<input type='hidden' value='0' class='thumb-index'>"
+                      +"</div>");
+                  }
+
+                  
+                }
+              })
+
+              
+
           $('.carousel').carousel('pause');
           $('#modalEquipoDetalle').modal('show');
 
           let orderNumber = $(".order-number").eq(orderIndex).val();
-          //alert(orderNumber)
+          
           localStorage.setItem("idDeMantenimiento", orderNumber);
 
           let orderDescription = $(".order-description").eq(orderIndex).text();
@@ -1350,8 +1468,9 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
           let ordersContainer = document.getElementsByClassName("order-"+orderNumber);
           let ordersIdContainer = document.getElementsByClassName("id-foto-"+orderNumber);
 
-          $("#carouselContainer").empty();
-          $("#thumbnailsContainer").empty();
+          //alert(ordersContainer.length)
+
+          
           $("#manDetalles").empty();
           
           $("#manTitulo").text(orderTitulo);
@@ -1359,108 +1478,7 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
           //$("#manDetalles").append("<li class='list-group-item'>Estado : "+orderStatus+"</li>");
           $("#manDetalles").append("<li class='list-group-item'>Fecha Solicitud : "+orderSDate+"</li>");
           $("#manDetalles").append("<li class='list-group-item'>Fecha Mantenimiento : "+orderODate+"</li>");
-          
-          if (ordersContainer.length > 0) {
-            
-            
-           for (let indexT = 0; indexT < ordersContainer.length; indexT++) {
-            const elementT = ordersContainer[indexT];
-            const idElement = ordersIdContainer[indexT];
-            let thumbUrl = elementT.value;
-            let thumbId = idElement.innerHTML;
-            //alert(thumbUrl+", "+thumbId)
-            fotoIndex = ordersContainer.length+1;
 
-            $("#thumbnailsContainer").append(
-              "<li><a href='#slide"+(indexT+1)+"'><img src="+thumbUrl+" class='thumb-nail'><span class='id-de-foto' style='display:none;'>"+thumbId+"</span></a></li>");
-
-            if (indexT == 0) {
-              $("#carouselContainer").append(
-              "<div class='carousel-item active'>"
-              +"<img class='d-block w-100' style='background-image:url("+thumbUrl+");background-size:cover;background-position:center;width:60px; height:240px;' >"
-              +"<span class='thumb-url' style='display:none;'>"+thumbUrl+"</span>"
-              +"<span class='id-de-foto' style='display:none;'>"+thumbId+"</span>"
-              +"<input type='hidden' value="+indexT+" class='thumb-index'>"
-              +"</div>");
-            }else{
-              $("#carouselContainer").append(
-              "<div class='carousel-item'>"
-              +"<img class='d-block w-100' style='background-image:url("+thumbUrl+");background-size:cover;background-position:center;width:60px; height:240px;' >"
-              +"<span class='thumb-url' style='display:none;'>"+thumbUrl+"</span>"
-              +"<span class='id-de-foto' style='display:none;'>"+thumbId+"</span>"
-              +"<input type='hidden' value="+indexT+" class='thumb-index'>"
-              +"</div>");
-            }
-
-            if (indexT == (ordersContainer.length-1)) {
-
-              elStatusClass = document.getElementById("status_class");
-              elStatusIcon = document.getElementById("status_icon");
-              elStatusClass.className = '';
-              elStatusIcon.className = '';
-              $("#status_title").text("");
-
-              let dClass = "bg-warning";
-              let dIcon = "fas fa-cog";
-              let finalizarContainer = document.getElementsByClassName("finalizar-mantenimiento");
-              let finalizarCount = finalizarContainer.length;
-              if(orderStatus == "Diagnosticado"){
-                if (finalizarCount == 0) {
-                  //$("#order_body").append("<a href='#' class='card-link finalizar-mantenimiento boton-edicion'>Finalizar</a>");
-                }
-                
-                dClass = "info-box-icon elevation-1 bg-danger";
-                dIcon = "fas fa-hourglass-start";
-              }
-              if(orderStatus == "En reparación"){
-                if (finalizarCount == 0) {
-                  //$("#order_body").append("<a href='#' class='card-link finalizar-mantenimiento boton-edicion'>Finalizar</a>");
-                }
-                
-                dClass = "info-box-icon elevation-1 bg-warning";
-                dIcon = "fas fa-cog"
-              }
-              if(orderStatus == "Finalizado"){
-                if (finalizarCount > 0) {
-                  //$(".boton-edicion").eq(1).remove();
-                }
-                //$(".boton-edicion").eq(1).remove();
-                dClass = "info-box-icon elevation-1 bg-success";
-                dIcon = "fas fa-thumbs-up";
-              }
-
-              $("#status_class").addClass(dClass);
-              $("#status_icon").addClass(dIcon);
-              $("#status_title").text(orderStatus);
-
-              
-
-              $(".thumb-nail").click(function(){
-                $(".carousel-item").eq(thumbIndex).removeClass(className);
-                
-                indexThumb = $(".thumb-nail").index(this);
-                $(".carousel-item").eq(indexThumb).addClass(className);
-          
-                thumbElements = document.getElementsByClassName("carousel-item");
-                thumbElement = thumbElements[indexThumb];
-
-                if (indexThumb==(ordersContainer.length-1)) {
-                  thumbIndex = 0;
-                }else{
-                  thumbIndex = indexThumb;
-                }
-              })
-            }
-          }
-        }else{
-          fotoIndex = 0;
-          $("#thumbnailsContainer").append("<li><a href='#slide1'><img src='dist/img/HDCS-imagotipo.png' class='thumb-nail'></a></li>");
-          $("#carouselContainer").append(
-            "<div class='carousel-item active'>"
-            +"<img class='d-block w-100' style='background-image:url(dist/img/HDCS-imagotipo.png);background-size:cover;background-position:center;width:60px; height:240px;' >"
-            +"<input type='hidden' value='0' class='thumb-index'>"
-            +"</div>");
-        }
         });
       }
     });
@@ -1504,7 +1522,7 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
               let totalDepto = deptMCountArray[0].row_cnt;
 
               $("#deptosContenedor").append(
-                "<div class='col-md-4' style='box-shadow: 3px 3px 6px #bebebe;border-radius: 6px;margin-bottom:12px;'>"
+                "<div class='col-md-4 departamento-widget' style='box-shadow: 3px 3px 6px #bebebe;border-radius: 6px;margin-bottom:12px;'>"
               +"<p class='text-left'>"
                 +"<strong>"+deptoNombre+"</strong>"
               +"</p>"
@@ -1569,15 +1587,6 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
               fContador+=1;
             }
 
-/*
-            if (idDept == deptoId) {
-              if (countDept == null || countDept == "" || countDept == undefined || countDept == 0) {
-                donutData.datasets[0].data.push(0);
-              }else{
-                donutData.datasets[0].data.push(countDept);
-              }
-            }
-            */
             
           }
 
@@ -2576,13 +2585,28 @@ $(".logout-button").click(function(){
         evpdf.preventDefault();
         evpdf.stopPropagation();
 
-        alert(currentUrl);
+        //alert(currentUrl);
 
-        alert($(this).location.href);
+        //alert($(this).location.href);
 
       });
 
     
+      
+      $(".departamento-widget").click(function(evdw){
+        evdw.preventDefault();
+        evdw.stopPropagation();
+        let dwIndex = $(".departamento-widget").index(this);
+        //alert(dwIndex)
+      });
+
+      $(".reporte").click(function(evrep){
+        evrep.preventDefault();
+        evrep.stopPropagation();
+        let repIndex = $(".reporte").index(this);
+        //alert(repIndex)
+      });
+
       $(".boton-pdf").click(function(evpdf){
         evpdf.preventDefault();
         evpdf.stopPropagation();

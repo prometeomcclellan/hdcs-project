@@ -529,8 +529,8 @@ if(session_id() == ''){
 
                 <div class="card-tools" style="width:100%;">
                 <div class="row" style="width:100%;">
-              <div class="col-md-2"><h3 class="card-title">Mantenimientos del mes</h3></div>
-              <div class="col-md-10" style="width:100%;">
+              <div class="col-md-3"><h3 class="card-title">Mantenimientos hasta la fecha</h3></div>
+              <div class="col-md-9" style="width:100%;">
                 <div class="row">
                 <?php
     require_once "../Mobile_Detect.php";
@@ -782,6 +782,9 @@ if(session_id() == ''){
               <div class="card-body" style="overflow-y: scroll;">
                 <div id="deptosContenedor" class="row"></div>
                 <!-- /.row -->
+                <style>
+                .departamento-widget, .reporte{cursor: pointer;}
+                </style>
                 <div id="table-wrapper" class="table-responsive">
                   <table id="deptosTabla" class="table table-striped table-hover m-0 tabla-data">
                     <thead>
