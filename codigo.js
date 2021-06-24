@@ -22,6 +22,7 @@ $(document).ready(function() {
   let userCountArray = [];
   let deptIdsCount = [];
   let deptCountArray = [];
+  let deptsCountArray = [];
   let notificacionesIdsArray = [];
   let arrayFilter = [];
   let arrayFiltered = [];
@@ -929,7 +930,7 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
       console.dir(JSON.parse(data));
       mantenimientosPendientesArray = JSON.parse(data);
       let sortedPArray = mantenimientosPendientesArray.sort();
-
+      
       for (let indexPend = 0; indexPend < sortedPArray.length; indexPend++) {
 
         const elementPend = sortedPArray[indexPend];
@@ -940,6 +941,8 @@ if(currentUrl == "/HDCS/inicio/reporteria.php"){
         let oSDateP = elementPend.fechaSolicitudMantenimiento;
         let oDateP = elementPend.fechaControlMantenimiento;
         let oClassP = "success";
+
+        
 
         if(oStatusP == "Diagnosticado"){
           oClassP = "danger";
@@ -1195,6 +1198,20 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
         
       }
     });
+
+    $.ajax({
+      type: "post",
+      crossOrigin: true,
+      url: "../forms/departamento/crud.php",
+      data: {opcion:4},
+      async: false,
+      success: function (data) {
+        deptsCountArray = JSON.parse(data);
+
+        console.log("departamentos para donutData");
+        console.dir(deptsCountArray);
+      }
+    });
     
     var donutData = {
       labels: [],
@@ -1213,33 +1230,36 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
     let colorIndex = 0;
     let oDeptoId;
     let colorClassArray = ["danger", "success", "warning", "info", "primary", "secondary"];
+    mantenimientosArrayX = [];
 
-    $.ajax({
-      type: "get",
-      crossOrigin: true,
-      url: "../bd/get_maintineance_data.php",
-      async: false,
-      success: function (data) {
-        mantenimientosArrayX = JSON.parse(data);
-        for (let index = 0; index < mantenimientosArrayX.length; index++) {
-          const element = mantenimientosArrayX[index];
-          oDeptoId = element.idDepartamento;
-          let estadoId = element.idEstadoControlMantenimiento;
-          let sum = 0;
-
-          if (deptIdsCount.includes(oDeptoId)) {
-            sum = sum+1;
-            deptIdsCount.push({depto: oDeptoId, suma:sum, estado:estadoId});
-          }else{
-            sum = 1;
-            deptIdsCount.push({depto: oDeptoId, suma:sum, estado:estadoId});
-          }
-
-          if (index == (mantenimientosArrayX.length-1)) {}
-        }
-        
-      }
-    })
+    //deptsCountArray
+    for (let indiePie = 0; indiePie < deptsCountArray.length; indiePie++) {
+          const elementPie = deptsCountArray[indiePie];
+          let deptoNombrePie = elementPie.departamento;
+          let deptoIdPie = elementPie.idDepartamento;
+          
+          $.ajax({
+            type: "post",
+            crossOrigin: true,
+            url: "../bd/get_maintineance_data.php",
+            data: {deptoIdPie:deptoIdPie},
+            async: false,
+            success: function (data) {
+              mantenimientosArrayX = JSON.parse(data);
+              console.log("maintinance data info");
+              console.dir(mantenimientosArrayX);
+              
+              for (let index = 0; index < mantenimientosArrayX.length; index++) {
+                const element = mantenimientosArrayX[index];
+                oDeptoId = element.idDepartamento;
+                
+                let estadoId = element.idEstadoControlMantenimiento;
+                let sum = element.row_cnt;
+                donutData.datasets[0].data.push(sum);
+                }
+            }
+          })
+    }
 
     $.ajax({
       type: "get",
@@ -1456,13 +1476,19 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
       success: function (data) {
         deptCountArray = JSON.parse(data);
 
+        console.log("departamentos");
+        console.dir(deptCountArray);
+
         $("#deptosContenedor").empty();
+
+        let dUserId = localStorage.getItem("idDeUsuario");
 
         for (let indexPie = 0; indexPie < deptCountArray.length; indexPie++) {
           const element = deptCountArray[indexPie];
           let deptoNombre = element.departamento;
           let deptoId = element.idDepartamento;
           donutData.labels.push(deptoNombre);
+          
           
           $.ajax({
             type: "post",
@@ -1543,6 +1569,7 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
               fContador+=1;
             }
 
+/*
             if (idDept == deptoId) {
               if (countDept == null || countDept == "" || countDept == undefined || countDept == 0) {
                 donutData.datasets[0].data.push(0);
@@ -1550,6 +1577,7 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
                 donutData.datasets[0].data.push(countDept);
               }
             }
+            */
             
           }
 
@@ -2543,7 +2571,17 @@ $(".logout-button").click(function(){
         $(".xlsx").eq(indexXl).click();
       });
 
-      
+
+      $("#reportesBoton").click(function(evpdf){
+        evpdf.preventDefault();
+        evpdf.stopPropagation();
+
+        alert(currentUrl);
+
+        alert($(this).location.href);
+
+      });
+
     
       $(".boton-pdf").click(function(evpdf){
         evpdf.preventDefault();

@@ -51,8 +51,12 @@ button#btnBuscar {
     margin-top: 32px;
 }
 
-button#btnBuscarU {
+
+button#btnBuscar {
     margin-top: 32px;
+    background-color: #ffc107;
+    border: #ffc107;
+    color: black;
 }
 
 #anchoModalBuscarSolMant {
@@ -139,4 +143,9 @@ element.style {
     color: #fff;
     border-color: #007bff;
     background: #1a3c8a important;
+}
+
+
+.requerido {
+    color: red;
 }

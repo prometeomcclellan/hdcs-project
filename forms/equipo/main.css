@@ -60,3 +60,7 @@ body{
 .modal-content.update {
   margin-top: 140px;
 }
+
+.requerido {
+    color: red;
+}

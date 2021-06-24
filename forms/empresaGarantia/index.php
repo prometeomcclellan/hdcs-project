@@ -584,7 +584,7 @@ if ( $detect->isMobile() ) {
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Empresa:</label>
+                        <label for="nombre" class="col-form-label">Empresa:<span class="requerido"> *</span></label>
                         <input type="text" class="form-control capitalize" id="empresa" AUTOCOMPLETE="OFF" required>
                     </div>
 

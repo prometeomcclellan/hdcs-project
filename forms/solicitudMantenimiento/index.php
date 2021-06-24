@@ -428,7 +428,7 @@ if ( $detect->isMobile() ) {
           ?>
     <div class="container">
         <header>
-            <h1 class="mt-4"><b>Gestión de solicitud matenimiento</b></h1>
+            <h1 class="mt-4"><b>Gestión de solicitud mantenimiento</b></h1>
        <!--     
             <h2>Usuario: <?php echo $_SESSION["s_idUsuario"]?></h2>
             <h2>Usuario: <?php echo $_SESSION["s_usuario"]?></h2>
@@ -470,8 +470,8 @@ if ( $detect->isMobile() ) {
                                 <th>Modelo</th>
                                 <th>Service Tag</th>              
                                 <th>Descripción falla</th>
-                             <!--   <th>Estado solicitud</th>  -->
                                 <th>Usuario</th>
+                                <th>Estado solicitud</th>
                                 <th class="last-col">Acciones</th>
                             </tr>
                         </thead>
@@ -521,7 +521,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Código equipo:</label>
+                                <label for="nombre" class="col-form-label">Código equipo:<span class="requerido"> *</span></label>
                                 <input type="text" class="form-control" id="codEquipo" disabled="true" required autofocus>
                             </div>
                         </div> 
@@ -564,13 +564,13 @@ if ( $detect->isMobile() ) {
                     <hr id="linea2">
                     <h5 id="h5"><b><i>Datos de solicitud</i></b></h5> <hr>
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Fecha solicitud:</label>
-                        <input type="date" class="form-control" id="fechaSM" required autofocus>
+                        <label for="nombre" class="col-form-label">Fecha solicitud:<span class="requerido"> *</span></label>
+                        <input type="date" class="form-control" id="fechaSM" required >
                     </div>
                     
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Descripción falla:</label>
-                        <textarea type="text" class="form-control " id="Pre_Diag" required autofocus></textarea>
+                        <label for="nombre" class="col-form-label">Descripción falla:<span class="requerido"> *</span></label>
+                        <textarea type="text" class="form-control " id="Pre_Diag" required ></textarea>
                     </div>
 
                 </div>
@@ -608,7 +608,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Código equipo:</label>
+                                <label for="nombre" class="col-form-label">Código equipo:<span class="requerido"> *</span></label>
                                 <input type="text" class="form-control" id="codEquipoU" disabled="true" required autofocus>
                             </div>
                         </div> 
@@ -651,13 +651,13 @@ if ( $detect->isMobile() ) {
                     <hr id="linea2">
                     <h5 id="h5"><b><i>Datos de solicitud</i></b></h5> <hr>
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Fecha solicitud:</label>
-                        <input type="date" class="form-control" id="fechaSMU" required autofocus>
+                        <label for="nombre" class="col-form-label">Fecha solicitud:<span class="requerido"> *</span></label>
+                        <input type="date" class="form-control" id="fechaSMU" required >
                     </div>
                     
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Descripción falla:</label>
-                        <textarea type="text" class="form-control " id="Pre_DiagU" required autofocus></textarea>
+                        <label for="nombre" class="col-form-label">Descripción falla:<span class="requerido"> *</span></label>
+                        <textarea type="text" class="form-control " id="Pre_DiagU" required ></textarea>
                     </div>
 
                 </div>

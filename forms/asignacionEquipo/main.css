@@ -124,3 +124,7 @@ button#btnSeleccionar {
     color: black;
     border-color: #ffc107;
 }
+
+.requerido {
+    color: red;
+}

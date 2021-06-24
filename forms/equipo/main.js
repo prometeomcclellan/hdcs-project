@@ -95,7 +95,8 @@ let diccionarioModelos = [];
           {"data": "serie"},
           {"data": "serviceTag"},
           {"data": "descripcionEquipo"},
-          {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-primary btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
+          //{"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-primary btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
+          {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-primary btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            </div></div>" }
       ]
   });  
 
@@ -221,7 +222,7 @@ $("#select_marca").on("change", selectMarcas);
               tablaEquipo.ajax.reload(null, false);
               $('#modalCREAR').modal('hide');       // Oculto la modal de crear Equipo
               
-              if (_selectTipoEquipo == 3) { // 3=Computadora
+              if (_selectTipoEquipo == 1) { // 1=Computadora
                 $('#modalPregunta').modal('show') //Muestro la modal de la pregunta si desea agregar detalle si es computadora
 
                 $('#formMADC').submit(function(e){   //OBTENIDO DL VALOR DE SI DE LA MODAL DE LA PREGUNTA                      

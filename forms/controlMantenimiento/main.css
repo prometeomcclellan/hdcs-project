@@ -82,7 +82,7 @@ div#tablaControlMant_filter {
 
 /* Paginacion */
 div#tablaControlMant_paginate {
-    margin-top: -30px;
+    margin-top: 0px;
     margin-bottom: 10px;
 }
 
@@ -110,4 +110,8 @@ table.dataTable thead {
     border-color: #007bff;
 
     background: #1a3c8a;
+}
+
+.requerido {
+    color: red;
 }

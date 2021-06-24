@@ -590,12 +590,12 @@ if ( $detect->isMobile() ) {
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Modelo:</label>
+                        <label for="nombre" class="col-form-label">Modelo:<span class="requerido"> *</span></label>
                         <input type="text" class="form-control capitalize" id="modelo" autofocus required >
                     </div>
 
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Marca:</label>
+                        <label for="nombre" class="col-form-label">Marca:<span class="requerido"> *</span></label>
 
                         <select class="form-control" name="select_Marca" id="select_Marca" required>
                             <option value="">Seleccione..</option>
@@ -644,12 +644,12 @@ if ( $detect->isMobile() ) {
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Modelo:</label>
+                        <label for="nombre" class="col-form-label">Modelo:<span class="requerido"> *</span></label>
                         <input type="text" class="form-control capitalize" id="modeloU" required autofocus>
                     </div>
 
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Marca:</label>
+                        <label for="nombre" class="col-form-label">Marca:<span class="requerido"> *</span></label>
 
                         <select class="form-control" name="select_MarcaU" id="select_MarcaU" required>
                                 <?php

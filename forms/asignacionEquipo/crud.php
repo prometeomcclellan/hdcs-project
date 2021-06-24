@@ -49,13 +49,13 @@
                 $data = 1;
             }
             else{
-                $consulta = "CALL sp_insertarAsignacionEquipo(?, ?, ?, ?, ?) ";        
+                $consulta = "CALL sp_insertarAsignacionEquipo(?, ?, ?, ?) ";        
                 $resultado = $conexion->prepare($consulta);
                 $resultado->bindValue(1, $fechaAsignacion);
                 $resultado->bindValue(2, $codEquipo); 
                 $resultado->bindValue(3, $Observacion);
-                $resultado->bindValue(4, $fechaBaja);
-                $resultado->bindValue(5, $idUsuario);
+                //$resultado->bindValue(4, $fechaBaja);
+                $resultado->bindValue(4, $idUsuario);
                 $resultado->execute(); 
 
                 $data = 0;  

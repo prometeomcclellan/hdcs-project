@@ -3,33 +3,20 @@
 	$objeto = new Conexion();
 	$conexion = $objeto->Conectar();
 	$data = array();
-    $response = array();
     require_once('conn.php');
 
+
     $conn = new mysqli($servername, $username, $password, $dbname);
-    
-    $from=date('Y-m-d',strtotime($_POST['from']));
-    $to=date('Y-m-d',strtotime($_POST['to']));
 
     $codEmpleado = "";
     $idDepartamento = "";
-    $departamentoP = "";
+    $departamentoP = "DEGT";
 
-    $sql = "SELECT * FROM controlmantenimiento
-    WHERE fechaControlMantenimiento  BETWEEN '".$from."' AND '".$to."'";
-    
+    $sql = "SELECT * FROM controlmantenimiento WHERE idEstadoControlMantenimiento < 3 ORDER BY idDepartamento";
     $result = $conn->query($sql);
-    $row_cnt = $result->num_rows;
 
-    //echo $row_cnt;
-    if ($row_cnt == 0) {
-        $response = array(
-			'status' => 500,
-			'row_cnt' => $row_cnt
-		);
-
-        array_push($data, $response);
-    }else{
+    if($result){
+        
         while($row = $result->fetch_assoc()) {
             $fechaControlMantenimiento = $row["fechaControlMantenimiento"];
             $idUsuario = $row["idUsuario"];
@@ -39,7 +26,8 @@
             $observacion = $row["observacion"];
             $idEstadoControlMantenimiento = $row["idEstadoControlMantenimiento"];
 
-            $sqlEmpleado = "SELECT * FROM usuario WHERE idUsuario   = '".$idUsuario."'";
+
+          /*  $sqlEmpleado = "SELECT * FROM usuario WHERE idUsuario   = '".$idUsuario."'";
             $resultEmpleado = $conn->query($sqlEmpleado);
 
             while ( $rowEmpleado = $resultEmpleado ->fetch_assoc()) {
@@ -64,8 +52,9 @@
                     }
 
                 }
-            }
+            }*/
 
+            
 
             $sqlSolicitud = "SELECT * FROM solicitudmantenimiento
             WHERE idSolicitudMantenimiento = '".$idSolicitudMantenimiento."'";
@@ -108,7 +97,6 @@
                             $estadoControlMantenimiento = $rowStat["estadoControlMantenimiento"];
                         }
 
-
                         $response = array(
                             'status' => 200,
                             'fechaControlMantenimiento' => $fechaControlMantenimiento,
@@ -119,17 +107,23 @@
                             'idSolicitudMantenimiento' => $idSolicitudMantenimiento,
                             'observacion' => $observacion,
                             'estadoControlMantenimiento' => $estadoControlMantenimiento,
-                            'idDepartamento' => $idDepartamento,
                             'elEquipoIdTipo' => $elEquipoIdTipo,
                             'elEquipoIdModelo' => $elEquipoIdModelo,
                             'elEquipoDescripcion' => $elEquipoDescripcion,
                             'elEquipo' => $elEquipo,
                             'departamentoP' => $departamentoP
-                            
                         );
-                
                         array_push($data, $response);
-                    }  
-        } 
+                    }
+
+           
+
+
+        }
+        
     }
+    
+                                        
     echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    //$conexion=null;
+    

@@ -117,3 +117,7 @@ table.dataTable thead {
 .modal-content {
     margin-top: 200px;
 }
+
+.requerido {
+    color: red;
+}

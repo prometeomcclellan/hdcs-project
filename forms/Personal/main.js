@@ -81,7 +81,7 @@ opcion = 4;
           {"data": "serie"},
           {"data": "serviceTag"},
           {"data": "descripcionEquipo"},
-          {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-success' id='btnSeleccionar'><i class='material-icons' >check_box</i></button></div></div>" }
+          {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-warning' id='btnSeleccionar'><i class='material-icons' >check_box</i></button></div></div>" }
       ]
   });  
 
@@ -91,7 +91,7 @@ opcion = 4;
   $("#btnBuscar").click(function(){
     $('#modalCREAR').css("opacity", ".1");
     $("#formEquipo").trigger("reset");
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
     $(".modal-titles").text("Buscar equipo");          
     $("#modalEquipo").modal("show");     //cuando hacen click sobre buscar, se abrira la modal de equipo 
@@ -211,7 +211,7 @@ opcion = 4;
     $('#fechaSM').focus();
     $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#28a745"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Nueva solicitud mantenimiento");          
     $("#modalCREAR").modal("show");       
   });   
@@ -332,9 +332,9 @@ opcion = 4;
     opcion = 3; //eliminar   
 
     $("#panel_eliminar").html("Pre_Diagnostico: " + diagnostico);
-    $(".modal-header").css("background-color", "#003399");
+    $(".modal-header").css("background-color", "#1a3c8a");
     $(".modal-header").css("color", "white");
-    $("#btnGuardar").css("background-color", "#003399"); 
+    $("#btnGuardar").css("background-color", "#1a3c8a"); 
     $(".modal-title").text("Eliminar Solicitud de Matenimiento");            
     $("#modalEliminar").modal("show");  
   });

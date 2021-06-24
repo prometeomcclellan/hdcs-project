@@ -125,3 +125,7 @@ table.dataTable thead {
     color: white;
     background: #1a3c8a;
 }
+
+.requerido {
+    color: red;
+}

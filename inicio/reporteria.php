@@ -377,9 +377,9 @@ if ( $detect->isMobile() ) {
 
             if ($uriCheck == 1) {
               //echo str_contains($thisUri, $uriFilter);
-              echo "<a href='reporteria.php' class='nav-link rol-admin'>";
+              echo "<a id='reportesBoton' href='reporteria.php' class='nav-link rol-admin'>";
             }else{
-              echo "<a href='../../reporteria.php' class='nav-link rol-admin'>";
+              echo "<a id='reportesBoton' href='../reporteria.php' class='nav-link rol-admin'>";
             }
             ?>
 

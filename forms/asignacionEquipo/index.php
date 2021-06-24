@@ -594,7 +594,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Código equipo:</label>
+                                <label for="nombre" class="col-form-label">Código equipo:<span class="requerido"> *</span></label>
                                 <input type="text" class="form-control" id="codEquipo" disabled="true" required autofocus>
                             </div>
                         </div> 
@@ -636,28 +636,18 @@ if ( $detect->isMobile() ) {
 
                     <hr id="linea2">
                     <h5 id="h5"><b><i>Datos de asignación</i></b></h5> <hr>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="nombre" class="col-form-label">Fecha asignacion:</label>
-                                <input type="date" class="form-control" id="fechaAsignacion" required >
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="nombre" class="col-form-label">Fecha baja:</label>
-                                <input type="date" class="form-control" id="fechaBaja"  >
-                            </div>
-                        </div>
-                    </div> 
+                    <div class="form-group">
+                      <label for="nombre" class="col-form-label">Fecha asignacion:<span class="requerido"> *</span></label>
+                      <input type="date" class="form-control" id="fechaAsignacion" required >
+                    </div>
 
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Observación:</label>
+                        <label for="nombre" class="col-form-label">Observación:<span class="requerido"> *</span></label>
                         <textarea type="text" class="form-control" id="observacion" required ></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Usuario:</label>
+                        <label for="nombre" class="col-form-label">Usuario asignado:<span class="requerido"> *</span></label>
 
                         <select class="form-control" name="select_Usuario" id="select_Usuario" required>
                             <option value="">Seleccione..</option>
@@ -708,7 +698,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Código equipo:</label>
+                                <label for="nombre" class="col-form-label">Código equipo:<span class="requerido"> *</span></label>
                                 <input type="text" class="form-control" id="codEquipoU" disabled="true" required autofocus>
                             </div>
                         </div> 
@@ -753,7 +743,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Fecha asignacion:</label>
+                                <label for="nombre" class="col-form-label">Fecha asignacion:<span class="requerido"> *</span></label>
                                 <input type="date" class="form-control" id="fechaAsignacionU" required >
                             </div>
                         </div>
@@ -766,7 +756,7 @@ if ( $detect->isMobile() ) {
                     </div> 
 
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Observación:</label>
+                        <label for="nombre" class="col-form-label">Observación:<span class="requerido"> *</span></label>
                         <textarea type="text" class="form-control" id="observacionU" required ></textarea>
                     </div>
 
@@ -774,7 +764,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                              <label for="nombre" class="col-form-label">Estado:</label>
+                              <label for="nombre" class="col-form-label">Estado:<span class="requerido"> *</span></label>
                               <select class="form-control" name="estadoU" id="estadoU" >
                                   <option value=1>ACTIVO</option>  
                                   <option value=0>INACTIVO</option>     
@@ -783,7 +773,7 @@ if ( $detect->isMobile() ) {
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                              <label for="nombre" class="col-form-label">Usuario:</label>
+                              <label for="nombre" class="col-form-label">Usuario asignado:<span class="requerido"> *</span></label>
                               <select class="form-control" name="select_UsuarioU" id="select_UsuarioU" required>
                                   <option value="">Seleccione..</option>
                                       <?php

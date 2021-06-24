@@ -14,7 +14,9 @@
     $selectTipoMant   = (isset($_POST['selectTipoMant'])) ? $_POST['selectTipoMant'] : '';
     $selectIdSolMant   = (isset($_POST['selectIdSolMant'])) ? $_POST['selectIdSolMant'] : '';
     $observacion   = (isset($_POST['observacion'])) ? $_POST['observacion'] : '';
-    $estadoContronMant   = (isset($_POST['estadoContronMant'])) ? $_POST['estadoContronMant'] : '';      
+    $estadoContronMant   = (isset($_POST['estadoContronMant'])) ? $_POST['estadoContronMant'] : '';
+    $selectDepartamento   = (isset($_POST['selectDepartamento'])) ? $_POST['selectDepartamento'] : '';
+          
     $select_Usuario   = (isset($_POST['select_Usuario'])) ? $_POST['select_Usuario'] : '';
 
     $opcion = (isset($_POST['opcion'])) ? $_POST['opcion'] : '';
@@ -48,7 +50,7 @@
                 $data = 1;
             }
             else{
-                $consulta = "CALL sp_insertarControlMantenimiento (?, ?, ?, ?, ?, ?) ";        
+                $consulta = "CALL sp_insertarControlMantenimiento (?, ?, ?, ?, ?, ?, ?) ";        
                 $resultado = $conexion->prepare($consulta);
                 $resultado->bindValue(1, $fechaControl);
                 $resultado->bindValue(2, $select_Usuario); //Usando la variable de sesion del usuario
@@ -56,6 +58,7 @@
                 $resultado->bindValue(4, $selectIdSolMant);
                 $resultado->bindValue(5, $observacion);
                 $resultado->bindValue(6, $estadoContronMant);
+                $resultado->bindValue(7, $selectDepartamento);
                 $resultado->execute(); 
 
                 $data = 0; 
@@ -71,6 +74,7 @@
                 $resultado->bindValue(5, $selectIdSolMant); 
                 $resultado->bindValue(6, $observacion); 
                 $resultado->bindValue(7, $estadoContronMant); 
+               // $resultado->bindValue(8, $selectDepartamento); 
                 $resultado->execute(); 
 
                 $data = 0; 
@@ -125,7 +129,13 @@
             $resultado = $conexion->prepare($consulta);
             $resultado->execute();  
             $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
-            break;    
+            break;   
+        case 12:
+            $consulta = "CALL sp_mostrarDepartamento()";
+            $resultado = $conexion->prepare($consulta);
+            $resultado->execute();  
+            $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
+            break;  
     }
 
     print json_encode($data);//envio el array final el formato json a AJAX

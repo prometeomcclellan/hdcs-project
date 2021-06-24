@@ -1,15 +1,19 @@
 <?php
-	include_once 'conexion.php';
-	$objeto = new Conexion();
-	$conexion = $objeto->Conectar();
-	$data = array();
+    include_once 'conexion.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $data = array();
     require_once('conn.php');
+
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
-    $sql = "SELECT * FROM controlmantenimiento WHERE idEstadoControlMantenimiento < 3 ORDER BY idDepartamento";
+    $codEmpleado = "";
+    $idDepartamento = "";
+    $departamentoP = "DEGT";
+
+    $sql = "SELECT * FROM controlmantenimiento WHERE idEstadoControlMantenimiento < 3 ORDER BY fechaControlMantenimiento";
     $result = $conn->query($sql);
-    $row_cnt = $result->num_rows;
 
     if($result){
         
@@ -21,14 +25,33 @@
             $idSolicitudMantenimiento = $row["idSolicitudMantenimiento"];
             $observacion = $row["observacion"];
             $idEstadoControlMantenimiento = $row["idEstadoControlMantenimiento"];
-            $idDepartamento = $row["idDepartamento"];
 
-            $sqlDept = "SELECT * FROM departamento
-            WHERE idDepartamento = '".$idDepartamento."'";
-            $resultDepto = $conn->query($sqlDept);
 
-            while($rowDepto = $resultDepto->fetch_assoc()) {
-                $departamentoP = $rowDepto["departamento"];
+            $sqlEmpleado = "SELECT * FROM usuario WHERE idUsuario   = '".$idUsuario."'";
+            $resultEmpleado = $conn->query($sqlEmpleado);
+
+            while ( $rowEmpleado = $resultEmpleado ->fetch_assoc()) {
+                $codEmpleado = $rowEmpleado["codEmpleado"];
+                $sqlCargo = "SELECT * FROM empleado WHERE codEmpleado = '".$codEmpleado."'";
+                $resulCargo = $conn->query($sqlCargo);
+
+                while ( $rowCargo = $resulCargo ->fetch_assoc() ) {
+                    $idCargo = $rowCargo["idCargo"];
+                    $sqlIdCargo = "SELECT * FROM cargo WHERE idCargo = '".$idCargo."'";
+                    $resultIdCargo = $conn->query($sqlIdCargo);
+
+                    while ($rowIdCargo = $resultIdCargo ->fetch_assoc()) {
+                        $idDepartamento = $rowIdCargo["idDepartamento"];
+                        $sqlDept = "SELECT * FROM departamento
+                        WHERE idDepartamento = '".$idDepartamento."'";
+                        $resultDepto = $conn->query($sqlDept);
+
+                        while($rowDepto = $resultDepto->fetch_assoc()) {
+                            $departamentoP = $rowDepto["departamento"];
+                        }
+                    }
+
+                }
             }
 
             $sqlSolicitud = "SELECT * FROM solicitudmantenimiento

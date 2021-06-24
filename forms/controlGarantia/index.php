@@ -596,7 +596,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Código equipo:</label>
+                                <label for="nombre" class="col-form-label">Código equipo:<span class="requerido"> *</span></label>
                                 <input type="text" class="form-control" id="codEquipo" disabled="true" required autofocus>
                             </div>
                         </div> 
@@ -641,13 +641,13 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Fecha inicio:</label>
+                                <label for="nombre" class="col-form-label">Fecha inicio:<span class="requerido"> *</span></label>
                                 <input type="date" class="form-control" id="fechaInicio" required >
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Fecha vencimiento:</label>
+                                <label for="nombre" class="col-form-label">Fecha vencimiento:<span class="requerido"> *</span></label>
                                 <input type="date" class="form-control" id="fechaVencimiento" required >
                             </div>
                         </div>
@@ -657,7 +657,7 @@ if ( $detect->isMobile() ) {
             <div class="row">
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Empresa:</label>
+                        <label for="nombre" class="col-form-label">Empresa:<span class="requerido"> *</span></label>
 
                         <select class="form-control" name="select_Empresa" id="select_Empresa" required>
                             <option value="">Seleccione..</option>
@@ -729,7 +729,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Código equipo:</label>
+                                <label for="nombre" class="col-form-label">Código equipo:<span class="requerido"> *</span></label>
                                 <input type="text" class="form-control" id="codEquipoU" disabled="true" required autofocus>
                             </div>
                         </div> 
@@ -774,13 +774,13 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Fecha inicio:</label>
+                                <label for="nombre" class="col-form-label">Fecha inicio:<span class="requerido"> *</span></label>
                                 <input type="date" class="form-control" id="fechaInicioU" required >
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Fecha vencimiento:</label>
+                                <label for="nombre" class="col-form-label">Fecha vencimiento:<span class="requerido"> *</span></label>
                                 <input type="date" class="form-control" id="fechaVencimientoU" required >
                             </div>
                         </div>
@@ -789,7 +789,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                              <label for="nombre" class="col-form-label">Estado garantía:</label>
+                              <label for="nombre" class="col-form-label">Estado garantía:<span class="requerido"> *</span></label>
                               <select class="form-control" name="estadoU" id="estadoU" >
                                   <option value=1>ACTIVO</option>  
                                   <option value=0>INACTIVO</option>     
@@ -798,7 +798,7 @@ if ( $detect->isMobile() ) {
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                              <label for="nombre" class="col-form-label">Empresa:</label>
+                              <label for="nombre" class="col-form-label">Empresa:<span class="requerido"> *</span></label>
 
                               <select class="form-control" name="select_EmpresaU" id="select_EmpresaU" required>
                                   <option value="">Seleccione..</option>

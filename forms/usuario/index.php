@@ -511,7 +511,7 @@ if ( $detect->isMobile() ) {
                 <div class="modal-body">
 
                     <div class="form-group">
-                    <label for="nombre" class="col-form-label">Empleado:</label>
+                    <label for="nombre" class="col-form-label">Empleado:<span class="requerido"> *</span></label>
                         <select class="form-control" name="select_Empleado" id="select_Empleado" required>
                             <option value="">Seleccione..</option>
                                 <?php
@@ -532,25 +532,25 @@ if ( $detect->isMobile() ) {
                     </div>
 
                     <div class="form-group">
-                    <label for="nombre" class="col-form-label">Fecha creación:</label>
+                    <label for="nombre" class="col-form-label">Fecha creación:<span class="requerido"> *</span></label>
                     <input type="date" class="form-control" id="fechaCreacion" required>
                     </div>
 
                     <div class="form-group">
-                    <label for="nombre" class="col-form-label">User name:</label>
+                    <label for="nombre" class="col-form-label">User name:<span class="requerido"> *</span></label>
                     <input type="text" class="form-control" id="userName" required>
                     </div>
 
                     <div class="form-group">
-                    <label for="nombre" class="col-form-label">Password:</label>
+                    <label for="nombre" class="col-form-label">Password:<span class="requerido"> *</span></label>
                     <input type="password" class="form-control" id="password" required>
                     </div>
 
-                    <div class="form-group">
-                    <label for="nombre" class="col-form-label">Fecha baja:</label>
+                <!--<div class="form-group">
+                    <label for="nombre" class="col-form-label">Fecha baja:<span class="requerido"> *</span></label>
                     <input type="date" class="form-control" id="fechaBaja" >
                     </div>
-
+                -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
@@ -579,7 +579,7 @@ if ( $detect->isMobile() ) {
                 <div class="modal-body">
 
                     <div class="form-group">
-                    <label for="nombre" class="col-form-label">Empleado:</label>
+                    <label for="nombre" class="col-form-label">Empleado:<span class="requerido"> *</span></label>
                         <select class="form-control" name="select_EmpleadoU" id="select_EmpleadoU" disabled="true">
                             <option value="">Seleccione..</option>
                                 <?php
@@ -587,7 +587,7 @@ if ( $detect->isMobile() ) {
                                     $objeto = new Conexion();
                                     $conexion = $objeto->Conectar();
 
-                                    $consulta = "CALL sp_mostrarEmpleado()";
+                                    $consulta = "CALL sp_mostrarEmpleado1()";
                                     $resultado = $conexion->prepare($consulta);
                                     $resultado->execute();  
                                     $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
@@ -600,17 +600,17 @@ if ( $detect->isMobile() ) {
                     </div>
 
                     <div class="form-group">
-                    <label for="nombre" class="col-form-label">Fecha creación:</label>
+                    <label for="nombre" class="col-form-label">Fecha creación:<span class="requerido"> *</span></label>
                     <input type="date" class="form-control" id="fechaCreacionU" disabled="true">
                     </div>
 
                     <div class="form-group">
-                    <label for="nombre" class="col-form-label">User name:</label>
+                    <label for="nombre" class="col-form-label">User name:<span class="requerido"> *</span></label>
                     <input type="text" class="form-control" id="userNameU" required>
                     </div>
 
                     <div class="form-group">
-                    <label for="nombre" class="col-form-label">Password:</label>
+                    <label for="nombre" class="col-form-label">Password:<span class="requerido"> *</span></label>
                     <input type="password" class="form-control" id="passwordU" required>
                     </div>
 
@@ -620,7 +620,7 @@ if ( $detect->isMobile() ) {
                     </div>
 
                     <div class="form-group">
-                    <label for="nombre" class="col-form-label">Estado:</label>
+                    <label for="nombre" class="col-form-label">Estado:<span class="requerido"> *</span></label>
                         <select class="form-control" name="estadoU" id="estadoU" >
                             <option value=1>ACTIVO</option>  
                             <option value=0>INACTIVO</option>     

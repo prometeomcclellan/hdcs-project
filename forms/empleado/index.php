@@ -596,13 +596,13 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Código empleado:</label>
+                                <label for="nombre" class="col-form-label">Código empleado:<span class="requerido"> *</span></label>
                                 <input type="text" class="form-control" id="codEmpleado" AUTOCOMPLETE="OFF" pattern="[0-9]+" required autofocus>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Cargo:</label>
+                                <label for="nombre" class="col-form-label">Cargo:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_Cargo" id="select_Cargo" required>
                                     <option value="">Seleccione..</option>
@@ -628,14 +628,14 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Nombres:</label>
+                                <label for="nombre" class="col-form-label">Nombres:<span class="requerido"> *</span></label>
                                 <input minlength="" maxlength="" type="text" class="form-control capitalize" id="nombres" AUTOCOMPLETE="OFF" pattern="[a-zA-ZÀ-ÿ\s]+" required>
                                 <span id="lblAlerta"></span>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Apellidos:</label>
+                                <label for="nombre" class="col-form-label">Apellidos:<span class="requerido"> *</span></label>
                                 <input minlength="" maxlength="" type="text" class="form-control capitalize" id="apellidos" AUTOCOMPLETE="OFF" pattern="[a-zA-ZÀ-ÿ\s]+" required>
                                 <span id="lblApellido"></span>
                             </div> 
@@ -669,7 +669,7 @@ if ( $detect->isMobile() ) {
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Sexo:</label>
+                                <label for="nombre" class="col-form-label">Sexo:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_Sexo" id="select_Sexo" required>
                                     <option value="">Seleccione..</option>
@@ -693,7 +693,7 @@ if ( $detect->isMobile() ) {
                     </div> 
 
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Correo electrónico:</label>
+                        <label for="nombre" class="col-form-label">Correo electrónico:<span class="requerido"> *</span></label>
                         <input minlength="" maxlength="" type="email" class="form-control" id="eMail" placeholder="example@servidor.com" AUTOCOMPLETE="OFF" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
                         <span id="lblCorreo"></span>
                     </div>
@@ -728,13 +728,13 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Código empleado:</label>
+                                <label for="nombre" class="col-form-label">Código empleado:<span class="requerido"> *</span></label>
                                 <input type="text" class="form-control" id="codEmpleadoU" disabled="true" pattern="[0-9]+">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Cargo:</label>
+                                <label for="nombre" class="col-form-label">Cargo:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_Cargo" id="select_CargoU" required>
                                         <?php
@@ -759,13 +759,13 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Nombres:</label>
+                                <label for="nombre" class="col-form-label">Nombres:<span class="requerido"> *</span></label>
                                 <input type="text" class="form-control capitalize" id="nombresU" AUTOCOMPLETE="OFF" pattern="[a-zA-ZÀ-ÿ\s]+" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Apellidos:</label>
+                                <label for="nombre" class="col-form-label">Apellidos:<span class="requerido"> *</span></label>
                                 <input type="text" class="form-control capitalize" id="apellidosU" AUTOCOMPLETE="OFF" pattern="[a-zA-ZÀ-ÿ\s]+" required>
                             </div> 
                         </div>    
@@ -796,7 +796,7 @@ if ( $detect->isMobile() ) {
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Sexo:</label>
+                                <label for="nombre" class="col-form-label">Sexo:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_Sexo" id="select_SexoU" required>
                                         <?php
@@ -819,12 +819,12 @@ if ( $detect->isMobile() ) {
                     </div> 
 
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Correo electrónico:</label>
+                        <label for="nombre" class="col-form-label">Correo electrónico:<span class="requerido"> *</span></label>
                         <input type="email" class="form-control" id="eMailU" placeholder="example@servidor.com" AUTOCOMPLETE="OFF" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required >
                     </div>
 
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Estado:</label>
+                        <label for="nombre" class="col-form-label">Estado:<span class="requerido"> *</span></label>
                         <select class="form-control" name="estadoU" id="estadoU" >
                             <option value=1>ACTIVO</option>  
                             <option value=0>INACTIVO</option>     

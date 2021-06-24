@@ -471,6 +471,7 @@ if ( $detect->isMobile() ) {
                             <th>Fecha solicitud mant.</th>
                             <th>Observación control mant.</th>
                             <th>Estado control mant.</th>
+                            <th>Departamento</th>
                             <th>Usuario asignado control </th>
                             <th class="last-col">Acciones</th>
                         </tr>
@@ -599,7 +600,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Id solicitud mantenimiento:</label>
+                                <label for="nombre" class="col-form-label">Id solicitud mantenimiento:<span class="requerido"> *</span></label>
                                 <input type="text" class="form-control" id="select_IdSolMant" disabled="true" required autofocus>
                             </div>
                         </div> 
@@ -630,13 +631,13 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Fecha control:</label>
+                                <label for="nombre" class="col-form-label">Fecha control:<span class="requerido"> *</span></label>
                                 <input type="date" class="form-control" id="fechaControl" required >
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Tipo mantenimiento:</label>
+                                <label for="nombre" class="col-form-label">Tipo mantenimiento:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_TipoMant" id="select_TipoMant" required>
                                     <option value="">Seleccione..</option>
@@ -660,34 +661,66 @@ if ( $detect->isMobile() ) {
                     </div> 
 
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Observación:</label>
+                        <label for="nombre" class="col-form-label">Observación:<span class="requerido"> *</span></label>
                         <textarea type="text" class="form-control" id="observacion" required ></textarea>
                     </div>
 
-                    <div class="form-group">
-                        <label for="nombre" class="col-form-label">Estado control mantenimiento:</label>
 
-                        <select class="form-control" name="select_ControlMant" id="select_ControlMant" required>
-                            <option value="">Seleccione..</option>
-                                <?php
-                                    require_once '../../bd/conexion.php';
-                                    $objeto = new Conexion();
-                                    $conexion = $objeto->Conectar();
 
-                                    $consulta = "CALL sp_mostrarEstadoControlMantenimiento()";
-                                    $resultado = $conexion->prepare($consulta);
-                                    $resultado->execute();  
-                                    $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="nombre" class="col-form-label">Estado control mant. :<span class="requerido"> *</span></label>
+
+                            <select class="form-control" name="select_ControlMant" id="select_ControlMant" required>
+                                <option value="">Seleccione..</option>
+                                    <?php
+                                        require_once '../../bd/conexion.php';
+                                        $objeto = new Conexion();
+                                        $conexion = $objeto->Conectar();
+
+                                        $consulta = "CALL sp_mostrarEstadoControlMantenimiento()";
+                                        $resultado = $conexion->prepare($consulta);
+                                        $resultado->execute();  
+                                        $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
+                                
+                                        foreach($data as $dat) {     
+                                            echo "<option value=".$dat["idEstadoControlMantenimiento"]." class='form-control'>".$dat['estadoControlMantenimiento']."</option>";
+                                        }
+                                    ?>        
+                            </select>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="nombre" class="col-form-label">Departamento:<span class="requerido"> *</span></label>
+
+                            <select class="form-control" name="select_Departamento" id="select_Departamento" required>
+                                <option value="">Seleccione..</option>
+                                    <?php
+                                        require_once '../../bd/conexion.php';
+                                        $objeto = new Conexion();
+                                        $conexion = $objeto->Conectar();
+
+                                        $consulta = "CALL sp_mostrarDepartamento()";
+                                        $resultado = $conexion->prepare($consulta);
+                                        $resultado->execute();  
+                                        $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
                         
-                                    foreach($data as $dat) {     
-                                        echo "<option value=".$dat["idEstadoControlMantenimiento"]." class='form-control'>".$dat['estadoControlMantenimiento']."</option>";
-                                    }
-                                ?>        
-                        </select>
+                                        foreach($data as $dat) {     
+                                            echo "<option value=".$dat["idDepartamento"]." class='form-control'>".$dat['departamento']."</option>";
+                                        }
+                                    ?>        
+                            </select>
+                        </div>
+                      </div>
                     </div>
 
+
+
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Usuario:</label>
+                        <label for="nombre" class="col-form-label">Usuario técnico:<span class="requerido"> *</span></label>
 
                         <select class="form-control" name="select_Usuario" id="select_Usuario" required>
                             <option value="">Seleccione..</option>
@@ -696,7 +729,7 @@ if ( $detect->isMobile() ) {
                                     $objeto = new Conexion();
                                     $conexion = $objeto->Conectar();
 
-                                    $consulta = "CALL sp_mostrarUsuario()";
+                                    $consulta = "CALL sp_mostrarUsuarioControl()";
                                     $resultado = $conexion->prepare($consulta);
                                     $resultado->execute();  
                                     $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
@@ -738,7 +771,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Id solicitud mantenimiento:</label>
+                                <label for="nombre" class="col-form-label">Id solicitud mantenimiento:<span class="requerido"> *</span></label>
                                 <input type="text" class="form-control" id="select_IdSolMantU" disabled="true" required autofocus>
                             </div>
                         </div> 
@@ -769,13 +802,13 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Fecha control:</label>
+                                <label for="nombre" class="col-form-label">Fecha control:<span class="requerido"> *</span></label>
                                 <input type="date" class="form-control" id="fechaControlU" required >
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Tipo mantenimiento:</label>
+                                <label for="nombre" class="col-form-label">Tipo mantenimiento:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_TipoMantU" id="select_TipoMantU" required>
                                     <option value="">Seleccione..</option>
@@ -799,34 +832,66 @@ if ( $detect->isMobile() ) {
                     </div> 
 
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Observación:</label>
+                        <label for="nombre" class="col-form-label">Observación:<span class="requerido"> *</span></label>
                         <textarea type="text" class="form-control" id="observacionU" required ></textarea>
                     </div>
 
-                    <div class="form-group">
-                        <label for="nombre" class="col-form-label">Estado control mantenimiento:</label>
 
-                        <select class="form-control" name="select_ControlMantU" id="select_ControlMantU" required>
-                            <option value="">Seleccione..</option>
-                                <?php
-                                    require_once '../../bd/conexion.php';
-                                    $objeto = new Conexion();
-                                    $conexion = $objeto->Conectar();
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="nombre" class="col-form-label">Estado control mant. :<span class="requerido"> *</span></label>
 
-                                    $consulta = "CALL sp_mostrarEstadoControlMantenimiento()";
-                                    $resultado = $conexion->prepare($consulta);
-                                    $resultado->execute();  
-                                    $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
+                            <select class="form-control" name="select_ControlMantU" id="select_ControlMantU" required>
+                                <option value="">Seleccione..</option>
+                                    <?php
+                                        require_once '../../bd/conexion.php';
+                                        $objeto = new Conexion();
+                                        $conexion = $objeto->Conectar();
+
+                                        $consulta = "CALL sp_mostrarEstadoControlMantenimiento()";
+                                        $resultado = $conexion->prepare($consulta);
+                                        $resultado->execute();  
+                                        $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
+                                
+                                        foreach($data as $dat) {     
+                                            echo "<option value=".$dat["idEstadoControlMantenimiento"]." class='form-control'>".$dat['estadoControlMantenimiento']."</option>";
+                                        }
+                                    ?>        
+                            </select>
+                        </div>
+                      </div>
+
+                      <!--<div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="nombre" class="col-form-label">Departamento:<span class="requerido"> *</span></label>
+
+                            <select class="form-control" name="select_DepartamentoU" id="select_DepartamentoU" required>
+                                <option value="">Seleccione..</option>
+                                    <?php
+                                        require_once '../../bd/conexion.php';
+                                        $objeto = new Conexion();
+                                        $conexion = $objeto->Conectar();
+
+                                        $consulta = "CALL sp_mostrarDepartamento()";
+                                        $resultado = $conexion->prepare($consulta);
+                                        $resultado->execute();  
+                                        $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
                         
-                                    foreach($data as $dat) {     
-                                        echo "<option value=".$dat["idEstadoControlMantenimiento"]." class='form-control'>".$dat['estadoControlMantenimiento']."</option>";
-                                    }
-                                ?>        
-                        </select>
+                                        foreach($data as $dat) {     
+                                            echo "<option value=".$dat["idDepartamento"]." class='form-control'>".$dat['departamento']."</option>";
+                                        }
+                                    ?>        
+                            </select>
+                        </div>
+                      </div> -->
                     </div>
 
+
+
+
                     <div class="form-group">
-                        <label for="nombre" class="col-form-label">Usuario:</label>
+                        <label for="nombre" class="col-form-label">Usuario técnico:<span class="requerido"> *</span></label>
 
                         <select class="form-control" name="select_UsuarioU" id="select_UsuarioU" required>
                             <option value="">Seleccione..</option>
@@ -835,7 +900,7 @@ if ( $detect->isMobile() ) {
                                     $objeto = new Conexion();
                                     $conexion = $objeto->Conectar();
 
-                                    $consulta = "CALL sp_mostrarUsuario()";
+                                    $consulta = "CALL sp_mostrarUsuarioControl()";
                                     $resultado = $conexion->prepare($consulta);
                                     $resultado->execute();  
                                     $data = $resultado->fetchAll(PDO::FETCH_ASSOC);

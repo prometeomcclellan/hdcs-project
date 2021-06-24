@@ -53,7 +53,8 @@ opcion = 4;
           {"data": "modelo"},
           {"data": "serviceTag"},
           {"data": "preDiagnostico"},
-        /*  {"data": "estadoControlMantenimiento",
+          {"data": "userName"},
+          {"data": "estadoControlMantenimiento",
               render: function(data,type,row){
                         if(data == "Finalizado"){
                           return "<span class='IAE badge badge-success badge-pill m-r-5 m-b-5'>"+data+"</span>";
@@ -62,9 +63,10 @@ opcion = 4;
                         }else if(data == "En reparación"){
                           return "<span class='IAE badge badge-danger badge-pill m-r-5 m-b-5'>"+data+"</span>";
                         }
-              }},*/
-          {"data": "userName"},
-          {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-warning btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
+              }
+          },
+          //{"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-warning btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
+          {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-warning btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            </div></div>" }
       ],
      
   });  

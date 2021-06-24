@@ -44,13 +44,13 @@
                 $data = 1;
             }
             else{
-                $consulta = "CALL sp_insertarUsuario(?, ?, ?, ?, ?)";        
+                $consulta = "CALL sp_insertarUsuario(?, ?, ?, ?)";        
                 $resultado = $conexion->prepare($consulta);
                 $resultado->bindValue(1, $codEmpleado);
                 $resultado->bindValue(2, $fechaCreacion); 
                 $resultado->bindValue(3, $userName);
                 $resultado->bindValue(4, $password);
-                $resultado->bindValue(5, $fechaBaja);
+                //$resultado->bindValue(5, $fechaBaja);
                 $resultado->execute(); 
 
                 $data = 0;
@@ -83,7 +83,7 @@
             $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
             break;
         case 5://Select
-            $consulta = "CALL sp_mostrarEmpleado()";
+            $consulta = "CALL sp_mostrarEmpleado1()";
             $resultado = $conexion->prepare($consulta);
             $resultado->execute();  
             $data = $resultado->fetchAll(PDO::FETCH_ASSOC);

@@ -594,7 +594,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Código equipo:</label>
+                                <label for="nombre" class="col-form-label">Código equipo:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_CodEquipo" id="select_CodEquipo" required>
                                     <option value="">Seleccione..</option>
@@ -617,7 +617,7 @@ if ( $detect->isMobile() ) {
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Tipo ram:</label>
+                                <label for="nombre" class="col-form-label">Tipo ram:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_TipoRam" id="select_TipoRam" required>
                                     <option value="">Seleccione..</option>
@@ -644,7 +644,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Capacidad ram:</label>
+                                <label for="nombre" class="col-form-label">Capacidad ram:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_CapacidadRam" id="select_CapacidadRam" required>
                                     <option value="">Seleccione..</option>
@@ -667,7 +667,7 @@ if ( $detect->isMobile() ) {
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Velocidad ram:</label>
+                                <label for="nombre" class="col-form-label">Velocidad ram:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_VelocidadRam" id="select_VelocidadRam" required>
                                     <option value="">Seleccione..</option>
@@ -693,7 +693,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Tipo disco:</label>
+                                <label for="nombre" class="col-form-label">Tipo disco:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_TipoDisco" id="select_TipoDisco" required>
                                     <option value="">Seleccione..</option>
@@ -716,7 +716,7 @@ if ( $detect->isMobile() ) {
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Capacidad disco:</label>
+                                <label for="nombre" class="col-form-label">Capacidad disco:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_CapacidadDisco" id="select_CapacidadDisco" required>
                                     <option value="">Seleccione..</option>
@@ -769,7 +769,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Código equipo:</label>
+                                <label for="nombre" class="col-form-label">Código equipo:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_CodEquipoU" id="select_CodEquipoU" disabled="true">
                                         <?php
@@ -791,7 +791,7 @@ if ( $detect->isMobile() ) {
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Tipo ram:</label>
+                                <label for="nombre" class="col-form-label">Tipo ram:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_TipoRamU" id="select_TipoRamU" required>
                                         <?php
@@ -817,7 +817,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Capacidad ram:</label>
+                                <label for="nombre" class="col-form-label">Capacidad ram:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_CapacidadRamU" id="select_CapacidadRamU" required>
                                         <?php
@@ -839,7 +839,7 @@ if ( $detect->isMobile() ) {
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Velocidad ram:</label>
+                                <label for="nombre" class="col-form-label">Velocidad ram:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_VelocidadRamU" id="select_VelocidadRamU" required>
                                         <?php
@@ -864,7 +864,7 @@ if ( $detect->isMobile() ) {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Tipo disco:</label>
+                                <label for="nombre" class="col-form-label">Tipo disco:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_TipoDiscoU" id="select_TipoDiscoU" required>
                                         <?php
@@ -886,7 +886,7 @@ if ( $detect->isMobile() ) {
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="nombre" class="col-form-label">Capacidad disco:</label>
+                                <label for="nombre" class="col-form-label">Capacidad disco:<span class="requerido"> *</span></label>
 
                                 <select class="form-control" name="select_CapacidadDiscoU" id="select_CapacidadDiscoU" required>
                                         <?php

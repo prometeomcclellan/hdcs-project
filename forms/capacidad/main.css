@@ -41,3 +41,7 @@ body{
 .modal-content {
     margin-top: 200px;
 }
+
+.requerido {
+    color: red;
+}

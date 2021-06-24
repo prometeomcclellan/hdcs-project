@@ -475,7 +475,7 @@ if ( $detect->isMobile() ) {
         <footer class="py-4 bg-light mt-auto ">
             <div class="container-fluid ">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Your Website 2020</div>                  
+                    <div class="text-muted">Copyright &copy; Your Website 2021</div>                  
                         <div>
                             <a href="https://curlp.unah.edu.hn/" target="unah">UNAH-CURLP</a>
                             &middot;
@@ -499,7 +499,7 @@ if ( $detect->isMobile() ) {
         <form id="formTipoDisco">    
             <div class="modal-body">
                 <div class="form-group">
-                <label for="nombre" class="col-form-label">Tipo disco:</label>
+                <label for="nombre" class="col-form-label">Tipo disco:<span class="requerido"> *</span></label>
                 <input type="text" class="form-control capitalize" id="tipoDisco" required>
                 </div>
             </div>

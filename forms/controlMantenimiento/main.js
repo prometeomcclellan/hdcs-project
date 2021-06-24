@@ -11,6 +11,7 @@ var diccionarioSolMant = [];
 var diccionarioControlMant = [];
 var diccionarioEquipo = [];
 var diccionarioUsuario = [];
+var diccionarioDepartamento = [];
 opcion = 4;
 
 
@@ -90,6 +91,23 @@ console.log(diccionarioControlMant);
   });
 
 
+
+
+    //Consulta a la tabla usuario   
+  $.ajax({
+    url: "crud.php",
+    type: "POST",
+    datatype:"json",
+    data: {opcion:12},
+    success: function(data) {
+      //console.log("nuestra data length");
+
+      //console.log(JSON.parse(data));
+      diccionarioDepartamento = JSON.parse(data); //JSON.parse = cambiar el formato de dato a JSON
+    }
+  });
+
+
 //MOSTRAR ---------------------------------------------------------------------------------------
 //DataTable que carga la tabla de inicio del index
   tablaControlMant = $('#tablaControlMant').DataTable({  
@@ -135,138 +153,11 @@ console.log(diccionarioControlMant);
                           return "<span class='IAE badge badge-danger badge-pill m-r-5 m-b-5'>"+data+"</span>";
                         }
               }},
+          {"data": "departamento"},
           {"data": "empleado"},
-          {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-warning btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
+          //{"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-warning btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            <button class='btn btn-danger btnBorrar' data-toggle='tooltip'  title='Eliminar'><i class='material-icons'>delete</i> </button></div></div>" }
+          {"defaultContent": "<div class='text-center'><div class='btn-group'>   <button class='btn btn-warning btnEditar'   data-toggle='tooltip' title='Editar'>  <i class='material-icons' >edit</i> </button>            </div></div>" }
       ],
-      
-      
-      //para usar los botones   
-    /*  responsive: "true",
-      dom: 'lBfrtip',       
-      "buttons":[ 
-
-        //EXCEL
-        {
-          extend:    'excelHtml5',
-          text:      '<i class="fas fa-file-excel"></i> ',
-          titleAttr: 'Exportar a Excel',
-          className: 'btn btn-success',
-          excelStyles: {
-            "template": 'blue_medium'
-          },
-
-          //Estilos al momento de imprimir
-          pageStyle: {
-              sheetPr: {
-                  pageSetUpPr: {
-                      fitToPage: 1            // Ajustar la impresion a la pagina
-                  } 
-              },
-              printOptions: {
-                  horizontalCentered: true,
-                  verticalCentered: true,
-              },
-              pageSetup: {
-                  orientation: "landscape",   // Orientacion
-                  paperSize: "9",             // Tamaño del papel (1 = Legal, 9 = A4)
-                  fitToWidth: "1",            // Ajustar al ancho de la página
-                  fitToHeight: "0",           // Ajustar al alto de la página
-              },
-              pageMargins: {
-                  left: "0.2",
-                  right: "0.2",
-                  top: "0.4",
-                  bottom: "0.4",
-                  header: "0",
-                  footer: "0",
-              },
-              repeatHeading: true,    // Repeat the heading row at the top of each page
-              repeatCol: 'A:A',       // Repeat column A (for pages wider than a single printed page)
-          },
-        },
-
-
-        //PDF
-        {
-          extend:    'pdfHtml5',
-          text:      '<i class="fas fa-file-pdf"></i> ',
-          titleAttr: 'Exportar a PDF',
-          className: 'btn btn-danger',
-          excelStyles: {
-            "template": 'blue_medium'
-          },
-
-          //Estilos al momento de imprimir
-          pageStyle: {
-              sheetPr: {
-                  pageSetUpPr: {
-                      fitToPage: 1            // Ajustar la impresion a la pagina
-                  } 
-              },
-              printOptions: {
-                  horizontalCentered: true,
-                  verticalCentered: true,
-              },
-              pageSetup: {
-                  orientation: "landscape",   // Orientacion
-                  paperSize: "9",             // Tamaño del papel (1 = Legal, 9 = A4)
-                  fitToWidth: "1",            // Ajustar al ancho de la página
-                  fitToHeight: "0",           // Ajustar al alto de la página
-              },
-              pageMargins: {
-                  left: "0.2",
-                  right: "0.2",
-                  top: "0.4",
-                  bottom: "0.4",
-                  header: "0",
-                  footer: "0",
-              },
-              repeatHeading: true,    // Repeat the heading row at the top of each page
-              repeatCol: 'A:A',       // Repeat column A (for pages wider than a single printed page)
-          },
-        },
-
-        //IMPRIMIR
-        {
-          extend:    'print',
-          text:      '<i class="fa fa-print"></i> ',
-          titleAttr: 'Imprimir',
-          className: 'btn btn-info',
-          excelStyles: {
-            "template": 'blue_medium'
-          },
-
-          //Estilos al momento de imprimir
-          pageStyle: {
-              sheetPr: {
-                  pageSetUpPr: {
-                      fitToPage: 1            // Ajustar la impresion a la pagina
-                  } 
-              },
-              printOptions: {
-                  horizontalCentered: true,
-                  verticalCentered: true,
-              },
-              pageSetup: {
-                  orientation: "landscape",   // Orientacion
-                  paperSize: "9",             // Tamaño del papel (1 = Legal, 9 = A4)
-                  fitToWidth: "1",            // Ajustar al ancho de la página
-                  fitToHeight: "0",           // Ajustar al alto de la página
-              },
-              pageMargins: {
-                  left: "0.2",
-                  right: "0.2",
-                  top: "0.4",
-                  bottom: "0.4",
-                  header: "0",
-                  footer: "0",
-              },
-              repeatHeading: true,    // Repeat the heading row at the top of each page
-              repeatCol: 'A:A',       // Repeat column A (for pages wider than a single printed page)
-          },
-        },
-      ],
-      */
   });  
 
 //DataTable que carga las solicitudes de mantenimiento
@@ -432,7 +323,9 @@ console.log(diccionarioControlMant);
     _selectIdSolMant = $.trim($('#select_IdSolMant').val() || []);  //-----1
     _observacion = $.trim($('#observacion').val());                 //-----4
     _selectControlMant = $.trim($('#select_ControlMant').val() || []); //--5
-    _select_Usuario = $.trim($('#select_Usuario').val() || []); //--6
+    _selectDepartamento = $.trim($('#select_Departamento').val() || []); //--6
+    
+    _select_Usuario = $.trim($('#select_Usuario').val() || []); //--7
     _codEquipo = $.trim($('#codEquipo').val() || []); 
     selectControlMant = $.trim($('#select_ControlMant').text() || []);
 
@@ -444,7 +337,7 @@ console.log(diccionarioControlMant);
         url: "crud.php",
         type: "POST",
         datatype:"json",    
-        data:  {fechaControl:_fechaControl, selectTipoMant:_selectTipoMant, selectIdSolMant:_selectIdSolMant, observacion:_observacion, estadoContronMant:_selectControlMant, select_Usuario:_select_Usuario, opcion:opcion},    
+        data:  {fechaControl:_fechaControl, selectTipoMant:_selectTipoMant, selectIdSolMant:_selectIdSolMant, observacion:_observacion, estadoContronMant:_selectControlMant, selectDepartamento:_selectDepartamento, select_Usuario:_select_Usuario, opcion:opcion},    
 
           success: function(data) {
           //alert(data);
@@ -486,13 +379,14 @@ console.log(diccionarioControlMant);
     fila = $(this).closest("tr");                  //FILA
     _idControlMantU = parseInt(fila.find('td:eq(0)').text());   //ID
     _fechaControlMant = fila.find('td:eq(1)').text();
-    _codEquipo = fila.find('td:eq(1)').text();
+    _codEquipo = fila.find('td:eq(2)').text();
     _usuario = fila.find('td:eq(9)').text();
     _selectTipoMant = fila.find('td:eq(4)').text();
     _idSolMant = fila.find('td:eq(5)').text();
     _observacion = fila.find('td:eq(7)').text();
     _estadoControlMant = fila.find('td:eq(8)').text();
-    _select_Usuario = fila.find('td:eq(9)').text();
+    _select_Depto = fila.find('td:eq(9)').text();
+    _select_Usuario = fila.find('td:eq(10)').text();
 
       
     opcion = 2; //editar
@@ -570,6 +464,29 @@ console.log(diccionarioControlMant);
       }
     }
 
+
+
+    //for, que permite el llenado del select de departamento
+    //console.log(diccionarioDepartamento.length);
+    for (let index = 0; index < diccionarioDepartamento.length; index++) {
+      const element = diccionarioDepartamento[index];
+      console.dir(diccionarioDepartamento);
+
+      let deptoId = element.idDepartamento;
+      let deptoNombre = element.departamento;
+      
+      if (_select_Depto.toString().trim() == deptoNombre.toString().trim()) {
+        let element = document.getElementById("select_DepartamentoU");
+        element.value = deptoId;  // asigna el deptoId al element.value
+      }
+    }
+
+
+
+
+
+
+
   });
 
 
@@ -582,18 +499,20 @@ console.log(diccionarioControlMant);
     _selectIdSolMantU = $.trim($('#select_IdSolMantU').val() || []);
     _observacionU = $.trim($('#observacionU').val()); 
     _selectControlMantU = $.trim($('#select_ControlMantU').val() || []);
+    _selectDepartamentoU = $.trim($('#select_DepartamentoU').val() || []);
     _select_UsuarioU = $.trim($('#select_UsuarioU').val() || []);
      
 
-    //alert(_estadoU);
+    alert(_selectDepartamentoU);
 
       $.ajax({
         url: "crud.php",
         type: "POST",
         datatype:"json",    
-        data:  {idControlMant:_idControlMantU, fechaControl:_fechaControlU, selectTipoMant:_selectTipoMantU, selectIdSolMant:_selectIdSolMantU, observacion:_observacionU, estadoContronMant:_selectControlMantU, select_UsuarioU:_select_UsuarioU,  opcion:opcion},   
+        data:  {idControlMant:_idControlMantU, fechaControl:_fechaControlU, selectTipoMant:_selectTipoMantU, selectIdSolMant:_selectIdSolMantU, observacion:_observacionU, estadoContronMant:_selectControlMantU, selectDepartamento:_selectDepartamentoU,  select_UsuarioU:_select_UsuarioU,  opcion:opcion},   
         
           success: function(data) {
+            alert(data);
           //console.log(data);
             if(data == 0){
               alertify.success("Registro actualizado satisfactoriamente.");

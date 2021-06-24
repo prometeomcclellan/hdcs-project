@@ -499,7 +499,7 @@ if ( $detect->isMobile() ) {
         <form id="formTipoMantenimiento">    
             <div class="modal-body">
                 <div class="form-group">
-                <label for="nombre" class="col-form-label">Tipo mantenimiento:</label>
+                <label for="nombre" class="col-form-label">Tipo mantenimiento:<span class="requerido"> *</span></label>
                 <input type="text" class="form-control capitalize" id="tipoMantenimiento" required>
                 </div>
             </div>
