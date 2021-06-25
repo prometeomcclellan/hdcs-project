@@ -53,8 +53,13 @@ $(document).ready(function() {
   let statusP = 0;
   let statusF = 0;
 
+  let statusDED = 0;
+  let statusPED = 0;
+  let statusFED = 0;
+
   let oClass;
   let oClassUs;
+  let oClassED;
 
   let countDept;
   let esteEstado;
@@ -1330,6 +1335,8 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
           $(this).css("cursor", "pointer");
         });
 
+        
+
         $(".maintinance").click(function(mevt){
           mevt.preventDefault();
           mevt.stopPropagation();
@@ -1455,6 +1462,8 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
           $('.carousel').carousel('pause');
           $('#modalEquipoDetalle').modal('show');
 
+          
+
           let orderNumber = $(".order-number").eq(orderIndex).val();
           
           localStorage.setItem("idDeMantenimiento", orderNumber);
@@ -1521,10 +1530,12 @@ if(currentUrl == "/HDCS/forms/equipo/index.php"){
               let contadorF = deptMCountArray[0].f_count;
               let totalDepto = deptMCountArray[0].row_cnt;
 
+              // 
               $("#deptosContenedor").append(
                 "<div class='col-md-4 departamento-widget' style='box-shadow: 3px 3px 6px #bebebe;border-radius: 6px;margin-bottom:12px;'>"
+                +"<input type='hidden' class='id-departa' value='"+deptoId+"' >"
               +"<p class='text-left'>"
-                +"<strong>"+deptoNombre+"</strong>"
+                +"<strong class='este-depto-nombre'>"+deptoNombre+"</strong>"
               +"</p>"
               +"<div class='progress-group'>"
                 +"Diagnosticados"
@@ -2597,7 +2608,258 @@ $(".logout-button").click(function(){
         evdw.preventDefault();
         evdw.stopPropagation();
         let dwIndex = $(".departamento-widget").index(this);
-        //alert(dwIndex)
+        let idDeparta = $(this).find("input.id-departa").val();
+        let tituloDeparta = $(this).find("strong.este-depto-nombre").text().trim();
+        // este-depto-nombre
+        //alert($(this).find("input.id-departa").val())
+
+        $.ajax({
+          url:"../bd/get_mantenimientos_este_departamento.php",
+          type:"POST",
+          async: false,
+          data: {deptoId: idDeparta}, 
+            success:function(dataEsteDepto){
+              let dataED = [];
+              dataED = JSON.parse(dataEsteDepto);
+              
+
+              //alert(dataED.length)
+              if (dataED.length > 0) {
+                $("#thisDeptTable").empty();
+                for (let indexED = 0; indexED < dataED.length; indexED++) {
+                  const elementED = dataED[indexED];
+                  let  estadoR = elementED.status;
+                  let oNumberED = elementED.idControlMantenimiento+"-"+elementED.idSolicitudMantenimiento;
+                  let oDescriptionED = elementED.descripcion;
+                  let observacionED = elementED.observacion;
+                  let oStatusED = elementED.estadoControlMantenimiento;
+                  let oSDateED = elementED.fechaSolicitudMantenimiento;
+                  let oDateED = elementED.fechaControlMantenimiento;
+                  let oTituloED = elementED.tituloControlmantenimiento;
+
+                  if (oTituloED == null || oTituloED.toString().trim() == "") {
+                    oTituloED = "Equipo en proceso";
+                  }else{
+                    oTituloED = oTituloED;
+                  }
+          
+                  oClassED = "success";
+          
+                  if(oStatusED.toString().trim().toLocaleLowerCase() == "diagnosticado"){
+                    oClassED = "danger";
+                    statusDED++;
+                  }
+          
+                  if(oStatusED.toString().trim().toLocaleLowerCase() == "en reparación"){
+                    oClassED = "warning";
+                    statusPED++;
+                  }
+          
+                  if(oStatusED.toString().trim().toLocaleLowerCase() == "finalizado"){
+                    oClassED = "success";
+                    statusFED++;
+                  }
+
+                  /*
+                  
+                  $("#mantenimientosTable").append(
+            "<tr class='maintinance'>"
+              +"<td>"+oNumber+"</td>"+"<input type='hidden' value="+element.idControlMantenimiento+" class='order-number'>"
+              +"<td>"+oEquipment+"<span class='order-description' style='display:none;'>"+oEquipment+"</span>"+"<span class='order-titulo' style='display:none;'>"+oTitulo+"</span></td>"
+              +"<td><span class='badge badge-"+oClass+"' style='width:120px;'>"+oStatus+"</span><span class='order-status' style='display:none;'>"+oStatus+"</span></td>"
+              +"<td>"
+                +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oSDate+"</div>"+"<input type='hidden' value="+oSDate+" class='order-sdate'>"
+              +"</td>"
+              +"<td>"
+                +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDate+"</div>"+"<input type='hidden' value="+oDate+" class='order-odate'>"
+              +"</td>"
+             +"</tr>");
+                  
+                  */
+
+                  $("#thisDeptTable").append(
+                    "<tr class='maintinance-ed'>"
+                    +"<td>"+oNumberED+"</td>"+"<input type='hidden' value="+elementED.idControlMantenimiento+" class='order-number-ed'>"
+                    +"<td>"+oTituloED+"<span class='order-description' style='display:none;'>"+oDescriptionED+"</span>"+"<span class='order-titulo' style='display:none;'>"+oTituloED+"</span></td>"
+                    +"<td><span class='badge badge-"+oClassED+"' style='width:120px;'>"+oStatusED+"</span><span class='order-status' style='display:none;'>"+oStatusED+"</span></td>"
+                    +"<td>"
+                      +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oSDateED+"</div>"+"<input type='hidden' value="+oSDateED+" class='order-sdate'>"
+                    +"</td>"
+                    +"<td>"
+                      +"<div class='sparkbar' data-color='#00a65a' data-height='20'>"+oDateED+"</div>"+"<input type='hidden' value="+oDateED+" class='order-odate'>"
+                    +"</td>"
+                   +"</tr>");
+
+                  //alert(estadoR)
+                  if (estadoR == 200) {
+                    if (indexED == (dataED.length-1)) {
+                      $("#thisDeptModalLabel").text("Mantenimientos "+tituloDeparta);
+                      $("#thisDeptModal").find("div.modal-dialog").css("max-width", "1000px");
+                      $('#thisDeptModal').modal('show');
+
+                      $(".maintinance-ed").click(function(edevt){
+                        edevt.preventDefault();
+                        edevt.stopPropagation();
+              
+                        let edIndex = $(".maintinance-ed").index(this);
+                        let orderDiagnose = $(this).find("span.badge").text();
+                        let orderDescription = $(this).find("span.order-description").text();
+                        let ordenNumero = $(this).find("input.order-number-ed").val();
+                        let orderTitulo = $(this).find("span.order-titulo").text();
+                        let orderStatus = $(this).find("span.order-status").text();
+                        let orderSDate = $(this).find("input.order-sdate").val();
+                        let orderODate = $(this).find("input.order-odate").val();
+
+
+                        elStatusClass = document.getElementById("status_class");
+                            elStatusIcon = document.getElementById("status_icon");
+                            elStatusClass.className = '';
+                            elStatusIcon.className = '';
+                            $("#status_title").text("");
+              
+                            let dClass = "bg-warning";
+                            let dIcon = "fas fa-cog";
+                            let finalizarContainer = document.getElementsByClassName("finalizar-mantenimiento");
+                            let finalizarCount = finalizarContainer.length;
+                            if(orderDiagnose == "Diagnosticado"){
+                              if (finalizarCount == 0) {
+                                //$("#order_body").append("<a href='#' class='card-link finalizar-mantenimiento boton-edicion'>Finalizar</a>");
+                              }
+                              
+                              dClass = "info-box-icon elevation-1 bg-danger";
+                              dIcon = "fas fa-hourglass-start";
+                            }
+                            if(orderDiagnose == "En reparación"){
+                              if (finalizarCount == 0) {
+                                //$("#order_body").append("<a href='#' class='card-link finalizar-mantenimiento boton-edicion'>Finalizar</a>");
+                              }
+                              
+                              dClass = "info-box-icon elevation-1 bg-warning";
+                              dIcon = "fas fa-cog"
+                            }
+                            if(orderDiagnose == "Finalizado"){
+                              if (finalizarCount > 0) {
+                                //$(".boton-edicion").eq(1).remove();
+                              }
+                              //$(".boton-edicion").eq(1).remove();
+                              dClass = "info-box-icon elevation-1 bg-success";
+                              dIcon = "fas fa-thumbs-up";
+                            }
+              
+                            $("#status_class").addClass(dClass);
+                            $("#status_icon").addClass(dIcon);
+                            $("#status_title").text(orderDiagnose);
+
+                            imagenesArray = [];
+                            $.ajax({
+                              type: "post",
+                              crossOrigin: true,
+                              url: "../bd/get_mantenimiento_imagenes_por_idcontrol.php",
+                              data: {ordenNumero:ordenNumero},
+                              async: false,
+                              success: function (data) {
+                                imagenesArray = JSON.parse(data);
+                                console.log("imágenes del control");
+                                console.dir(imagenesArray);
+              
+                                $("#carouselContainer").empty();
+                                $("#thumbnailsContainer").empty();
+                                
+                                if (imagenesArray.length > 0) {
+                                  for (let indexT = 0; indexT < imagenesArray.length; indexT++) {
+                                    const elementT = imagenesArray[indexT];
+                                    let thumbUrl = elementT.fotoUrl;
+                                    let thumbId = elementT.fotoId;
+                
+                                    $("#thumbnailsContainer").append(
+                                      "<li><a href='#slide"+(indexT+1)+"'><img src="+thumbUrl+" class='thumb-nail'><span class='id-de-foto' style='display:none;'>"+thumbId+"</span></a></li>");
+                
+                                    if (indexT == 0) {
+                                      $("#carouselContainer").append(
+                                      "<div class='carousel-item active'>"
+                                      +"<img class='d-block w-100' style='background-image:url("+thumbUrl+");background-size:cover;background-position:center;width:60px; height:240px;' >"
+                                      +"<span class='thumb-url' style='display:none;'>"+thumbUrl+"</span>"
+                                      +"<span class='id-de-foto' style='display:none;'>"+thumbId+"</span>"
+                                      +"<input type='hidden' value="+indexT+" class='thumb-index'>"
+                                      +"</div>");
+                                    }else{
+                                      $("#carouselContainer").append(
+                                      "<div class='carousel-item'>"
+                                      +"<img class='d-block w-100' style='background-image:url("+thumbUrl+");background-size:cover;background-position:center;width:60px; height:240px;' >"
+                                      +"<span class='thumb-url' style='display:none;'>"+thumbUrl+"</span>"
+                                      +"<span class='id-de-foto' style='display:none;'>"+thumbId+"</span>"
+                                      +"<input type='hidden' value="+indexT+" class='thumb-index'>"
+                                      +"</div>");
+                                    }
+                
+                                    if (indexT == (imagenesArray.length-1)) {
+                                      $(".thumb-nail").click(function(){
+                                        $(".carousel-item").eq(thumbIndex).removeClass(className);
+                                        indexThumb = $(".thumb-nail").index(this);
+                                        $(".carousel-item").eq(indexThumb).addClass(className);
+                                        thumbElements = document.getElementsByClassName("carousel-item");
+                                        thumbElement = thumbElements[indexThumb];
+                                        if (indexThumb==(imagenesArray.length-1)) {
+                                          thumbIndex = 0;
+                                        }else{
+                                          thumbIndex = indexThumb;
+                                        }
+                                      })
+                
+                                    }
+                                    
+                                  }
+                          
+                                }else{
+                                  fotoIndex = 0;
+                                  $("#thumbnailsContainer").append("<li><a href='#slide1'><img src='dist/img/HDCS-imagotipo.png' class='thumb-nail'></a></li>");
+                                  $("#carouselContainer").append(
+                                    "<div class='carousel-item active'>"
+                                    +"<img class='d-block w-100' style='background-image:url(dist/img/HDCS-imagotipo.png);background-size:cover;background-position:center;width:60px; height:240px;' >"
+                                    +"<input type='hidden' value='0' class='thumb-index'>"
+                                    +"</div>");
+                                }
+              
+                                
+                              }
+                            })
+              
+                            
+              
+                        $('.carousel').carousel('pause');
+                        $('#modalEquipoDetalle').modal('show');
+
+                        localStorage.setItem("idDeMantenimiento", ordenNumero);
+
+                        $("#manDetalles").empty();
+                        
+                        $("#manTitulo").text(orderTitulo);
+                        $("#manDescripcion").text(orderDescription);
+                        //$("#manDetalles").append("<li class='list-group-item'>Estado : "+orderStatus+"</li>");
+                        $("#manDetalles").append("<li class='list-group-item'>Fecha Solicitud : "+orderSDate+"</li>");
+                        $("#manDetalles").append("<li class='list-group-item'>Fecha Mantenimiento : "+orderODate+"</li>");
+              
+              
+                      });
+                    }
+                  }
+                  if (estadoR == 500) {}
+                }
+              }else{
+                $(document).Toasts('create', {
+                  class: 'bg-warning', 
+                  title: "Vacío!",
+                  subtitle: 'Cerrar',
+                  autohide: true,
+                  delay: 6000,
+                  body: 'Este departamento no tiene solicitudes.'
+                })
+              }
+              
+              
+            }      
+          });
+
       });
 
       $(".reporte").click(function(evrep){

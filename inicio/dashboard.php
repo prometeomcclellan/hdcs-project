@@ -1037,6 +1037,90 @@ if(session_id() == ''){
   </div>
 </div>
 
+<!-- Modal Este Departamento -->
+<div class="modal fade" id="thisDeptModal" tabindex="-1" role="dialog" aria-labelledby="thisDeptModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="thisDeptModalLabel">Mantenimientos <span id="tipoMantenimiento"></span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- TABLE: LATEST ORDERS -->
+        <div class="card">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Mantenimientos Filtrados</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <style>
+/*
+              #reportesTabla {
+ 	              height: 300px;
+	              
+	              padding: 0px;
+	              margin: 0px auto 0px auto;
+	              overflow: auto;
+	              
+              }
+              */
+
+              table {
+	              width: 100%;
+                max-height: 300px;
+	              padding: 15px;
+	              text-align: left;
+	              border-collapse: collapse;
+	              
+              }
+
+              #thisDeptTable > tr {
+                cursor: pointer;
+              }
+
+              
+              </style>
+              <div class="card-body p-0">
+                <div id="esteDeptoTabla" class="table-responsive">
+                  <table id="reportesTabla" class="table table-striped table-hover m-0 tabla-data">
+                    <thead>
+                    <tr>
+                      <th>Número orden</th>
+                      <th>Equipo</th>
+                      <th>Estado</th>
+                      <th>Fecha solicitud</th>
+                      <th>Fecha mantenimiento</th>
+                    </tr>
+                    </thead>
+                    <tbody id="thisDeptTable"></tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Ver Todas</a>
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <!-- button type="button" class="btn btn-primary" style="background-color: #1a3c8a;">Guardar Cambios</button -->
+      </div>
+    </div>
+  </div>
+</div>
+
 <!--Modal nuevas solicitudes-->
 <div class="modal fade" id="nuevasModal" tabindex="-1" role="dialog" aria-labelledby="nuevasModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
